@@ -1,0 +1,19 @@
+let g:spf13_bundle_groups=['general', 'programming', 'neocomplete', 'php', 'javascript', 'html', 'ruby', 'go', 'misc', 'writing']
+
+" Airline config {
+	let g:airline_theme="simple"
+	let g:airline_powerline_fonts = 1
+	let g:airline#extensions#tabline#enabled = 1
+
+	set laststatus=2 " Always display the statusline in all windows
+	set showtabline=2 " Always display the tabline, even if there is only one tab
+	set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)"
+" }
+
+syntax enable
+
+" Show “invisible” characters - give us nice EOL (end of line) characters
+set list
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+
+let g:spf13_no_omni_complete = 1

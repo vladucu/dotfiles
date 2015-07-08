@@ -31,6 +31,19 @@ brew install gnu-sed --with-default-names
 brew install bash
 brew tap homebrew/versions
 brew install bash-completion2
+# Install zsh
+brew install zsh
+git clone git://github.com/vladucu/oh-my-zsh.git $PWD/oh-my-zsh
+# Install tmux
+brew install tmux
+# super useful, more here: https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+brew install reattach-to-user-namespace
+
+# Install python + vim + powerline
+# https://gist.github.com/antiAgainst/5b63c39960d875b5d75b
+brew install python
+brew install vim --env-std --override-system-vi --with-lua
+
 
 # Install `wget` with IRI support.
 brew install wget --with-iri
@@ -38,15 +51,14 @@ brew install wget --with-iri
 # Install RingoJS and Narwhal.
 # Note that the order in which these are installed is important;
 # see http://git.io/brew-narwhal-ringo.
-brew install ringojs
-brew install narwhal
+#brew install ringojs
+#brew install narwhal
 
 # Install more recent versions of some OS X tools.
-brew install vim --override-system-vi
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
 brew install homebrew/dupes/screen
-brew install homebrew/php/php55 --with-gmp
+# brew install homebrew/php/php55 --with-gmp
 
 # Install font tools.
 brew tap bramstein/webfonttools
@@ -99,6 +111,47 @@ brew install ssh-copy-id
 brew install tree
 brew install webkit2png
 brew install zopfli
+
+# Install direnv
+brew install direnv
+
+# Install hub
+brew install hub
+
+# sourcetree
+brew cask install sourcetree
+
+# Install ngrok
+brew install ngrok
+
+# Install redis
+brew install redis
+
+brew cask install istat-menus
+
+# Install z https://github.com/rupa/z
+brew install z
+
+# http://vim.spf13.com/#install
+curl http://j.mp/spf13-vim3 -L -o - | sh
+
+# https://rvm.io
+# rvm for the rubiess
+curl -L https://get.rvm.io | bash -s stable --ruby
+
+# Install modman, module manager for Magento
+# https://github.com/colinmollenhour/modman
+bash < <(curl -s https://raw.github.com/colinmollenhour/modman/master/modman-installer)
+
+# https://github.com/jamiew/git-friendly
+# the `push` command which copies the github compare URL to my clipboard is heaven
+sudo bash < <( curl https://raw.github.com/jamiew/git-friendly/master/install.sh)
+
+# Install nvm
+brew install nvm
+
+# Install go
+brew install go
 
 # Remove outdated versions from the cellar.
 brew cleanup

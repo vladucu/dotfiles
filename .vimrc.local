@@ -1,0 +1,62 @@
+
+"set t_Co=256
+" give us 256 color schemes!
+set term=screen-256color
+set background=dark
+colorscheme solarized
+"let g:solarized_termcolors=256
+let g:solarized_termtrans = 0
+
+" set timeoutlen=0 " Time to wait after ESC (default causes an annoying delay)"
+
+" set shell=$SHELL
+
+" Forcing the use of hjkl keys to navigate
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+" vim-go config {
+	if count(g:spf13_bundle_groups, 'go')
+		let g:go_fmt_command = "goimports"
+
+		au FileType go nmap <leader>r <Plug>(go-run)
+		au FileType go nmap <leader>b <Plug>(go-build)
+		au FileType go nmap <leader>t <Plug>(go-test)
+		au FileType go nmap <leader>c <Plug>(go-coverage)
+		au FileType go nmap <Leader>ds <Plug>(go-def-split)
+		au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+		au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+		au FileType go nmap <Leader>gd <Plug>(go-doc)
+		au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+		au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+		au FileType go nmap <Leader>s <Plug>(go-implements)
+		au FileType go nmap <Leader>i <Plug>(go-info)
+		au FileType go nmap <Leader>e <Plug>(go-rename)
+
+		let g:go_highlight_functions = 1
+		let g:go_highlight_methods = 1
+		let g:go_highlight_structs = 1
+	endif
+"}
+
+" Rails specific configs {
+	if count(g:spf13_bundle_groups, 'ruby')
+		" vim-rspec
+		au FileType ruby map <Leader>t :call RunCurrentSpecFile()<CR>
+		au FileType ruby map <Leader>s :call RunNearestSpec()<CR>
+		au FileType ruby map <Leader>l :call RunLastSpec()<CR>
+		au FileType ruby map <Leader>a :call RunAllSpecs()<CR>
+
+		let g:rspec_runner = "os_x_iterm2"
+		let g:rspec_command = "! Bundle exec foreman run Rake spec {spec}"
+	endif
+" }
+
+" Remove trailing whitespaces and \^M chars, overwriting only to add other exxtensions too
+autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif"

@@ -1,0 +1,3 @@
+Bundle 'airblade/vim-gitgutter'
+Bundle 'sickill/vim-monokai'
+Bundle 'thoughtbot/vim-rspec'
