@@ -33,13 +33,13 @@ DISABLE_AUTO_UPDATE="true"
 
 # ssh-agent set forwarding on and specify all identities that we want to be loaded
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent vladucu vlad@ST
+zstyle :omz:plugins:ssh-agent identities vladucu vlad@ST
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
-    git git-flow git-extras git-cust github
+    git git-flow git-extras git-cust github git-flow-completion
     vagrant knife docker supervisor
     sublime extract ssh-agent composer
     npm node
@@ -54,10 +54,11 @@ plugins=(
     go
     tmux tmuxinator
     brew brew-cask osx
+    colored-man
 )
 
-# set default editor to sublime
-export EDITOR="subl"
+# set default editor to vim
+export EDITOR=vim
 
 source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
@@ -73,10 +74,13 @@ mkdir -p ~/.nvm
 cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
+# [[ -s "$HOME/.nvm" ]] && . "$HOME/.nvm/nvm.sh"
 
 # Enable rvm
 source $HOME/.rvm/scripts/rvm
 rvm use default
+# This loads RVM into a shell session.
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 # Enable direnv
 eval "$(direnv hook zsh)"
