@@ -1,4 +1,4 @@
-let g:spf13_bundle_groups=['general', 'programming', 'neocomplete', 'php', 'javascript', 'html', 'ruby', 'go', 'misc', 'writing']
+let g:spf13_bundle_groups=['general', 'programming', 'youcompleteme', 'php', 'javascript', 'html', 'ruby', 'go', 'misc', 'writing']
 
 " Airline config {
 	let g:airline_theme="simple"
@@ -17,3 +17,7 @@ set list
 set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 
 let g:spf13_no_omni_complete = 1
+
+" to allow editing crontab with vim (http://superuser.com/questions/359580/error-adding-cronjobs-in-mac-os-x-lion,
+" http://vim.wikia.com/wiki/Editing_crontab)
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
