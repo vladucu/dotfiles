@@ -40,7 +40,7 @@ zstyle :omz:plugins:ssh-agent identities vladucu vlad@ST
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
     git git-flow git-extras git-cust github git-flow-completion
-    vagrant knife docker supervisor
+    vagrant knife docker supervisor docker-compose
     sublime extract ssh-agent composer
     npm node
     ruby gem rvm rails capistrano

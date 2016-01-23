@@ -1,13 +1,16 @@
+if has('gui_running')
+	" do something?
+else
+	set t_Co=256
+	" give us 256 color schemes!
+	set term=screen-256color
+	set background=dark
+	colorscheme solarized
+	let g:solarized_termcolors=256
+	let g:solarized_termtrans = 0
+endif
 
-"set t_Co=256
-" give us 256 color schemes!
-set term=screen-256color
-set background=dark
-colorscheme solarized
-"let g:solarized_termcolors=256
-let g:solarized_termtrans = 0
-
-" set timeoutlen=0 " Time to wait after ESC (default causes an annoying delay)"
+"set timeoutlen=0 " Time to wait after ESC (default causes an annoying delay)"
 
 " set shell=$SHELL
 
@@ -58,8 +61,12 @@ inoremap <Right> <nop>
 	endif
 " }
 
-" Remove trailing whitespaces and \^M chars, overwriting only to add other exxtensions too
+" Remove trailing whitespaces and \^M chars, overwriting only to add other extensions too
 autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif"
+
+" for vim-mustache-handlebars because right now auto-detect file type doesn't
+" seems to be working
+au BufRead,BufNewFile *.hbs setfiletype mustache
 
 " make YCM compatible with UltiSnips (using supertab)
 " http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
