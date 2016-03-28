@@ -23,6 +23,7 @@ windows:
     - api: api && rm -f log/*.log && foreman start -f Procfile.local
     - ui: ui && rm -Rf tmp/* && foreman start -f Procfile.local
     - store: store && rm -Rf tmp/* && foreman start -f Procfile.local
+    - storefront: storefront && rm -Rf tmp/* && foreman start -f Procfile.local
     - admin: admin && rm -Rf tmp/* && foreman start -f Procfile.local
     - cli_api: api
   # - editor:
