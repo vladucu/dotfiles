@@ -1,4 +1,4 @@
-let g:spf13_bundle_groups=['general', 'programming', 'youcompleteme', 'php', 'javascript', 'html', 'ruby', 'go', 'misc', 'writing']
+let g:spf13_bundle_groups=['general', 'programming', 'php', 'javascript', 'html', 'ruby', 'go', 'misc', 'writing', 'youcompleteme']
 
 " Airline config {
 	let g:airline_theme="simple"

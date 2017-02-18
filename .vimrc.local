@@ -67,7 +67,7 @@ inoremap <Right> <nop>
 " }
 
 " Remove trailing whitespaces and \^M chars, overwriting only to add other extensions too
-autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif"
+" autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> if !exists('g:spf13_keep_trailing_whitespace') | call StripTrailingWhitespace() | endif"
 
 " for vim-mustache-handlebars because right now auto-detect file type doesn't
 " seems to be working
