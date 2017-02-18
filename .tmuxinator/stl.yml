@@ -19,17 +19,38 @@ root: ~/
 # tmux_command: byobu
 
 windows:
-    - ngrok: api && ngrok --config $PWD/.ngrok start api manage store
-    - api: api && rm -f log/*.log && foreman start -f Procfile.local
-    - ui: ui && rm -Rf tmp/* && foreman start -f Procfile.local
-    - store: store && rm -Rf tmp/* && foreman start -f Procfile.local
-    - storefront: storefront && rm -Rf tmp/* && foreman start -f Procfile.local
-    - admin: admin && rm -Rf tmp/* && foreman start -f Procfile.local
-    - cli_api: api
-  # - editor:
-  #     layout: main-vertical
-  #     panes:
-  #       - vim
-  #       - guard
-  # - server: bundle exec rails s
-  # - logs: tail -f log/development.log
+    - api:
+        root: ~/dev/work/stl/api.sweettooth.io
+        layout: 838c,238x61,0,0{147x61,0,0,0,90x61,148,0[90x30,148,0,3,90x30,148,31,4]}
+        panes:
+            - foreman start
+            - ngrok start -config $PWD/.ngrok2/ngrok.yml api manage storefront storefrontjs #admin
+            - less +F log/development.log
+    - ux:
+        root: ~/dev/work/stl
+        layout: 09b3,238x61,0,0{118x61,0,0,3,119x61,119,0[119x30,119,0,7,119x30,119,31,12]}
+        panes:
+            - manage:
+                - cd manage.sweettoothrewards.com
+                - rm -rf tmp && foreman start -f Procfile.local
+            - admin:
+                - cd admin.sweettoothrewards.com
+                - rm -rf tmp && foreman start -f Procfile.local
+            - storefront:
+                - cd sweettooth-storefront
+                - rm -rf tmp && foreman start -f Procfile.local
+    - customer:
+        root: ~/dev/work/stl
+        panes:
+            - storefrontjs:
+                - cd sweettooth-storefront-js
+                - foreman run npm start
+            - launcher:
+                - cd sweettooth-storefront-launcher
+                - foreman start
+            - panel:
+                - cd sweettooth-storefront-panel
+                - rm -rf tmp && foreman start -f Procfile.local
+            - test-shop:
+                - cd sweettooth-storefront-test-shop
+                - foreman start
