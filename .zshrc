@@ -1,80 +1,122 @@
-#!/usr/bin/zsh
 # Path to your oh-my-zsh configuration.
-DOT=$HOME/.dotfiles
-ZSH=$DOT/oh-my-zsh
+export DOT=$HOME/.dotfiles
+export ZSH=$DOT/oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="vladucu"
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH_THEME="vladucu"
+ZSH_THEME=""
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Set to this to use case-sensitive completion
+# Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Comment this out to disable bi-weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-# Uncomment to change how many often would you like to wait before auto-updates occur? (in days)
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
-# Uncomment following line if you want to disable colors in ls
+# Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
-# Uncomment following line if you want to disable autosetting terminal title.
+# Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
 
-# ssh-agent set forwarding on and specify all identities that we want to be loaded
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities vladucu vlad@ST vlad-lavyl
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git git-flow git-extras git-cust github git-flow-completion
-    vagrant knife docker supervisor docker-compose
+    git git-flow git-extras git-cust github git-flow-completion gitignore
+    vagrant docker docker-compose
     sublime extract ssh-agent composer
-    npm node
-    ruby gem rvm rails capistrano
-    bower
+    vi-mode
+    npm node bower
+    ember-cli
+    ruby gem rvm rails
     redis-cli
     z
     heroku
     battery
+    nmap
     cp
+    history
     shortcuts
-    go
+    golang
     tmux tmuxinator
-    brew brew-cask osx
+    brew osx
     colored-man
+    themes
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-history-substring-search
 )
-
-# set default editor to vim
-export EDITOR=vim
-
-source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs..
+# User configuration
 
-export LC_ALL=en_US.UTF-8
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# ssh-agent set forwarding on and specify all identities that we want to be loaded
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities vladucu vlad@ST
 
 # Enable nvm
 mkdir -p ~/.nvm
 cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
-# [[ -s "$HOME/.nvm" ]] && . "$HOME/.nvm/nvm.sh"
 
 # Enable rvm
 source $HOME/.rvm/scripts/rvm
@@ -84,3 +126,8 @@ rvm use default
 
 # Enable direnv
 eval "$(direnv hook zsh)"
+
+# Initialize pure-promt
+# source https://github.com/sindresorhus/pure#getting-started
+autoload -U promptinit; promptinit
+prompt pure
