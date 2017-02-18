@@ -168,3 +168,9 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+[user]
+	email = vanca.vlad@gmail.com
+	name = Vlad Vanca
+	signingkey = 0D33120F
+[commit]
+	gpgsign = true
