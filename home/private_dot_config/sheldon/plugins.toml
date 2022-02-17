@@ -28,6 +28,7 @@ github = "romkatv/zsh-defer"
 ###################
 # Deferred
 ###################
+# Alternative djui/alias-tips
 [plugins.zsh-you-should-use]
 github = "MichaelAquilina/zsh-you-should-use"
 apply = ["defer"]
