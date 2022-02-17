@@ -40,3 +40,10 @@ apply = ["defer"]
 [plugins.zsh-syntax-highlighting]
 github = 'zsh-users/zsh-syntax-highlighting'
 apply = ["defer"]
+
+# TODO setup keyboard shortcuts
+# https://github.com/zsh-users/zsh-history-substring-search#usage
+[plugins.zsh-history-substring-search]
+github = 'zsh-users/zsh-history-substring-search'
+use = ["{{ name }}.zsh"]
+apply = ["defer"]
