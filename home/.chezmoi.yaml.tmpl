@@ -1,22 +1,37 @@
 {{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
 {{- $interactive := stdinIsATTY -}}
 
-{{- /* Initializes the name variable with a default value */ -}}
-{{- /* If name was previously set, reuses it */ -}}
-{{- /* Otherwise, if running interactively, prompts for a name */ -}}
-{{- $name := "Vlad Vanca" -}}
-{{- if hasKey . "name" -}}
-{{-   $name = .name -}}
-{{- else if $interactive -}}
-{{-   $name = promptString "name" $name -}}
-{{- end -}}
+{{/* Boolean feature tags */}}
+{{/* If this machine should have Smile secrets from 1Password */}}
+{{- $smile := false -}}
+{{- "" -}}
 
-{{- /* Does the same for the email */ -}}
+{{/* Configs */}}
+{{- $name := "Vlad Vanca" -}}
 {{- $email := "vanca.vlad@gmail.com" -}}
-{{- if hasKey . "email" -}}
-{{-   $email = .email -}}
-{{- else if $interactive -}}
-{{-   $email = promptString "email" $email -}}
+{{- "" -}}
+
+{{- /* If running interactively */ -}}
+{{- /*   - if config was previously set, reuse it */ -}}
+{{- /*   - if config was not previously set, prompt */ -}}
+{{- if $interactive -}}
+{{-   if hasKey . "name" -}}
+{{-     $name = .name -}}
+{{-   else -}}
+{{-     $name = promptString "name" $name -}}
+{{-   end -}}
+
+{{-   if hasKey . "email" -}}
+{{-     $email = .email -}}
+{{-   else if $interactive -}}
+{{-     $email = promptString "email" $email -}}
+{{-   end -}}
+
+{{-   if hasKey . "smile" -}}
+{{-     $smile = .smile -}}
+{{-   else -}}
+{{-     $smile = promptBool "smile" -}}
+{{-   end -}}
 {{- end -}}
 
 {{- if $interactive -}}
@@ -27,4 +42,5 @@
 data:
   name: {{ $name | quote }}
   email: {{ $email | quote }}
+  smile: {{ $smile }}
   vault: "xegovmwy3acc65sfscbzfje5fu"
