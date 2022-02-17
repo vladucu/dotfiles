@@ -5,13 +5,38 @@
 [templates]
 defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 
-#------------------------------------------------------------------------------
-# Sourced
-#------------------------------------------------------------------------------
+###################
+# Completions
+###################
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
 
+###################
+# Sourced
+###################
+
+# Alternatives to check
+# starship/starship
+# denysdovhan/spaceship-prompt
 [plugins.pure]
 github = "rossmacarthur/pure"
 use = ["{async,pure}.zsh"]
 
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
+
+###################
+# Deferred
+###################
+[plugins.zsh-you-should-use]
+github = "MichaelAquilina/zsh-you-should-use"
+apply = ["defer"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-syntax-highlighting]
+github = 'zsh-users/zsh-syntax-highlighting'
+apply = ["defer"]

@@ -1,4 +1,7 @@
 {{ if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env zsh
+
 # Source sheldon plugins
-eval "$(sheldon source)"
+# TODO Add -q flag once done boostraping
+eval "$(sheldon --config-file $HOME/.config/sheldon/plugins.toml source)"
 {{ end -}}
