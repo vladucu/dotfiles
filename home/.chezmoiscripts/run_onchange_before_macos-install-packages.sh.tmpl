@@ -19,25 +19,27 @@ set -eufo pipefail
 {{ $brews := list
     "chezmoi"
     "git"
+    "zsh"
 -}}
 
 {{ $casks := list
     "1password-cli"
+    "alacritty"
     "brave-browser"
     "google-chrome"
-
-    "alacritty"
 -}}
 
 {{ if .smile -}}
 {{  $brews = concat $brews (list
         "awscli"
+        "helm"
         "kubectl"
         "vault"
     ) -}}
 {{  $casks = concat $casks (list
         "aws-vault"
         "keybase"
+        "slack"
         "tunnelblick"
     ) -}}
 {{ end -}}
