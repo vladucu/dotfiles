@@ -1,0 +1,17 @@
+# Sheldon configuration file
+#
+# See https://rossmacarthur.github.io/sheldon/
+
+[templates]
+defer = { value = 'zsh-defer source "{{ file }}"', each = true }
+
+#------------------------------------------------------------------------------
+# Sourced
+#------------------------------------------------------------------------------
+
+[plugins.pure]
+github = "rossmacarthur/pure"
+use = ["{async,pure}.zsh"]
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
