@@ -31,9 +31,14 @@ set -eufo pipefail
 
 {{ if .smile -}}
 {{  $brews = concat $brews (list
+        "awscli"
+        "kubectl"
+        "vault"
     ) -}}
 {{  $casks = concat $casks (list
-       "keybase"
+        "aws-vault"
+        "keybase"
+        "tunnelblick"
     ) -}}
 {{ end -}}
 
