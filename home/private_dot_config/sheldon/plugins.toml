@@ -33,6 +33,16 @@ github = "romkatv/zsh-defer"
 github = "MichaelAquilina/zsh-you-should-use"
 apply = ["defer"]
 
+# Git aliases
+[plugins.zimfw-git]
+github = "zimfw/git"
+apply = ["defer"]
+
+# Misc utils: prefer less, ls aliases, colours, etc
+[plugins.zimfw-utility]
+github = "zimfw/utility"
+apply = ["defer"]
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
