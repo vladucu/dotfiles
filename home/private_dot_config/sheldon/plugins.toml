@@ -38,6 +38,10 @@ apply = ["defer"]
 github = "zimfw/git"
 apply = ["defer"]
 
+[plugins.zimfw-fzf]
+github = "zimfw/fzf"
+apply = ["defer"]
+
 # Misc utils: prefer less, ls aliases, colours, etc
 [plugins.zimfw-utility]
 github = "zimfw/utility"
