@@ -9,6 +9,7 @@
 {{/* Configs */}}
 {{- $name := "Vlad Vanca" -}}
 {{- $email := "vanca.vlad@gmail.com" -}}
+{{- $gpg_recipient := "9F2DA28BEC99BC96" -}}
 {{- "" -}}
 
 {{- /* If running interactively */ -}}
@@ -18,19 +19,25 @@
 {{-   if hasKey . "name" -}}
 {{-     $name = .name -}}
 {{-   else -}}
-{{-     $name = promptString "name" $name -}}
+{{-     $name = promptString "Name" $name -}}
 {{-   end -}}
 
 {{-   if hasKey . "email" -}}
 {{-     $email = .email -}}
 {{-   else if $interactive -}}
-{{-     $email = promptString "email" $email -}}
+{{-     $email = promptString "Email" $email -}}
+{{-   end -}}
+
+{{-   if hasKey . "gpg_recipient" -}}
+{{-     $gpg_recipient = .gpg_recipient -}}
+{{-   else if $interactive -}}
+{{-     $gpg_recipient = promptString "GPG Recipient" $gpg_recipient -}}
 {{-   end -}}
 
 {{-   if hasKey . "smile" -}}
 {{-     $smile = .smile -}}
 {{-   else -}}
-{{-     $smile = promptBool "smile" -}}
+{{-     $smile = promptBool "Smile" -}}
 {{-   end -}}
 {{- end -}}
 
@@ -44,3 +51,7 @@ data:
   email: {{ $email | quote }}
   smile: {{ $smile }}
   vault: "xegovmwy3acc65sfscbzfje5fu"
+
+encryption: "gpg"
+gpg:
+  recipient: {{ $gpg_recipient | quote }}
