@@ -17,21 +17,26 @@ set -eufo pipefail
 -}}
 
 {{ $brews := list
+    "bash"
     "bat"
     "chezmoi"
     "fd"
     "fzf"
     "git"
+    "gpg"
+    "less"
     "ripgrep"
     "sheldon"
     "zsh"
 -}}
 
 {{ $casks := list
+    "1password-beta"
     "1password-cli"
     "alacritty"
     "brave-browser"
     "google-chrome"
+    "iterm2"
     "karabiner-elements"
     "visual-studio-code"
 -}}
@@ -49,6 +54,7 @@ set -eufo pipefail
         "keybase"
         "slack"
         "tunnelblick"
+        "zoom"
     ) -}}
 {{ end -}}
 
