@@ -6,3 +6,13 @@
     ```sh
     sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply vladucu
     ```
+
+
+<details>
+    <summary>Notes</summary>
+
+### Import GPG keys
+- use GPG Keychain provided by gpg-suite OR command-line
+- mark it as ultimate
+
+</details>

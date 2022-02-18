@@ -8,6 +8,7 @@ defer = { value = 'zsh-defer source "{{ file }}"', each = true }
 ###################
 # Completions
 ###################
+
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
 
@@ -28,6 +29,12 @@ github = "romkatv/zsh-defer"
 ###################
 # Deferred
 ###################
+
+[plugins.path]
+local = "~/.local/share/chezmoi/home/shell"
+use = ["**/{path,keybinding,completion}.zsh"]
+apply = ["defer"]
+
 # Alternative djui/alias-tips
 [plugins.zsh-you-should-use]
 github = "MichaelAquilina/zsh-you-should-use"
@@ -56,6 +63,7 @@ apply = ["defer"]
 github = 'zsh-users/zsh-syntax-highlighting'
 apply = ["defer"]
 
+# Keep this after zsh-syntax-highlighting
 # TODO setup keyboard shortcuts
 # https://github.com/zsh-users/zsh-history-substring-search#usage
 [plugins.zsh-history-substring-search]
