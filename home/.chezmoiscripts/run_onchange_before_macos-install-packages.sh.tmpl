@@ -14,6 +14,7 @@ echo "Install common macOS packages"
 set -eufo pipefail
 
 {{ $taps := list
+    "homebrew/cask-versions"
 -}}
 
 {{ $brews := list
