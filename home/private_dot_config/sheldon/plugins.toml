@@ -30,7 +30,7 @@ github = "romkatv/zsh-defer"
 # Deferred
 ###################
 
-[plugins.path]
+[plugins.local]
 local = "~/.local/share/chezmoi/home/shell"
 use = ["**/{env,path,keybinding,completion}.zsh"]
 apply = ["defer"]
