@@ -34,10 +34,14 @@ set -eufo pipefail
 {{ $casks := list
     "1password-beta"
     "1password-cli"
+    "adobe-acrobat-reader"
     "alacritty"
+    "appcleaner"
+    "licecap"
     "brave-browser"
     "google-chrome"
     "gpg-suite"
+    "hiddenbar"
     "iterm2"
     "karabiner-elements"
     "raycast"
@@ -55,6 +59,7 @@ set -eufo pipefail
 {{  $casks = concat $casks (list
         "aws-vault"
         "docker"
+        "loom"
         "keybase"
         "slack"
         "tunnelblick"
