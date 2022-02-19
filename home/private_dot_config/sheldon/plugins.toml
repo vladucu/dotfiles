@@ -54,6 +54,10 @@ apply = ["defer"]
 github = "zimfw/utility"
 apply = ["defer"]
 
+[plugins.zimfw-exa]
+github = "zimfw/exa"
+apply = ["defer"]
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{ name }}.zsh"]
