@@ -32,7 +32,7 @@ github = "romkatv/zsh-defer"
 
 [plugins.path]
 local = "~/.local/share/chezmoi/home/shell"
-use = ["**/{path,keybinding,completion}.zsh"]
+use = ["**/{env,path,keybinding,completion}.zsh"]
 apply = ["defer"]
 
 # Alternative djui/alias-tips
