@@ -18,3 +18,5 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # Link Phoenix debug page stack traces to VSCode
 # https://angelika.me/2020/03/22/link-phoenix-debug-page-stack-trace-to-your-editor
 export PLUG_EDITOR="vscode://file/__FILE__:__LINE__"
+
+export CODE=$HOME/code

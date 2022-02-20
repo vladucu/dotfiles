@@ -3,8 +3,9 @@
 # See https://rossmacarthur.github.io/sheldon/
 
 [templates]
-defer = { value = 'zsh-defer source "{{ file }}"', each = true }
-defer-more = { value = 'zsh-defer -t 0.5 source "{{ file }}"', each = true }
+
+defer = { value = 'zsh-defer source "{{ "{{ file }}" }}"', each = true }
+defer-more = { value = 'zsh-defer -t 0.5 source "{{ "{{ file }}" }}"', each = true }
 
 ###################
 # Completions
@@ -68,9 +69,13 @@ apply = ["defer"]
 github = "zimfw/exa"
 apply = ["defer"]
 
+[plugins.z]
+github = "rupa/z"
+apply = ["defer"]
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
-use = ["{{ name }}.zsh"]
+use = ["{{- "{{ name }}.zsh" -}}"]
 apply = ["defer"]
 
 [plugins.zsh-syntax-highlighting]
@@ -90,5 +95,14 @@ apply = ["defer"]
 # https://github.com/zsh-users/zsh-history-substring-search#usage
 [plugins.zsh-history-substring-search]
 github = 'zsh-users/zsh-history-substring-search'
-use = ["{{ name }}.zsh"]
+use = ["{{- "{{ name }}.zsh" -}}"]
 apply = ["defer-more"]
+
+{{ if .smile -}}
+
+[plugins.smile]
+local = "~/SpiderOak Hive/Shared/smile"
+use = ["dot_env.local.zsh"]
+apply = ["defer"]
+
+{{- end }}
