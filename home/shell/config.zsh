@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Keep 10000000 lines of history within the shell and save it to ~/.zsh_history:
-HISTFILE=$ZSH/.zsh_history
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
 
