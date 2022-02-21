@@ -1,0 +1,17 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Install volta
+# https://docs.volta.sh/
+
+printf "${green}[51 - macOS] ${reset}"
+{{- if or (lt 31 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_VOLTA") }}
+echo "Skip installing volta"
+exit 0
+{{ else }}
+echo "Install volta"
+{{- end }}
+
+curl https://get.volta.sh | bash -s -- --skip-setup
+
+{{ end -}}
