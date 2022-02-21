@@ -55,6 +55,7 @@ set -eufo pipefail
 {{ if .smile -}}
 {{  $brews = concat $brews (list
         "awscli"
+        "docker-credential-helper-ecr"
         "helm"
         "kubectl"
         "vault"
