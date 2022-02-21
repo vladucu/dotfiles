@@ -73,6 +73,11 @@ apply = ["defer"]
 github = "rupa/z"
 apply = ["defer"]
 
+[plugins.asdf]
+local = "{{ output "zsh" "-c" "echo $(brew --prefix asdf)/libexec" | trim }}"
+use = ["{{- "{{ name }}.sh" -}}"]
+apply = ["defer"]
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{- "{{ name }}.zsh" -}}"]
