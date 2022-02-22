@@ -24,4 +24,7 @@
 ### SpiderOak One Backup
 - download & install manually if it fails throw `brew`
 
+### VS Code
+- open and enable _Sync Settings_ signing in with Github.
+
 </details>
