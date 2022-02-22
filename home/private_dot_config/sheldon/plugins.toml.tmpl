@@ -25,6 +25,10 @@ github = "zsh-users/zsh-completions"
 github = "rossmacarthur/pure"
 use = ["{async,pure}.zsh"]
 
+[plugins.env]
+local = "~/.local/share/chezmoi/home/shell"
+use = ["**/env.zsh"]
+
 [plugins.path]
 local = "~/.local/share/chezmoi/home/shell"
 use = ["**/path.zsh"]
@@ -43,7 +47,7 @@ apply = ["defer"]
 
 [plugins.local]
 local = "~/.local/share/chezmoi/home/shell"
-use = ["**/{env,keybinding,completion}.zsh"]
+use = ["**/{keybinding,completion}.zsh"]
 apply = ["defer"]
 
 # Alternative djui/alias-tips
