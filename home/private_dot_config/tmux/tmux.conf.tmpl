@@ -19,12 +19,6 @@ set -g bell-action none
 # Keep windows around after they exit
 set -g remain-on-exit on
 
-# Faster command sequence
-set -s escape-time 0
-
-# Set history limit to 1.000.000 lines
-set -g history-limit 1000000
-
 # Start windows and pane numbering with index 1 instead of 0
 set-option -g base-index 1
 
@@ -34,26 +28,18 @@ set -g renumber-windows on
 # Automatically set window title
 set -g automatic-rename on
 
+# Titles (window number, program name, active (or not)
+set-option -g set-titles on
+
 # Use vim keybindings in copy mode
 setw -g mode-keys vi
 
-# Focus events enabled for terminals that support them
-set -g focus-events on
-
-# Change the prefix key to C-f
-set -g prefix C-f
-unbind C-b
-bind C-f send-prefix
+# Change the prefix key to C-a
+set -g prefix C-a
 
 # Split window horiziontally and vertically. Also open them in the same directory.
 bind-key v split-window -h -c '#{pane_current_path}'
 bind-key s split-window -v -c '#{pane_current_path}'
-
-# Reload tmux config
-bind r source-file ~/.tmux.conf \; display "Reloaded!"
-
-# Toogle last window by hitting again C-f
-bind-key C-f last-window
 
 # Destroy the current pane
 bind-key x kill-pane
@@ -91,15 +77,22 @@ bind F set -w window-size
 bind m set monitor-activity
 bind y set synchronize-panes\; display 'synchronize-panes #{?synchronize-panes,on,off}'
 
-# Create a single default session - because a session is created here, tmux
-# should be started with "tmux attach" rather than "tmux new"
-new -d -s0 -nirssi 'exec irssi'
-set -t0:0 monitor-activity on
-set  -t0:0 aggressive-resize on
-neww -d -ntodo 'exec emacs ~/TODO'
-setw -t0:1 aggressive-resize on
-neww -d -nmutt 'exec mutt'
-setw -t0:2 aggressive-resize on
-neww -d
-neww -d
-neww -d
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-sessionist'
+# Themes
+# set -g @plugin 'dracula/tmux'
+
+set -g @dracula-plugins "battery network-bandwidth time"
+# set -g @dracula-show-powerline true
+set -g @dracula-show-flags true
+# set -g @dracula-show-fahrenheit false
+set -g @dracula-day-month true
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+{{ if (eq .chezmoi.arch "arm64") -}}
+# This line is needed for M1 https://github.com/tmux-plugins/tpm/issues/203#issuecomment-858036483
+set-environment -g PATH "/opt/homebrew/bin:/usr/local/bin:/bin:/usr/bin"
+{{- end }}
+run '~/.tmux/plugins/tpm/tpm'

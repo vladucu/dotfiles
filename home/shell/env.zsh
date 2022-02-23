@@ -5,7 +5,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Less recursive by default
-export LESS=-R
+export LESS=-eFR
 
 # You Should Use
 # Plugin: MichaelAquilina/zsh-you-should-use
