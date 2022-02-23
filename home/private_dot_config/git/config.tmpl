@@ -1,14 +1,31 @@
 [color]
-	# Use colors in Git commands that are capable of colored output when
-	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
-	ui = auto
+    # Use colors in Git commands that are capable of colored output when
+    # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+    ui = auto
+
 [commit]
-	gpgsign = true
+    gpgsign = true
+
 [core]
-	editor = vim
-	excludesfile = ~/.config/git/ignore
-	whitespace = trailing-space,space-before-tab
+    editor = vim
+    excludesfile = ~/.config/git/ignore
+    pager = delta
+    whitespace = trailing-space,space-before-tab
+
+[delta]
+    navigate = true
+    side-by-side = true
+
+[diff]
+    colorMoved = default
+
+[interactive]
+    diffFilter = delta --color-only
+
+[merge]
+    conflictstyle = diff3
+
 [user]
-	name = {{ .name }}
-	email = {{ .email }}
-	signinkey = {{ .gpg_recipient }}
+    name = {{ .name }}
+    email = {{ .email }}
+    signinkey = {{ .gpg_recipient }}
