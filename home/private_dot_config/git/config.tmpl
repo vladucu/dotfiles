@@ -19,6 +19,11 @@
 [diff]
     colorMoved = default
 
+{{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") -}}
+[gpg]
+    program = /opt/homebrew/bin/pinentry-mac
+{{- end }}
+
 [interactive]
     diffFilter = delta --color-only
 
