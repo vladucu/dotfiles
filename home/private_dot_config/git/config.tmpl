@@ -20,8 +20,8 @@
     colorMoved = default
 
 {{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") -}}
-[gpg]
-    program = /opt/homebrew/bin/pinentry-mac
+#[gpg]
+#    program = /opt/homebrew/bin/pinentry-mac
 {{- end }}
 
 [interactive]
