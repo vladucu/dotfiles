@@ -13,6 +13,9 @@ echo "Install common macOS packages"
 
 set -eufo pipefail
 
+# Ensure brew is available. Covers the initial run of chezmoi when dotfiles have not been created yet.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 {{ $taps := list
     "homebrew/cask-versions"
     "homebrew/cask-fonts"
