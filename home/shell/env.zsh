@@ -20,3 +20,5 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PLUG_EDITOR="vscode://file/__FILE__:__LINE__"
 
 export CODE=$HOME/code
+
+export EDITOR=nvim
