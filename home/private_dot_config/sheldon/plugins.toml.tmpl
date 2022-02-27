@@ -3,7 +3,6 @@
 # See https://rossmacarthur.github.io/sheldon/
 
 [templates]
-
 defer = { value = 'zsh-defer source "{{ "{{ file }}" }}"', each = true }
 defer-more = { value = 'zsh-defer -t 0.5 source "{{ "{{ file }}" }}"', each = true }
 
@@ -22,7 +21,7 @@ github = "zsh-users/zsh-completions"
 # starship/starship
 # denysdovhan/spaceship-prompt
 [plugins.pure]
-github = "rossmacarthur/pure"
+github = "sindresorhus/pure"
 use = ["{async,pure}.zsh"]
 
 [plugins.env]
@@ -58,15 +57,10 @@ apply = ["defer"]
 # Git aliases
 [plugins.zimfw-git]
 github = "zimfw/git"
-apply = ["defer"]
+apply = ["defer", "fpath", "path"]
 
 [plugins.zimfw-fzf]
 github = "zimfw/fzf"
-apply = ["defer"]
-
-# Misc utils: prefer less, ls aliases, colours, etc
-[plugins.zimfw-utility]
-github = "zimfw/utility"
 apply = ["defer"]
 
 [plugins.zimfw-exa]
