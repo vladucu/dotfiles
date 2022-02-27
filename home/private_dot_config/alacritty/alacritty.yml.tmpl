@@ -179,6 +179,12 @@ window:
   # it is recommended to set `use_thin_strokes` to `false`.
   #use_thin_strokes: true
 
+font:
+  normal:
+    family: 'Hack Nerd Font Mono'
+    # family: 'FiraCode Nerd Font Mono'
+  size: 12.0
+
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
 
@@ -326,6 +332,43 @@ window:
   # regardless of their background color.
   #transparent_background_colors: false
 
+
+# Snazzy theme
+# https://github.com/alebelcor/alacritty-snazzy
+draw_bold_text_with_bright_colors: true
+
+colors:
+  primary:
+    background: '#282a36'
+    foreground: '#eff0eb'
+
+  cursor:
+    cursor: '#97979b'
+
+  selection:
+    text:       '#282a36'
+    background: '#feffff'
+
+  normal:
+    black:   '#282a36'
+    red:     '#ff5c57'
+    green:   '#5af78e'
+    yellow:  '#f3f99d'
+    blue:    '#57c7ff'
+    magenta: '#ff6ac1'
+    cyan:    '#9aedfe'
+    white:   '#f1f1f0'
+
+  bright:
+    black:   '#686868'
+    red:     '#ff5c57'
+    green:   '#5af78e'
+    yellow:  '#f3f99d'
+    blue:    '#57c7ff'
+    magenta: '#ff6ac1'
+    cyan:    '#9aedfe'
+    white:   '#eff0eb'
+
 # Bell
 #
 # The bell is rung every time the BEL control character is received.
@@ -428,17 +471,17 @@ live_config_reload: true
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-{{ if (eq .chezmoi.os "darwin") }}
-{{   if (eq .chezmoi.arch "arm64") }}
- program: /bin/zsh
- args:
+{{- if (eq .chezmoi.os "darwin") -}}
+{{-   if (eq .chezmoi.arch "arm64") }}
+  program: /bin/zsh
+  args:
    - --login
 {{else}}
- program: /usr/local/bin/zsh
- args:
+  program: /usr/local/bin/zsh
+  args:
    - --login
-{{   end }}
-{{ end }}
+{{-   end   -}}
+{{- end }}
 
 # Startup directory
 #

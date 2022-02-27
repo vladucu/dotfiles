@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# Keep 10000000 lines of history within the shell and save it to ~/.zsh_history:
+# Keep 10,000,000 lines of history within the shell and save it to ~/.zsh_history:
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000000
 SAVEHIST=10000000
@@ -35,5 +35,13 @@ setopt NO_SHARE_HISTORY
 setopt HIST_FIND_NO_DUPS
 # Don't write duplicate entries in the history file.
 setopt HIST_SAVE_NO_DUPS
+
+# Move cursor to end of word if a full completion is inserted.
+setopt ALWAYS_TO_END
 # Case-insensitive globbing (used in pathname expansion)
 unsetopt CASE_GLOB
+# Don't beep on ambiguous completions.
+setopt NO_LIST_BEEP
+
+# Case-insesitive matching or partial word matching
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' '+r:|?=**'

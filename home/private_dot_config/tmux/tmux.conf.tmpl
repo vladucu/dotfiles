@@ -1,3 +1,20 @@
+# Hierarchy:
+#  Server
+#  ㄴSession
+#    ㄴWindow
+#      ㄴPane
+
+# Options:
+# - Session options (set-option [-g])
+# - Window options (set-window-option [-g])
+
+##############################################################################
+# Session options
+##############################################################################
+
+# Change the prefix key to C-a
+set-option -g prefix C-a
+
 # Some tweaks to the status line
 set -g status-right "%H:%M"
 set -g window-status-current-style "underscore"
@@ -7,11 +24,11 @@ set -g window-status-current-style "underscore"
 set -g status-bg red
 %endif
 
-# Enable RGB colour if running in xterm(1)
-set-option -sa terminal-overrides ",*256color*:Tc:sitm=\E[3m:RGB"
+# 256-color terminal
+set-option -g default-terminal "tmux-256color"
 
-# Change the default $TERM to tmux-256color
-set -g default-terminal "tmux-256color"
+# Add truecolor support (tmux info | grep Tc)
+set-option -sa terminal-overrides ",*256color*:Tc:sitm=\E[3m:RGB"
 
 # No bells at all
 set -g bell-action none
@@ -33,9 +50,6 @@ set-option -g set-titles on
 
 # Use vim keybindings in copy mode
 setw -g mode-keys vi
-
-# Change the prefix key to C-a
-set -g prefix C-a
 
 # Split window horiziontally and vertically. Also open them in the same directory.
 bind-key v split-window -h -c '#{pane_current_path}'
@@ -76,6 +90,10 @@ bind F set -w window-size
 # Keys to toggle monitoring activity in a window and the synchronize-panes option
 bind m set monitor-activity
 bind y set synchronize-panes\; display 'synchronize-panes #{?synchronize-panes,on,off}'
+
+##############################################################################
+# TPM
+##############################################################################
 
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
