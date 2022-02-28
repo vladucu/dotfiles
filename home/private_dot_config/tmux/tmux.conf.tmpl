@@ -12,17 +12,11 @@
 # Session options
 ##############################################################################
 
-# Change the prefix key to C-a
-set-option -g prefix C-a
+# History
+set-option -g history-limit 102400
 
-# Some tweaks to the status line
-set -g status-right "%H:%M"
-set -g window-status-current-style "underscore"
-
-# If running inside tmux ($TMUX is set), then change the status line to red
-%if #{TMUX}
-set -g status-bg red
-%endif
+# Repeat time limit (ms)
+set-option -g repeat-time 500
 
 # 256-color terminal
 set-option -g default-terminal "tmux-256color"
@@ -31,25 +25,40 @@ set-option -g default-terminal "tmux-256color"
 set-option -sa terminal-overrides ",*256color*:Tc:sitm=\E[3m:RGB"
 
 # No bells at all
-set -g bell-action none
-
-# Keep windows around after they exit
-set -g remain-on-exit on
+set-option -g bell-action none
 
 # Start windows and pane numbering with index 1 instead of 0
 set-option -g base-index 1
+set-option -g pane-base-index 1
 
 # When a window is closed in a session, automatically renumber the other windows in numerical order.
-set -g renumber-windows on
+set-option -g renumber-windows on
 
 # Automatically set window title
-set -g automatic-rename on
+set-option -g automatic-rename on
 
 # Titles (window number, program name, active (or not)
 set-option -g set-titles on
 
+# Key binding in the status line (bind-key :)
+set-option -g status-keys emacs
+
+# Mouse
+set-option -g mouse on
+
+##############################################################################
+# Window options
+##############################################################################
+
 # Use vim keybindings in copy mode
-setw -g mode-keys vi
+set-window-option -g mode-keys vi
+
+##############################################################################
+# Key bindings
+##############################################################################
+
+# Change the prefix key to C-a
+set-option -g prefix C-a
 
 # Split window horiziontally and vertically. Also open them in the same directory.
 bind-key v split-window -h -c '#{pane_current_path}'
@@ -58,55 +67,104 @@ bind-key s split-window -v -c '#{pane_current_path}'
 # Destroy the current pane
 bind-key x kill-pane
 
-# Map Vi movement keys as pane movement keys
-bind h select-pane -L
-bind j select-pane -D
-bind k select-pane -U
-bind l select-pane -R
+# Moving windows
+bind-key -r > swap-window -d -t :+
+bind-key -r < swap-window -d -t :-
 
-# Turn the mouse on, but without copy mode dragging
-set -g mouse on
-unbind -n MouseDrag1Pane
-unbind -Tcopy-mode MouseDrag1Pane
+# Pane movement keys
+bind-key h select-pane -L
+bind-key j select-pane -D
+bind-key k select-pane -U
+bind-key l select-pane -R
+bind-key tab select-pane -t :.+
+bind-key btab select-pane -t :.-
+
+# Synchronize panes
+bind-key * set-window-option synchronize-pane\; display 'synchronize-panes #{?synchronize-panes,on,off}'
+
+# Copy-mode
+bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
+bind-key y send-keys C-l C-a \; run-shell 'sleep 0.25' \;\
+  copy-mode \; send-keys -X begin-selection \;\
+  send-keys -X -N 100 'cursor-down' \;\
+  send-keys -X 'end-of-line' \;\
+  send-keys -X 'previous-word' \;\
+  send-keys -X 'next-word-end' \;\
+  send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" \;\
+  send-keys C-e \;\
+  display-message "Line copied"
+
+# Clear scrollback buffer
+bind-key C-l send-keys C-l \; clear-history
 
 # Some extra key bindings to select higher numbered windows
-bind F1 selectw -t:10
-bind F2 selectw -t:11
-bind F3 selectw -t:12
-bind F4 selectw -t:13
-bind F5 selectw -t:14
-bind F6 selectw -t:15
-bind F7 selectw -t:16
-bind F8 selectw -t:17
-bind F9 selectw -t:18
-bind F10 selectw -t:19
-bind F11 selectw -t:20
-bind F12 selectw -t:21
+bind-key F1 selectw -t:10
+bind-key F2 selectw -t:11
+bind-key F3 selectw -t:12
+bind-key F4 selectw -t:13
+bind-key F5 selectw -t:14
+bind-key F6 selectw -t:15
+bind-key F7 selectw -t:16
+bind-key F8 selectw -t:17
+bind-key F9 selectw -t:18
+bind-key F10 selectw -t:19
+bind-key F11 selectw -t:20
+bind-key F12 selectw -t:21
 
 # A key to toggle between smallest and largest sizes if a window is visible in
 # multiple places
-bind F set -w window-size
+bind-key F set-window-option window-size
 
-# Keys to toggle monitoring activity in a window and the synchronize-panes option
-bind m set monitor-activity
-bind y set synchronize-panes\; display 'synchronize-panes #{?synchronize-panes,on,off}'
+##############################################################################
+# Decoration (256-color)
+##############################################################################
+
+# TODO revise this
+set-option -g status-justify left
+set-option -g status-left '#[bg=colour72] #[bg=colour237] #[bg=colour236] #[bg=colour235]#[fg=colour185] #h #[bg=colour236] '
+set-option -g status-left-length 16
+set-option -g status-bg colour237
+set-option -g status-right '#{?pane_synchronized, #[fg=colour196]*SYNC*#[default],}#[bg=colour236] #[bg=colour235]#[fg=colour185] #(date "+%a %b %d %H:%M") #[bg=colour236] #[bg=colour237] #[bg=colour72] '
+set-option -g status-interval 60
+
+set-option -g pane-border-status bottom
+set-option -g pane-border-format "#{pane_index} #{pane_current_command}"
+set-option -g pane-active-border-style fg=colour245
+set-option -g pane-border-style fg=colour243
+
+set-window-option -g window-status-format '#[bg=colour238]#[fg=colour107] #I #[bg=colour239]#[fg=colour110] #[bg=colour240]#W#[bg=colour239]#[fg=colour195]#F#[bg=colour238] '
+set-window-option -g window-status-current-format '#[bg=colour236]#[fg=colour215] #I #[bg=colour235]#[fg=colour167] #[bg=colour234]#W#[bg=colour235]#[fg=colour195]#F#[bg=colour236] '
+
+# set-window-option -g window-style 'bg=colour238'
+# set-window-option -g window-active-style 'bg=colour237'
+
+##############################################################################
+# fzf integration
+##############################################################################
+# TODO
+# Tmux completion
+bind-key t run-shell 'tmux send-keys -t #{pane_id} "$(tmux-fzf-words)"'
+bind-key T run-shell 'tmux send-keys -t #{pane_id} "$(tmux-fzf-words --all)"'
+
+# Select pane
+bind-key 0 run-shell "tmux-fzf-panes || :"
 
 ##############################################################################
 # TPM
 ##############################################################################
 
 # List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-sessionist'
+set-option -g @plugin 'tmux-plugins/tpm'
+set-option -g @plugin 'tmux-plugins/tmux-sensible'
+set-option -g @plugin 'tmux-plugins/tmux-sessionist'
 # Themes
 # set -g @plugin 'dracula/tmux'
 
-set -g @dracula-plugins "battery network-bandwidth time"
-# set -g @dracula-show-powerline true
-set -g @dracula-show-flags true
-# set -g @dracula-show-fahrenheit false
-set -g @dracula-day-month true
+# set-option -g @dracula-plugins "battery network-bandwidth time"
+# set-option -g @dracula-show-powerline true
+# set-option -g @dracula-show-flags true
+# set-option -g @dracula-show-fahrenheit false
+# set-option -g @dracula-day-month true
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 {{ if (eq .chezmoi.arch "arm64") -}}
