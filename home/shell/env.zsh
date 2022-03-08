@@ -22,3 +22,6 @@ export PLUG_EDITOR="vscode://file/__FILE__:__LINE__"
 export CODE=$HOME/code
 
 export EDITOR=nvim
+
+# https://github.com/x-motemen/ghq#environment-variables
+export GHQ_ROOT=$CODE
