@@ -1,0 +1,33 @@
+-- Official docs: https://www.postgresql.org/docs/14/app-psql.html
+-- Others
+-- https://www.digitalocean.com/community/tutorials/how-to-customize-the-postgresql-prompt-with-psqlrc-on-ubuntu-14-04
+-- https://thoughtbot.com/blog/an-explained-psqlrc
+
+-- Hide output from .psqlrc when starting psql.
+\set QUIET 1
+
+-- Display query times.
+\timing on
+
+-- Display null values as [null] instead of blank space.
+\pset null '[null]'
+
+-- Complete SQL keywords as uppercase.
+\set COMP_KEYWORD_CASE upper
+
+-- Set verbosity of error reports. Options “default”, “verbose”, or “terse”.
+\set VERBOSITY verbose
+
+\set HISTFILE ~/.psql_history-:DBNAME
+\set HISTSIZE 65536
+-- Ignore duplicates in history.
+\set HISTCONTROL ignoredups
+
+-- Prompt config
+\set PROMPT1 '%[%033[1m%]%m %n@%/%R%[%033[0m%]%# '
+\set PROMPT2 '[more] %R > '
+
+-- Switch to expanded table format.
+\x auto
+
+\set QUIET 0
