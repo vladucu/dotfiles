@@ -9,6 +9,8 @@
 {{/* Configs */}}
 {{- $name := "Vlad Vanca" -}}
 {{- $email := "vanca.vlad@gmail.com" -}}
+{{- $computer_name := default "vladucu's macbook" (env "CM_computer_name") -}}
+{{- $hostname := default "vladucu" (env "CM_hostname") -}}
 {{- $gpg_recipient := "9F2DA28BEC99BC96" -}}
 {{- "" -}}
 
@@ -26,6 +28,18 @@
 {{-     $email = .email -}}
 {{-   else if $interactive -}}
 {{-     $email = promptString "Email" $email -}}
+{{-   end -}}
+
+{{-   if hasKey . "computer_name" -}}
+{{-     $computer_name = .computer_name -}}
+{{-   else if $interactive -}}
+{{-     $computer_name = promptString "Computer name" $computer_name -}}
+{{-   end -}}
+
+{{-   if hasKey . "hostname" -}}
+{{-     $hostname = .hostname -}}
+{{-   else if $interactive -}}
+{{-     $hostname = promptString "Host name" $hostname -}}
 {{-   end -}}
 
 {{-   if hasKey . "gpg_recipient" -}}
@@ -49,6 +63,8 @@
 data:
   name: {{ $name | quote }}
   email: {{ $email | quote }}
+  computer_name: {{ $computer_name | quote }}
+  hostname: {{ $hostname | quote }}
   smile: {{ $smile }}
   vault: "xegovmwy3acc65sfscbzfje5fu"
   gpg_recipient: {{ $gpg_recipient | quote }}
