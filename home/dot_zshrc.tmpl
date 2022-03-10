@@ -1,6 +1,9 @@
 {{ if eq .chezmoi.os "darwin" -}}
 #!/usr/bin/env zsh
 
+# Uncomment to profile startup
+zmodload zsh/zprof
+
 {{ include "shell/init.zsh" }}
 
 # Source sheldon plugins

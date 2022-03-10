@@ -76,6 +76,14 @@ local = "{{ output "zsh" "-c" "echo $(brew --prefix asdf)/libexec" | trim }}"
 use = ["{{- "{{ name }}.sh" -}}"]
 apply = ["defer"]
 
+[plugins.compinit]
+local = "~/.local/share/chezmoi/home/shell"
+apply = ["defer"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+apply = ["defer"]
+
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{- "{{ name }}.zsh" -}}"]
@@ -83,11 +91,6 @@ apply = ["defer"]
 
 [plugins.zsh-syntax-highlighting]
 github = 'zsh-users/zsh-syntax-highlighting'
-apply = ["defer"]
-
-# This works best if it is placed last.
-[plugins.compinit]
-local = "~/.local/share/chezmoi/home/shell"
 apply = ["defer"]
 
 ###################
