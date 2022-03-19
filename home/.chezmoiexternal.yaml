@@ -8,6 +8,7 @@
 .config/nvim:
   type: archive
   url: https://github.com/NvChad/NvChad/archive/master.tar.gz
-  exact: true
+  # Related issues https://github.com/twpayne/chezmoi/issues/1614#issuecomment-966524408
+  # exact: true
   stripComponents: 1
   refreshPeriod: 168h
