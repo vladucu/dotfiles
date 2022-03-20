@@ -1,3 +1,3 @@
 #!/usr/bin/env zsh
 
-path+=$HOME/bin
+path+=$HOME/.local/bin
