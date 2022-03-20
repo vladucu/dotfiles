@@ -3,7 +3,7 @@
 
 printf "${green}[90 - macOS preferences] ${reset}"
 
-# Inspiration 
+# Inspiration
 # https://macos-defaults.com/#%F0%9F%99%8B-what-s-a-defaults-command
 # https://mths.be/macos
 
@@ -55,6 +55,10 @@ defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+# Use Stacks on desktop
+defaults write com.apple.finder DesktopViewSettings -dict-add GroupBy -string "Kind"
+defaults write com.apple.finder FXPreferredGroupBy -string "Date Modified"
 
 # Show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
@@ -124,38 +128,38 @@ dockutil --remove all
 dockutil --add "/Applications/Alacritty.app"
 dockutil --add "/Applications/Brave Browser.app"
 dockutil --add "/Applications/Google Chrome.app"
-dockutil --add "" --type spacer --section apps 
+dockutil --add "" --type spacer --section apps
 dockutil --add "/Applications/Discord.app"
 dockutil --add "/Applications/Telegram.app"
-dockutil --add "" --type spacer --section apps 
+dockutil --add "" --type spacer --section apps
 
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 
 for app in "Activity Monitor" \
-	"Address Book" \
-	"Calendar" \
-	"cfprefsd" \
-	"Contacts" \
-	"Dock" \
-	"Finder" \
-	"Google Chrome Canary" \
-	"Google Chrome" \
-	"Mail" \
-	"Messages" \
-	"Opera" \
-	"Photos" \
-	"Safari" \
-	"SizeUp" \
-	"Spectacle" \
-	"SystemUIServer" \
-	"Terminal" \
-	"Transmission" \
-	"Tweetbot" \
-	"Twitter" \
-	"iCal"; do
-	killall "${app}" &> /dev/null
+    "Address Book" \
+    "Calendar" \
+    "cfprefsd" \
+    "Contacts" \
+    "Dock" \
+    "Finder" \
+    "Google Chrome Canary" \
+    "Google Chrome" \
+    "Mail" \
+    "Messages" \
+    "Opera" \
+    "Photos" \
+    "Safari" \
+    "SizeUp" \
+    "Spectacle" \
+    "SystemUIServer" \
+    "Terminal" \
+    "Transmission" \
+    "Tweetbot" \
+    "Twitter" \
+    "iCal"; do
+    killall "${app}" &> /dev/null
 done
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
