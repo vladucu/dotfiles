@@ -19,8 +19,8 @@ local sources = {
 
    -- Elixir
    diagnostics.credo,
-   -- formatting.mix,
-   formatting.surface,
+   formatting.mix,
+   -- formatting.surface,
 
    -- Rust
    formatting.rustfmt,
