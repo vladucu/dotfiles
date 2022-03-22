@@ -7,6 +7,7 @@
 {{ include "shell/init.zsh" }}
 
 # Source sheldon plugins
-# TODO Add -q flag once done boostraping
-eval "$(sheldon source)"
+{{  if lookPath "sheldon" -}}
+{{    output "sheldon" "source" | trim }}
+{{  end -}}
 {{ end -}}
