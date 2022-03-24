@@ -4,6 +4,8 @@
 {{/* Boolean feature tags */}}
 {{/* If this machine should have Smile secrets from 1Password */}}
 {{- $smile := false -}}
+{{/* Multi-user installation. Will use a dedicated user for brew for better support for multi-user. */}}
+{{- $multi_user := true -}}
 {{- "" -}}
 
 {{/* Configs */}}
@@ -53,6 +55,12 @@
 {{-   else -}}
 {{-     $smile = promptBool "Smile" -}}
 {{-   end -}}
+
+{{-   if hasKey . "multi_user" -}}
+{{-     $multi_user = .multi_user -}}
+{{-   else -}}
+{{-     $smile = promptBool "Multi-user support" -}}
+{{-   end -}}
 {{- end -}}
 
 {{- if $interactive -}}
@@ -66,6 +74,7 @@ data:
   computer_name: {{ $computer_name | quote }}
   hostname: {{ $hostname | quote }}
   smile: {{ $smile }}
+  multi_user: {{ $multi_user }}
   vault: "xegovmwy3acc65sfscbzfje5fu"
   gpg_recipient: {{ $gpg_recipient | quote }}
 
