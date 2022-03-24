@@ -11,12 +11,18 @@ exit 0
 echo "Install Homebrew"
 {{- end }}
 
-if command -v brew >/dev/null 2>&1; then
+{{  if lookPath "brew" -}}
   echo "Homebrew already installed, skipping."
   exit 0
-fi
+{{ end -}}
 
 echo "Installing Homebrew..."
+
+{{ if .multi_user -}}
+USER="ops"
+{{ else }}
+USER=$(whoami)
+{{ end -}}
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 

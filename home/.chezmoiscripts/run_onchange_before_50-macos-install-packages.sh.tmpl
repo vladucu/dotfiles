@@ -15,6 +15,9 @@ set -eufo pipefail
 
 # Ensure brew is available. Covers the initial run of chezmoi when dotfiles have not been created yet.
 eval "$(/opt/homebrew/bin/brew shellenv)"
+{{ if .multi_user -}}
+alias brew='sudo -Hu ops -i brew'
+{{- end }}
 
 {{ $taps := list
     "homebrew/cask-versions"
@@ -91,7 +94,10 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
     ) -}}
 {{ end -}}
 
-brew bundle --no-lock --file=/dev/stdin <<EOF || :
+sh -c "echo $(which brew)"
+
+cat <<EOF >/tmp/Brews
+#!/bin/sh
 {{ range ($taps | sortAlpha | uniq) -}}
 tap "{{ . }}"
 {{ end }}
@@ -100,7 +106,9 @@ brew "{{ . }}"
 {{ end }}
 {{ range ($casks | sortAlpha | uniq) -}}
 cask "{{ . }}"
-{{ end }}
+{{ end -}}
 EOF
+
+brew bundle --no-lock --file=/tmp/Brews
 
 {{ end -}}
