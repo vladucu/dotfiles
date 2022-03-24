@@ -5,6 +5,10 @@
 {{/* If this machine should have Smile secrets from 1Password */}}
 {{- $smile := false -}}
 {{/* Multi-user installation. Will use a dedicated user for brew for better support for multi-user. */}}
+{{/* Sources
+https://www.codejam.info/2021/11/homebrew-multi-user.html
+https://stackoverflow.com/a/70012833
+ */}}
 {{- $multi_user := true -}}
 {{- "" -}}
 
