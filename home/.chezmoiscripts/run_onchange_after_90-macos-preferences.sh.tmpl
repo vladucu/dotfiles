@@ -118,6 +118,9 @@ defaults write com.apple.dock autohide-time-modifier -float 0
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
+# Don't rearange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -int 0
+
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
 

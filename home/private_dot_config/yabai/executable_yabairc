@@ -1,0 +1,57 @@
+#!/usr/bin/env sh
+
+# global settings
+yabai -m config mouse_follows_focus          off
+yabai -m config focus_follows_mouse          off
+yabai -m config window_origin_display        default
+yabai -m config window_placement             second_child
+yabai -m config window_topmost               off
+yabai -m config window_shadow                on
+yabai -m config window_opacity               off
+yabai -m config active_window_opacity        1.0
+yabai -m config normal_window_opacity        0.90
+yabai -m config window_border                off
+yabai -m config window_border_width          6
+yabai -m config active_window_border_color   0xff775759
+yabai -m config normal_window_border_color   0xff555555
+yabai -m config insert_feedback_color        0xffd75f5f
+yabai -m config split_ratio                  0.50
+yabai -m config auto_balance                 off
+yabai -m config mouse_modifier               fn
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+yabai -m config mouse_drop_action            swap
+
+# general space settings
+yabai -m config layout                       bsp
+yabai -m config top_padding                  2
+yabai -m config bottom_padding               2
+yabai -m config left_padding                 2
+yabai -m config right_padding                2
+yabai -m config window_gap                   06
+
+# mission-control desktop labels
+yabai -m space 1 --label code
+yabai -m space 2 --label communications
+yabai -m space 3 --label web
+yabai -m space 4 --label media
+yabai -m space 5 --label social
+yabai -m space 6 --label other
+
+# window rules
+yabai -m rule --add app="^Code$" space=code
+yabai -m rule --add app="^Slack$" space=communications
+yabai -m rule --add app="Brave" space=web
+yabai -m rule --add app="^Spotify$" space=media
+yabai -m rule --add app="^Telegram$" space=social grid=1:1:0:0:1:1 manage=off
+yabai -m rule --add app="^Discord$" space=social grid=1:1:0:0:1:1 manage=off
+yabai -m rule --add app="^WhatsApp$" space=social grid=1:1:0:0:1:1 manage=off
+yabai -m rule --add app="Chrome" space=other
+yabai -m rule --add app="^System Preferences$" manage=off
+
+# specific space settings
+yabai -m config --space communications layout stack
+yabai -m config --space web layout stack
+yabai -m config --space social layout stack
+
+echo "yabai configuration loaded.."

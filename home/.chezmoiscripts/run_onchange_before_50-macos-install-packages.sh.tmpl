@@ -46,10 +46,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
     "pinentry-mac"
     "reattach-to-user-namespace"
     "ripgrep"
+    "skhd"
     "sheldon"
     "tig"
     "tmux"
     "wget"
+    "yabai"
     "zsh"
 -}}
 
@@ -65,12 +67,14 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
     "font-fira-code-nerd-font"
     "font-hack-nerd-font"
     "google-chrome"
+    "hammerspoon"
     "hiddenbar"
     "iina"
     "iterm2"
     "karabiner-elements"
     "licecap"
     "raycast"
+    "rectangle"
     "signal"
     "spideroakone"
     "telegram"
@@ -100,21 +104,30 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
     ) -}}
 {{ end -}}
 
-sh -c "echo $(which brew)"
+{{ $services := list
+    "skhd"
+    "yabai"
+-}}
 
 cat <<EOF >/tmp/Brews
 #!/bin/sh
 {{ range ($taps | sortAlpha | uniq) -}}
 tap "{{ . }}"
 {{ end }}
+
 {{ range ($brews | sortAlpha | uniq) -}}
 brew "{{ . }}"
 {{ end }}
+
 {{ range ($casks | sortAlpha | uniq) -}}
 cask "{{ . }}"
 {{ end -}}
 EOF
 
 sudo -Hu ops -i brew bundle --no-lock --file=/tmp/Brews
+
+{{ range ($services | sortAlpha | uniq) -}}
+brew services start "{{ . }}"
+{{   end -}}
 
 {{ end -}}
