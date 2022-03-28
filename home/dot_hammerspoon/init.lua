@@ -40,6 +40,8 @@ function reloadConfig(files)
       hs.reload()
     end
   end
+
+  hs.notify.new({title="Hammerspoon", informativeText="Config reloaded"}):send()
 end
 
 hs.pathwatcher.new(os.getenv('HOME') .. '/.hammerspoon/', reloadConfig):start()
