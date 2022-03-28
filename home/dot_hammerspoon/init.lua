@@ -2,23 +2,25 @@ hs.window.animationDuration = 0 -- disable animations
 
 function launchOrFocus(app)
   return function()
-    hs.application.launchOrFocus(app)
+    hs.application.launchOrFocusByBundleID(app)
   end
 end
 
 local bindings = {
+  -- Find bundle ID using
+  -- osascript -e 'id of app "Google Chrome"'
   [{'alt', 'cmd', 'ctrl', 'shift'}] = {
-    c = launchOrFocus('Brave'),
-    c = launchOrFocus('Google Chrome'),
-    d = launchOrFocus('Discord'),
-    f = launchOrFocus('Finder'),
-    g = launchOrFocus('Telegram'),
-    s = launchOrFocus('Slack'),
-    t = launchOrFocus('kitty'),
-    v = launchOrFocus('Visual Studio Code'),
-    w = launchOrFocus('WhatsApp'),
-    y = launchOrFocus('System Preferences'),
-    z = launchOrFocus('zoom.us'),
+    b = launchOrFocus('com.brave.Browser'),
+    c = launchOrFocus('com.google.Chrome'),
+    d = launchOrFocus('com.hnc.Discord'),
+    f = launchOrFocus('fom.apple.finder'),
+    g = launchOrFocus('ru.keepcoder.Telegram'),
+    s = launchOrFocus('com.tinyspeck.slackmacgap'),
+    t = launchOrFocus('net.kovidgoyal.kitty'),
+    v = launchOrFocus('com.microsoft.VSCode'),
+    w = launchOrFocus('Whatsapp'),
+    y = launchOrFocus('com.apple.systempreferences'),
+    z = launchOrFocus('us.zoom.xos'),
   },
 }
 
