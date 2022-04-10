@@ -1,2 +1,3 @@
 shell
-.config/nvim/custom
+
+.config/nvim/lua/custom/
