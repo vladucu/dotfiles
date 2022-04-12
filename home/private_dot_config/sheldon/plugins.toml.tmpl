@@ -5,6 +5,7 @@
 [templates]
 defer = { value = 'zsh-defer source "{{ "{{ file }}" }}"', each = true }
 defer-more = { value = 'zsh-defer -t 0.5 source "{{ "{{ file }}" }}"', each = true }
+ffpath = { value = 'fpath+="{{ "{{ dir }}/functions" }}" && autoload -U "{{ "{{ dir }}" }}"/functions/*(.:t)', each = true }
 
 ###################
 # Completions
@@ -57,11 +58,7 @@ apply = ["defer"]
 # Git aliases
 [plugins.zimfw-git]
 github = "zimfw/git"
-apply = ["defer", "fpath", "path"]
-
-[plugins.zimfw-fzf]
-github = "zimfw/fzf"
-apply = ["defer"]
+apply = ["defer", "ffpath"]
 
 [plugins.zimfw-exa]
 github = "zimfw/exa"
@@ -76,14 +73,6 @@ local = "{{ output "zsh" "-c" "echo $(brew --prefix asdf)/libexec" | trim }}"
 use = ["{{- "{{ name }}.sh" -}}"]
 apply = ["defer"]
 
-[plugins.compinit]
-local = "~/.local/share/chezmoi/home/shell"
-apply = ["defer"]
-
-[plugins.fzf-tab]
-github = "Aloxaf/fzf-tab"
-apply = ["defer"]
-
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{- "{{ name }}.zsh" -}}"]
@@ -91,6 +80,14 @@ apply = ["defer"]
 
 [plugins.zsh-syntax-highlighting]
 github = 'zsh-users/zsh-syntax-highlighting'
+apply = ["defer"]
+
+[plugins.compinit]
+local = "~/.local/share/chezmoi/home/shell"
+apply = ["defer"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
 apply = ["defer"]
 
 ###################
