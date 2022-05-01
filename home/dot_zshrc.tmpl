@@ -6,8 +6,15 @@
 
 {{ include "shell/init.zsh" }}
 
-# Source sheldon plugins
 {{  if lookPath "sheldon" -}}
+# Source sheldon plugins
 {{    output "sheldon" "source" | trim }}
 {{  end -}}
+
+{{  if lookPath "thefuck" }}
+# Fuck
+# https://github.com/nvbn/thefuck
+{{    output "thefuck" "--alias" | trim }}
+{{  end -}}
+
 {{ end -}}
