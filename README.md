@@ -15,7 +15,7 @@
 
 ### Multi-user support
 If using multi-user support, Brew doesn't play nicely with this. Instead create
-a dedicated user called `ops` to install brew stuff before running chezmoi.
+a dedicated user & group called `ops` to install brew stuff before running chezmoi.
 - [ ] Automate creating this
 
 ### Import GPG keys
