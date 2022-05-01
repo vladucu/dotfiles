@@ -1,3 +1,14 @@
+require("hs.ipc")
+
+stackline = require "stackline"
+local myStackline = {
+    paths = {
+      yabai = "{{ output "which" "yabai" | trim }}"
+    },
+}
+
+stackline:init(myStackline)
+
 hs.window.animationDuration = 0 -- disable animations
 
 function launchOrFocus(app)

@@ -15,8 +15,15 @@
 
 .config/nvim:
   type: archive
-  url: https://github.com/kabinspace/AstroVim/archive/master.tar.gz
+  url: https://github.com/kabinspace/AstroVim/archive/main.tar.gz
   # Related issues https://github.com/twpayne/chezmoi/issues/1614#issuecomment-966524408
   # exact: true
+  stripComponents: 1
+  refreshPeriod: 168h
+
+.hammerspoon/stackline:
+  type: archive
+  url: https://github.com/AdamWagner/stackline/archive/main.tar.gz
+  exact: true
   stripComponents: 1
   refreshPeriod: 168h
