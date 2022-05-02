@@ -10,7 +10,10 @@ hyper - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance 
 #============================================
 # Yabai
 #============================================
-# Sources https://programmer.ink/think/tile-desktop-under-mac-yabai.html
+# Sources
+# https://github.com/koekeishiya/yabai/wiki/Commands
+# https://programmer.ink/think/tile-desktop-under-mac-yabai.html
+# https://github.com/kpritam/nixpkgs/blob/master/configs/.skhdrc
 
 # Navigation
 alt - h : yabai -m window --focus west || yabai -m window --focus east

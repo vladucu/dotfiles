@@ -46,9 +46,6 @@ yabai -m rule --add app="Code$" space=code
 yabai -m rule --add app="^Slack$" space=communications
 yabai -m rule --add app="Brave" space=web
 yabai -m rule --add app="^Spotify$" space=media
-yabai -m rule --add app="^Telegram$" space=social grid=1:1:0:0:1:1 manage=off
-yabai -m rule --add app="^Discord$" space=social grid=1:1:0:0:1:1 manage=off
-yabai -m rule --add app="^WhatsApp$" space=social grid=1:1:0:0:1:1 manage=off
 yabai -m rule --add app="Chrome" space=other
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^1Password$" manage=off
