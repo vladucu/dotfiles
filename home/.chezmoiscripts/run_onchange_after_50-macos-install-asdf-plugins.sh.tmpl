@@ -13,6 +13,7 @@ echo "Install asdf plugins"
 
 {{ $plugins := dict
   "ruby"       "latest:2"
+  "rust"       "latest"
 }}
 
 # Add plugins & install versions
@@ -26,7 +27,7 @@ echo "Install asdf plugins"
     asdf install {{ $key }} {{ $val }} || true
     asdf global {{ $key }} {{ $val }} || true
   {{- end -}}
-{{ end -}}
+{{ end }}
 
 # -- Packages -- #
 
