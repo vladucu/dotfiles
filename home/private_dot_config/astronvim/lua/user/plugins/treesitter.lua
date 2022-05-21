@@ -4,6 +4,7 @@ return {
     "comment",
     "css",
     "dockerfile",
+    "elixir",
     "go",
     "glimmer",
     "html",

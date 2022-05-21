@@ -26,3 +26,6 @@ export EDITOR=code
 
 # https://github.com/x-motemen/ghq#environment-variables
 export GHQ_ROOT=$CODE
+
+# elixir-ls
+export ELS_INSTALL_PREFIX=$GHQ_ROOT/github.com/elixir-lsp/elixir-ls/release
