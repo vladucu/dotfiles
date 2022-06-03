@@ -12,8 +12,10 @@ echo "Install asdf plugins"
 {{- end }}
 
 {{ $plugins := dict
-  "ruby"       "latest:2"
-  "rust"       "latest"
+  "elixir"  "latest"
+  "erlang"  "latest"
+  "ruby"    "latest:2"
+  "rust"    "latest"
 }}
 
 # Add plugins & install versions
@@ -38,6 +40,12 @@ echo "Install asdf plugins"
 {{ range sortAlpha $rubyPackages }}
   gem install {{ . }}
 {{ end -}}
+
+ghq get https://github.com/elixir-lsp/elixir-ls
+cd $GHQ_ROOT/github.com/elixir-lsp/elixir-ls
+mix deps.get
+mix compile
+mix elixir_ls.release -o release
 
 asdf reshim
 

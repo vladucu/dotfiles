@@ -49,4 +49,4 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' '+r:|?=**'
 # TODO organize aliases
 # alias brew='sudo -Hu ops -i brew'
 alias c=chezmoi
-alias e="$EDITOR ."
+alias e="$EDITOR"
