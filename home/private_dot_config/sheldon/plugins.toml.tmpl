@@ -68,6 +68,11 @@ apply = ["defer"]
 github = "rupa/z"
 apply = ["defer"]
 
+[plugins.fancy-ctrl-z]
+github = "ohmyzsh/ohmyzsh"
+use = ["**/fancy-ctrl-z/*.plugin.zsh"]
+apply = ["defer"]
+
 [plugins.asdf]
 local = "{{ output "zsh" "-c" "echo $(brew --prefix asdf)/libexec" | trim }}"
 use = ["{{- "{{ name }}.sh" -}}"]

@@ -1,3 +1,12 @@
+-- Docs https://astronvim.github.io/
+--
+-- TODO
+-- https://github.com/folke/trouble.nvim install
+-- https://github.com/benfowler/telescope-luasnip.nvim maybe
+--
+-- Other repos for inspiration
+-- https://github.com/thieung/dotfiles/blob/main/config/nvim/plugins/init.lua
+-- https://github.com/datamonsterr/astronvim_config
 local config = {
 
   -- Set colorscheme
