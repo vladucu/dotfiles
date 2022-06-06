@@ -14,7 +14,7 @@ echo "Install asdf plugins"
 {{ $plugins := dict
   "elixir"  "latest"
   "erlang"  "latest"
-  "ruby"    "latest:2"
+  "ruby"    "latest"
   "rust"    "latest"
 }}
 
@@ -35,10 +35,11 @@ echo "Install asdf plugins"
 
 {{ $rubyPackages := list
   "foreman"
+  "tmuxinator"
 }}
 
 {{ range sortAlpha $rubyPackages }}
-  gem install {{ . }}
+  gem install {{ . }} --no-doc
 {{ end -}}
 
 ghq get https://github.com/elixir-lsp/elixir-ls
