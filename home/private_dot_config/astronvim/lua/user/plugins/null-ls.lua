@@ -5,13 +5,20 @@ if not present then
   return M
 end
 
--- local formatting = null_ls.builtins.formatting
+local code_actions = null_ls.builtins.code_actions
 local diagnostics = null_ls.builtins.diagnostics
+local formatting = null_ls.builtins.formatting
 
 M.sources = {
   -- Elixir
   diagnostics.credo,
   -- formatting.mix,
+
+  -- Javascript
+  code_actions.eslint,
+  diagnostics.eslint,
+  formatting.eslint,
+  formatting.prettier.with { filetypes = { "html", "markdown", "css", "javascript", "glimmer", "handlebars" } },
 }
 
 M.on_attach = function(client)
