@@ -11,6 +11,8 @@ https://stackoverflow.com/a/70012833
  */}}
 {{- $multi_user := true -}}
 {{- "" -}}
+{{/* Whether to use nix package manager or not */}}
+{{- $use_nix := false -}}
 
 {{/* Configs */}}
 {{- $name := "Vlad Vanca" -}}
@@ -63,7 +65,13 @@ https://stackoverflow.com/a/70012833
 {{-   if hasKey . "multi_user" -}}
 {{-     $multi_user = .multi_user -}}
 {{-   else -}}
-{{-     $smile = promptBool "Multi-user support" -}}
+{{-     $multi_user = promptBool "Multi-user support" -}}
+{{-   end -}}
+
+{{-   if hasKey . "use_nix" -}}
+{{-     $use_nix = .use_nix -}}
+{{-   else -}}
+{{-     $use_nix = promptBool "Use nix package manager" -}}
 {{-   end -}}
 {{- end -}}
 
@@ -79,6 +87,7 @@ data:
   hostname: {{ $hostname | quote }}
   smile: {{ $smile }}
   multi_user: {{ $multi_user }}
+  use_nix: {{ $use_nix }}
   vault: "xegovmwy3acc65sfscbzfje5fu"
   gpg_recipient: {{ $gpg_recipient | quote }}
 
