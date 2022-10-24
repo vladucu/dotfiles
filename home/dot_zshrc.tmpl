@@ -6,16 +6,15 @@
 
 {{ include "shell/init.zsh" }}
 
-{{  if lookPath "sheldon" -}}
-# Source sheldon plugins
-{{    output "sheldon" "source" | trim }}
+{{ if .use_nix }}
+# Nix multi-user installer will add this to the system /etc/zshrc but that is
+# overwritten with every system update
+#source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 {{  end -}}
 
-{{ if .use_nix }}
-# Nix
-source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-export NIX_PATH="$HOME/.nix-defexpr"
-# End Nix
+{{  if lookPath "sheldon" }}
+# Source sheldon plugins
+{{    output "sheldon" "source" | trim }}
 {{  end -}}
 
 {{  if lookPath "thefuck" }}

@@ -1,0 +1,11 @@
+{{- if .use_nix -}}
+#!/bin/sh
+set -eufo pipefail
+
+{{ if lookPath "nix" -}}
+exit 0
+{{ end -}}
+
+curl -L https://nixos.org/nix/install  | sh -s -- --no-modify-profile
+
+{{ end -}}

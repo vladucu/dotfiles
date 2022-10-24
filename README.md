@@ -32,4 +32,13 @@ a dedicated user & group called `ops` to install brew stuff before running chezm
 ### VS Code
 - open and enable _Sync Settings_ signing in with Github.
 
+### Nix
+
+#### Sources of inspiration
+- https://ianthehenry.com/posts/how-to-learn-nix/quick-start-guide/
+- https://yuanwang.ca/posts/getting-started-with-flakes.html
+- https://checkoway.net/musings/nix/
+- https://wiki.nikiv.dev/package-managers/nix/
+- https://github.com/ahmedelgabri/dotfiles
+- https://github.com/azuline/nixos
 </details>

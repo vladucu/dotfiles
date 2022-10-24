@@ -1,0 +1,26 @@
+{{- if .use_nix -}}
+#!/bin/sh
+set -eufo pipefail
+
+{{ if not (lookPath "nix") -}}
+echo "Please make sure nix is installed!"
+exit 0
+{{ end -}}
+
+{{   if stat "/etc/nix/nix.conf" -}}
+# Until this is addressed https://github.com/LnL7/nix-darwin/issues/149
+#sudo mv /etc/nix/nix.conf /etc/nix/.nix-darwin.bkp.nix.conf
+{{-   end }}
+
+pushd /tmp
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
+# Make sure just installed `darwin-rebuild` command is available in current script
+#test -f /etc/static/bashrc && source /etc/static/bashrc
+popd
+
+pushd {{ joinPath "$HOME/.config/nixpkgs" }}
+nix --experimental-features 'nix-command flakes' build .#darwinConfigurations.{{ .chezmoi.username }}.system
+./result/sw/bin/darwin-rebuild switch --flake "./#$(hostname)"
+popd
+{{ end -}}

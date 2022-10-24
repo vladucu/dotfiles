@@ -2,6 +2,7 @@
 #!/bin/sh
 
 # Install common macOS packages
+exit 0
 
 printf "${green}[10 - macOS] ${reset}"
 {{- if or (lt 10 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_BREW") }}
@@ -28,33 +29,16 @@ eval "$($(brew --prefix)/bin/brew shellenv)"
 
 {{ $brews := list
     "asdf"
-    "bash"
-    "bat"
-    "chezmoi"
     "cmake"
-    "curl"
-    "exa"
     "fd"
-    "fzf"
-    "gh"
-    "ghq"
-    "git-delta"
-    "git"
-    "gpg"
-    "less"
     "mackup"
     "navi"
-    "neovim"
     "pinentry-mac"
     "reattach-to-user-namespace"
-    "ripgrep"
     "skhd"
     "sheldon"
-    "tig"
     "tmux"
-    "wget"
     "yabai"
-    "zsh"
 -}}
 
 {{ $casks := list
