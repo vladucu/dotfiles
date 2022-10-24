@@ -103,6 +103,5 @@ shift + alt - b :  hs -c 'stackline.config:toggle("appearance.showIcons")'
 # Restart Yabai
 shift + ctrl + alt - r : \
     /usr/bin/env osascript <<< \
-        "display notification \"Restarting\" with title \"Yabai\""; \
+        "display notification \"Restarting\" with title \"SKHD\""; \
     brew services restart skhd
-
