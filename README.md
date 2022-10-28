@@ -38,7 +38,13 @@ a dedicated user & group called `ops` to install brew stuff before running chezm
 - https://ianthehenry.com/posts/how-to-learn-nix/quick-start-guide/
 - https://yuanwang.ca/posts/getting-started-with-flakes.html
 - https://checkoway.net/musings/nix/
+- https://nixcloud.io/tour/?id=1
 - https://wiki.nikiv.dev/package-managers/nix/
+- https://wiki.nikiv.dev/operating-systems/linux/nixos
+  - list of interesting dotfiles
+- https://github.com/mitchellh/nixos-config
+  - this is cool, does not use macOS for dev at all, just runs everything in NixOS in a VM
+- https://github.com/wiltaylor/dotfiles/
 - https://github.com/ahmedelgabri/dotfiles
 - https://github.com/azuline/nixos
 </details>
