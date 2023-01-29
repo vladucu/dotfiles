@@ -8,6 +8,12 @@ return {
     cmd = { "ZenMode" },
     config = function() require("user.plugins.zen-mode").config() end,
   },
+  ["danymat/neogen"] = {
+    requires = "nvim-treesitter/nvim-treesitter",
+    module = "neogen",
+    cmd = "Neogen",
+    config = function() require "user.plugins.neogen" end,
+  },
   ["simrat39/rust-tools.nvim"] = {
     after = "mason-lspconfig.nvim", -- make sure to load after mason-lspconfig
     config = function() require("rust-tools").setup(require "user.plugins.rust-tools") end,
