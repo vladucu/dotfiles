@@ -1,9 +1,11 @@
 require("hs.ipc")
 
 stackline = require "stackline"
+
+{{- $yabaiPath := lookPath "yabai" }}
 local myStackline = {
     paths = {
-      yabai = "{{ output "which" "yabai" | trim }}"
+      yabai = "{{ $yabaiPath }}"
     },
 }
 
