@@ -19,7 +19,7 @@
 [diff]
     colorMoved = default
 
-{{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") -}}
+{{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") (lookpath "gpg") -}}
 [gpg]
     program = {{ output "which" "gpg" | trim }}
 {{- end }}
