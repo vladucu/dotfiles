@@ -1,4 +1,5 @@
-{{- if eq .chezmoi.os "darwin" -}}
+{{- $gpgPath := lookPath "gpg" }}
+{{- if and (eq .chezmoi.os "darwin") $gpgPath -}}
 # Enables GPG to find gpg-agent
 use-standard-socket
 
@@ -6,5 +7,5 @@ use-standard-socket
 # pinentry program from GPGtools. This is the OSX 'magic sauce',
 # allowing the gpg key's passphrase to be stored in the login
 # keychain, enabling automatic key signing.
-pinentry-program {{ output "which" "pinentry-mac" | trim }}
+pinentry-program {{ $gpgPath }}
 {{- end -}}
