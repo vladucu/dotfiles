@@ -76,10 +76,12 @@ github = "ohmyzsh/ohmyzsh"
 use = ["**/fancy-ctrl-z/*.plugin.zsh"]
 apply = ["defer"]
 
+{{  if lookPath "brew" -}}
 [plugins.asdf]
 local = "{{ output "zsh" "-c" "echo $(brew --prefix asdf)/libexec" | trim }}"
 use = ["{{- "{{ name }}.sh" -}}"]
 apply = ["defer"]
+{{  end -}}
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
