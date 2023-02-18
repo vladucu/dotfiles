@@ -126,7 +126,11 @@ cask "{{ . }}"
 {{ end -}}
 EOF
 
+{{ if .multi_user -}}
 sudo -Hu ops -i brew bundle --no-lock --file=/tmp/Brews
+{{else}}
+brew bundle --no-lock --file=/tmp/Brews
+{{- end }}
 
 {{ range ($services | sortAlpha | uniq) -}}
 brew services start "{{ . }}"
