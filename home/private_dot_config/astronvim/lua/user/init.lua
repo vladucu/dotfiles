@@ -50,6 +50,13 @@ local config = {
                         disabled = { -- disable formatting capabilities for the listed language servers
                                 -- "sumneko_lua",
                         },
+                        filter = function(client)
+                                -- disable formatting for tsserver - conficts with eslint+prettier
+                                if client.name == "tsserver" then return false end
+
+                                -- enable all other clients
+                                return true
+                        end,
                         timeout_ms = 1000, -- default format timeout
                         -- filter = function(client) -- fully override the default formatting function
                         --   return true
