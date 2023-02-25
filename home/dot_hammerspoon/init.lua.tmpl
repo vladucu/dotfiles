@@ -23,6 +23,7 @@ local bindings = {
   -- Find bundle ID using
   -- osascript -e 'id of app "Google Chrome"'
   [{'alt', 'cmd', 'ctrl', 'shift'}] = {
+    a = launchOrFocus('company.thebrowser.Browser'),
     b = launchOrFocus('com.brave.Browser'),
     c = launchOrFocus('com.google.Chrome'),
     d = launchOrFocus('com.hnc.Discord'),
