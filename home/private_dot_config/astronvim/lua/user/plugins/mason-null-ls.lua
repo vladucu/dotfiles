@@ -2,5 +2,5 @@
 return {
   automatic_installation = true,
   automatic_setup = false,
-  ensure_installed = nil,
+  ensure_installed = {},
 }
