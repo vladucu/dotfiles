@@ -30,7 +30,6 @@ return {
     },
     ["lvimuser/lsp-inlayhints.nvim"] = {
         module = "lsp-inlayhints",
-        event = "LspAttach",
         config = function() require("lsp-inlayhints").setup() end,
     },
 }
