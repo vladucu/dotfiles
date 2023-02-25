@@ -19,8 +19,8 @@ return {
         config = function() require("rust-tools").setup(require "user.plugins.rust-tools") end,
     },
     ["wakatime/vim-wakatime"] = {
-        -- opt = true,
-        -- setup = function() table.insert(astronvim.file_plugins, "vim-wakatime") end,
+        opt = true,
+        setup = function() table.insert(astronvim.file_plugins, "vim-wakatime") end,
     },
     -- Better motions
     ["ggandor/leap.nvim"] = {
@@ -28,7 +28,6 @@ return {
         setup = function() table.insert(astronvim.file_plugins, "leap.nvim") end,
         config = function() require("leap").add_default_mappings() end,
     },
-    { "lvimuser/lsp-inlayhints.nvim", event = "LspAttach", config = true },
     ["lvimuser/lsp-inlayhints.nvim"] = {
         module = "lsp-inlayhints",
         event = "LspAttach",

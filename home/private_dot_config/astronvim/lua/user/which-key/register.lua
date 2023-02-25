@@ -7,6 +7,7 @@ return {
     ["<leader>"] = {
       -- third key is the key to bring up next level and its displayed
       -- group name in which-key top level menu
+      ["b"] = { name = "Buffer" },
       ["n"] = { "<cmd>tabnew<cr>", "New Buffer" },
       ["z"] = { "<cmd>ZenMode<cr>", "Zen Mode" },
     },
