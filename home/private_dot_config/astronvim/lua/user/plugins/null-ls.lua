@@ -12,7 +12,8 @@ return function(config)
     null_ls.builtins.diagnostics.credo,
     null_ls.builtins.diagnostics.eslint_d,
     -- null_ls.builtins.diagnostics.mix,
-    null_ls.builtins.diagnostics.luacheck,
+    -- TODO this does not work with mason, check why
+    -- null_ls.builtins.diagnostics.luacheck,
     null_ls.builtins.diagnostics.flake8,
     null_ls.builtins.diagnostics.mypy,
 

@@ -7,13 +7,13 @@ return function(client, bufnr)
     end
   end
 
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.document_formatting then
     vim.api.nvim_create_augroup("format_on_save", { clear = true })
     vim.api.nvim_create_autocmd("BufWritePre", {
       desc = "Auto format before save",
       group = "format_on_save",
       pattern = "<buffer>",
-      callback = function() vim.lsp.buf.formatting_sync { async = true } end,
+      callback = function() vim.lsp.buf.format { async = true } end,
     })
   end
 end

@@ -11,6 +11,7 @@ return {
       ["n"] = { "<cmd>tabnew<cr>", "New Buffer" },
       ["z"] = { "<cmd>ZenMode<cr>", "Zen Mode" },
     },
+
     a = {
       name = "Annotate",
       ["<cr>"] = { function() require("neogen").generate() end, "Current" },
@@ -18,6 +19,18 @@ return {
       f = { function() require("neogen").generate { type = "func" } end, "Function" },
       t = { function() require("neogen").generate { type = "type" } end, "Type" },
       F = { function() require("neogen").generate { type = "file" } end, "File" },
+    },
+
+    s = {
+      name = "Surf",
+      s = {
+        function() require("syntax-tree-surfer").select() end,
+        "Surf",
+      },
+      S = {
+        function() require("syntax-tree-surfer").select_current_node() end,
+        "Surf Node",
+      },
     },
   },
 }
