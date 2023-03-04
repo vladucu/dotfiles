@@ -1,10 +1,12 @@
 #!/bin/sh
 
 # Install remotely from single shell command
-# Usage : sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/chezmoi/install.sh)"
+# Usage : sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/install.sh)"
 
 echo "Installing Xcode Command Line Tools"
-xcode-select --install
+# xcode-select --install
+xcode-select --install && sleep 1
+osascript -e 'tell application "System Events"' -e 'tell process "Install Command Line Developer Tools"' -e 'keystroke return' -e 'click button "Agree" of window "License Agreement"' -e 'end tell' -e 'end tell'
 
 set -e # -e: exit on error
 
