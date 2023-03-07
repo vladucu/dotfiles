@@ -11,6 +11,11 @@
 {{    output "sheldon" "source" | trim }}
 {{  end -}}
 
+{{  if lookPath "zoxide" }}
+# Source zoxide 
+{{    output "zoxide" "init" "zsh" | trim }}
+{{  end -}}
+
 {{  if lookPath "thefuck" }}
 # Fuck
 # https://github.com/nvbn/thefuck
