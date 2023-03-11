@@ -14,7 +14,7 @@ These dotfiles are managed with [Chezmoi](https://chezmoi.io).
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/install.sh) -k"
 ```
 
-Right now, during first installation a cople of things that use personal secrets will fail.
+Right now, during first installation a couple of things that use personal secrets will fail.
 Personal secrets are stored in [1Password](https://1password.com) and you'll
 need to log into 1Password with:
 
