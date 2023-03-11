@@ -1,5 +1,8 @@
 {{ if eq .chezmoi.os "darwin" -}}
-{{  if lookPath "brew" -}}
-{{    output "brew" "shellenv" | trim }}
-{{  end -}}
+
+{{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
+{{- if $brew -}}
+{{   output $brew "shellenv" | trim}}
+{{ end -}}
+
 {{ end -}}

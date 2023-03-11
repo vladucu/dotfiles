@@ -19,8 +19,9 @@
 [diff]
     colorMoved = default
 
-{{- $gpgPath := lookPath "gpg" }}
-{{ if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") $gpgPath -}}
+
+{{- $gpgPath := or (lookPath "/opt/homebrew/bin/gpg") (lookPath "/usr/local/bin/gpg") }}
+{{- if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") $gpgPath }}
 [gpg]
     program = {{ $gpgPath }}
 {{- end }}
@@ -35,3 +36,6 @@
     name = {{ .name }}
     email = {{ .email }}
     signinkey = {{ .gpg_recipient }}
+
+[url "git@github.com:vladucu/"]
+    insteadOf = https://github.com/vladucu/

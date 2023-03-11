@@ -2,10 +2,10 @@ require("hs.ipc")
 
 stackline = require "stackline"
 
-{{- $yabaiPath := lookPath "yabai" }}
+{{- $yabai := or (lookPath "/opt/homebrew/bin/yabai") (lookPath "/usr/local/bin/yabai") }}
 local myStackline = {
     paths = {
-      yabai = "{{ $yabaiPath }}"
+      yabai = "{{ $yabai }}"
     },
 }
 

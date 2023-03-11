@@ -473,7 +473,7 @@ live_config_reload: true
 shell:
 {{- if (eq .chezmoi.os "darwin") -}}
 {{-   if (eq .chezmoi.arch "arm64") }}
-  program: /bin/zsh
+  program: /opt/homebrew/bin/zsh
   args:
    - --login
 {{else}}

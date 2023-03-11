@@ -25,11 +25,11 @@ github = "sindresorhus/pure"
 use = ["{async,pure}.zsh"]
 
 [plugins.env]
-local = "~/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
 use = ["**/env.zsh"]
 
 [plugins.path]
-local = "~/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
 use = ["**/path.zsh"]
 
 [plugins.zsh-defer]
@@ -40,12 +40,12 @@ github = "romkatv/zsh-defer"
 ###################
 
 [plugins.config]
-local = "~/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
 use = ["config.zsh"]
 apply = ["defer", "source"]
 
 [plugins.local]
-local = "~/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
 use = ["**/{keybinding,completion}.zsh"]
 apply = ["defer"]
 
@@ -77,7 +77,7 @@ use = ["**/fancy-ctrl-z/*.plugin.zsh"]
 apply = ["defer"]
 
 [plugins.asdf]
-local = "{{ output "zsh" "-c" "echo $(brew --prefix asdf)/libexec" | trim }}"
+local = "~/.asdf"
 use = ["{{- "{{ name }}.sh" -}}"]
 apply = ["defer"]
 
@@ -91,7 +91,7 @@ github = 'zsh-users/zsh-syntax-highlighting'
 apply = ["defer"]
 
 [plugins.compinit]
-local = "~/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
 apply = ["defer"]
 
 [plugins.fzf-tab]
@@ -112,7 +112,7 @@ apply = ["defer-more"]
 {{ if .smile -}}
 
 [plugins.smile]
-local = "~/SpiderOak Hive/shared/smile"
+local = "{{ .chezmoi.homeDir }}/SpiderOak Hive/shared/smile"
 use = ["dot_env.local.zsh"]
 apply = ["defer"]
 

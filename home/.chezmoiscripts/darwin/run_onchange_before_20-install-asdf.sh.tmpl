@@ -1,0 +1,45 @@
+#!/bin/bash
+# Install/upgrade asdf
+
+source /tmp/chezmoi-utils.sh
+set -eufo pipefail
+
+printf "${green}\n[20 - macOS] ${reset}"
+echo "Installing/upgrading asdf"
+
+if [[ ! $(command -v asdf) ]]; then
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
+else
+  asdf update
+fi
+
+# Excluding ruby right now because of this bug. 
+# https://github.com/asdf-vm/asdf-ruby/issues/184#issuecomment-818195977
+# TODO fix as recommended above
+{{- $plugins := dict
+  "elixir"  "latest"
+  "erlang"  "latest"
+  "rust"    "latest"
+}}
+
+# Add plugins & install versions
+{{- $asdf := (joinPath .chezmoi.homeDir ".asdf" "bin" "asdf") }}
+{{ range (keys $plugins) -}}
+{{   $key := . -}}
+{{   $val := get $plugins $key -}}
+
+{{   $asdf }} plugin-add {{ $key }} || true
+
+{{-  if not (eq $val "None") }}
+{{     $asdf }} install {{ $key }} {{ $val }} || true
+{{     $asdf }} global {{ $key }} {{ $val }} || true
+{{   end -}}
+{{- end }}
+
+# ghq get https://github.com/elixir-lsp/elixir-ls
+# cd $GHQ_ROOT/github.com/elixir-lsp/elixir-ls
+# mix deps.get
+# mix compile
+# mix elixir_ls.release -o release
+#
+# asdf reshim

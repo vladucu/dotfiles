@@ -1,0 +1,4 @@
+{{- $op := or (lookPath "/opt/homebrew/bin/op") (lookPath "/usr/local/bin/op") }}
+{{- if $op }}
+{{ onepasswordRead "op://Personal/vladucu SSH/private key" .onepassword_account }}
+{{ end -}}

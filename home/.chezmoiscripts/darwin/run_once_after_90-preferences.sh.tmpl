@@ -1,7 +1,8 @@
-{{- if (eq .chezmoi.os "darwin") -}}
 #!/usr/bin/env bash
 
-printf "${green}[90 - macOS preferences] ${reset}"
+source /tmp/chezmoi-utils.sh
+
+printf "${green}\n[90 - macOS preferences] ${reset}"
 
 # Inspiration
 # https://macos-defaults.com/#%F0%9F%99%8B-what-s-a-defaults-command
@@ -127,6 +128,8 @@ defaults write com.apple.dock showhidden -bool true
 # Don’t show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
+# Dockutil is not on brew yet to work in macOS Ventura
+{{  if lookPath "dockutil" -}}
 dockutil --remove all
 dockutil --add "/Applications/Alacritty.app"
 dockutil --add "/Applications/Brave Browser.app"
@@ -157,13 +160,12 @@ for app in "Activity Monitor" \
     "SizeUp" \
     "Spectacle" \
     "SystemUIServer" \
-    "Terminal" \
     "Transmission" \
     "Tweetbot" \
     "Twitter" \
     "iCal"; do
     killall "${app}" &> /dev/null
 done
+{{  end -}}
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
-{{ end -}}

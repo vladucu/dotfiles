@@ -4,19 +4,13 @@
 {{/* Boolean feature tags */}}
 {{/* If this machine should have Smile secrets from 1Password */}}
 {{- $smile := false -}}
-{{/* Multi-user installation. Will use a dedicated user for brew for better support for multi-user. */}}
-{{/* Sources
-https://www.codejam.info/2021/11/homebrew-multi-user.html
-https://stackoverflow.com/a/70012833
- */}}
-{{- $multi_user := true -}}
 {{- "" -}}
 
 {{/* Configs */}}
 {{- $name := "Vlad Vanca" -}}
 {{- $email := "vanca.vlad@gmail.com" -}}
-{{- $computer_name := default "vladucu's macbook" (env "CM_computer_name") -}}
-{{- $hostname := default "vladucu" (env "CM_hostname") -}}
+{{- $computer_name := "vladucu's macbook" -}}
+{{- $hostname := "vladucu" -}}
 {{- $gpg_recipient := "9F2DA28BEC99BC96" -}}
 {{- "" -}}
 
@@ -60,11 +54,6 @@ https://stackoverflow.com/a/70012833
 {{-     $smile = promptBool "Smile" -}}
 {{-   end -}}
 
-{{-   if hasKey . "multi_user" -}}
-{{-     $multi_user = .multi_user -}}
-{{-   else -}}
-{{-     $smile = promptBool "Multi-user support" -}}
-{{-   end -}}
 {{- end -}}
 
 {{- if $interactive -}}
@@ -78,8 +67,7 @@ data:
   computer_name: {{ $computer_name | quote }}
   hostname: {{ $hostname | quote }}
   smile: {{ $smile }}
-  multi_user: {{ $multi_user }}
-  vault: "xegovmwy3acc65sfscbzfje5fu"
+  onepassword_account: "44TQRXVOJ5CR3BULYTHWSHDLAI"
   gpg_recipient: {{ $gpg_recipient | quote }}
 
 encryption: "gpg"

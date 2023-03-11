@@ -6,20 +6,23 @@
 
 {{ include "shell/init.zsh" }}
 
-{{  if lookPath "sheldon" -}}
+{{ $sheldon := or (lookPath "/opt/homebrew/bin/sheldon") (lookPath "/usr/local/bin/sheldon") -}}
+{{ if $sheldon -}}
 # Source sheldon plugins
-{{    output "sheldon" "source" | trim }}
-{{  end -}}
+{{   output $sheldon "source" | trim }}
+{{- end }}
 
-{{  if lookPath "zoxide" }}
+{{ $zoxide := or (lookPath "/opt/homebrew/bin/zoxide") (lookPath "/usr/local/bin/zoxide") -}}
+{{ if $zoxide -}}
 # Source zoxide 
-{{    output "zoxide" "init" "zsh" | trim }}
-{{  end -}}
+{{   output $zoxide "init" "zsh" | trim }}
+{{- end }}
 
-{{  if lookPath "thefuck" }}
+{{- $thefuck := or (lookPath "/opt/homebrew/bin/thefuck") (lookPath "/usr/local/bin/thefuck") }}
+{{- if $thefuck }}
 # Fuck
 # https://github.com/nvbn/thefuck
-{{    output "thefuck" "--alias" | trim }}
-{{  end -}}
+{{   output $thefuck "--alias" | trim }}
+{{- end }}
 
 {{ end -}}

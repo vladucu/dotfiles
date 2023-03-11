@@ -2,11 +2,21 @@
 
 # Install remotely from single shell command
 # Usage : sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/install.sh)"
+echo ""
+echo "🤚  This script will setup your macOS & dotfiles."
+read -n 1 -r -s -p $'    Press any key to continue or Ctrl+C to abort...\n\n'
 
-echo "Installing Xcode Command Line Tools"
-# xcode-select --install
-xcode-select --install && sleep 1
-osascript -e 'tell application "System Events"' -e 'tell process "Install Command Line Developer Tools"' -e 'keystroke return' -e 'click button "Agree" of window "License Agreement"' -e 'end tell' -e 'end tell'
+# Install Xcode Command Line tools
+check=$((xcode-\select --install) 2>&1)
+str="xcode-select: note: install requested for command line developer tools"
+while [[ "$check" == "$str" ]];
+do
+  check=$((xcode-\select --install) 2>&1)
+  sleep 1
+done
+
+echo "Xcode Command Line Tools installed"
+
 
 set -e # -e: exit on error
 
