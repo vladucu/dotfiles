@@ -4,7 +4,7 @@
 # Uncomment to profile startup
 # zmodload zsh/zprof
 
-{{ include "shell/init.zsh" }}
+{{ include (joinPath .chezmoi.homeDir ".local/share/shell/init.zsh") }}
 
 {{ $sheldon := or (lookPath "/opt/homebrew/bin/sheldon") (lookPath "/usr/local/bin/sheldon") -}}
 {{ if $sheldon -}}

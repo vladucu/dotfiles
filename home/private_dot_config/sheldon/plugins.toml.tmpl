@@ -25,11 +25,11 @@ github = "sindresorhus/pure"
 use = ["{async,pure}.zsh"]
 
 [plugins.env]
-local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/shell"
 use = ["**/env.zsh"]
 
 [plugins.path]
-local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/shell"
 use = ["**/path.zsh"]
 
 [plugins.zsh-defer]
@@ -40,12 +40,12 @@ github = "romkatv/zsh-defer"
 ###################
 
 [plugins.config]
-local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/shell"
 use = ["config.zsh"]
 apply = ["defer", "source"]
 
 [plugins.local]
-local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/shell"
 use = ["**/{keybinding,completion}.zsh"]
 apply = ["defer"]
 
@@ -91,7 +91,7 @@ github = 'zsh-users/zsh-syntax-highlighting'
 apply = ["defer"]
 
 [plugins.compinit]
-local = "{{ .chezmoi.homeDir }}/.local/share/chezmoi/home/shell"
+local = "{{ .chezmoi.homeDir }}/.local/share/shell"
 apply = ["defer"]
 
 [plugins.fzf-tab]
