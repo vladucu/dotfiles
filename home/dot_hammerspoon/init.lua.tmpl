@@ -1,5 +1,13 @@
 require("hs.ipc")
 
+-- Install hs command line tool
+{{- if eq .chezmoi.arch "arm64" }}
+-- Hammerspoon will fail on newer M1's because it defaults to installing to /usr/local/bin, so we overwrite the path
+hs.ipc.cliInstall("/opt/homebrew")
+{{ else }}
+hs.ipc.cliInstall()
+{{- end }}
+
 stackline = require "stackline"
 
 {{- $yabai := or (lookPath "/opt/homebrew/bin/yabai") (lookPath "/usr/local/bin/yabai") }}
