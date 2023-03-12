@@ -1,0 +1,13 @@
+{{- $op := or (lookPath "/opt/homebrew/bin/op") (lookPath "/usr/local/bin/op") }}
+{{- $GITHUB_TOKEN := "MISSING_GITHUB_TOKEN" }}
+{{- if $op -}}
+{{ $GITHUB_TOKEN = onepasswordRead "op://Personal/GITHUB_TOKEN PAT/token" .onepassword_account }}
+{{- end -}}
+---
+:backtrace: false
+:bulk_threshold: 1000
+:sources:
+- https://rubygems.org/
+- https://vladucu:{{ $GITHUB_TOKEN }}@rubygems.pkg.github.com/smile-io/
+:update_sources: true
+:verbose: true
