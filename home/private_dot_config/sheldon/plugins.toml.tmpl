@@ -108,14 +108,14 @@ apply = ["defer"]
 github = 'zsh-users/zsh-history-substring-search'
 use = ["{{- "{{ name }}.zsh" -}}"]
 apply = ["defer-more"]
-
-{{ if .smile -}}
-
-[plugins.smile]
-local = "{{ .chezmoi.homeDir }}/SpiderOak Hive/shared/smile"
-use = ["dot_env.local.zsh"]
-apply = ["defer"]
-
-{{- end }}
-
+#
+# {{ if .smile -}}
+#
+# [plugins.smile]
+# local = "{{ .chezmoi.homeDir }}/SpiderOak Hive/shared/smile"
+# use = ["dot_env.local.zsh"]
+# apply = ["defer"]
+#
+# {{- end }}
+#
 {{/* vim: set filetype=toml: */}}

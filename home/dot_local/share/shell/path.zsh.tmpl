@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+path+=$HOME/.local/bin
+path+=/usr/local/bin
+
+{{- if .smile }}
+path+=/opt/homebrew/opt/postgresql@11/bin
+{{- end -}}
+
+{{/* vim: set filetype=zsh: */}}

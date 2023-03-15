@@ -18,6 +18,7 @@ echo "Installing common macOS packages"
     "bat"
     "chezmoi"
     "cmake"
+    "coreutils"
     "curl"
     "exa"
     "fd"
@@ -198,6 +199,8 @@ Removed casks for now:
         "docker-credential-helper-ecr"
         "helm"
         "kubectl"
+        "kubergrunt"
+        "postgresql@11"
         "vault"
     ) -}}
 {{  $casks = concat $casks (list
