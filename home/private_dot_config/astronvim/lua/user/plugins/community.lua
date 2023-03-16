@@ -10,6 +10,7 @@ return {
   { import = "astrocommunity.editing-support.neogen" },
   { import = "astrocommunity.editing-support.zen-mode-nvim" },
   { import = "astrocommunity.media.vim-wakatime" },
+  { import = "astrocommunity.motion.mini-move" },
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.rust" },
   { import = "astrocommunity.pack.json" },
