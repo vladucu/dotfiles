@@ -9,8 +9,6 @@ return {
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
     config.sources = {
       -- Set a formatter
-      -- null_ls.builtins.formatting.stylua,
-      -- null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.eslint_d,
       null_ls.builtins.formatting.rustfmt,
@@ -20,9 +18,6 @@ return {
 
       null_ls.builtins.diagnostics.credo,
       null_ls.builtins.diagnostics.eslint_d,
-      -- null_ls.builtins.diagnostics.mix,
-      -- TODO this does not work with mason, check why
-      -- null_ls.builtins.diagnostics.luacheck,
       null_ls.builtins.diagnostics.flake8,
       null_ls.builtins.diagnostics.mypy,
 

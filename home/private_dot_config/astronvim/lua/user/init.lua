@@ -17,8 +17,8 @@ return {
     },
   },
   -- Set colorscheme to use
-  -- colorscheme = "astrodark",
-  colorscheme = "catppuccin-mocha",
+  colorscheme = "astrodark",
+  -- colorscheme = "catppuccin-mocha",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = true,
@@ -35,12 +35,10 @@ return {
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
           -- "python",
-          "ruby",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
         -- "sumneko_lua",
-        "ruby",
       },
       timeout_ms = 1000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
