@@ -40,10 +40,13 @@ return {
       disabled = { -- disable formatting capabilities for the listed language servers
         -- "sumneko_lua",
       },
-      timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
+      timeout_ms = 1000,        -- default format timeout
+      filter = function(client) -- fully override the default formatting function
+        -- disable formatting for tsserver - conficts with eslint+prettier
+        if client.name == "tsserver" then return false end
+
+        return true
+      end
     },
     -- enable servers that you already have installed without mason
     servers = {

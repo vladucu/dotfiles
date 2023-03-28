@@ -28,7 +28,7 @@ return {
       -- Ensure that opts.ensure_installed exists and is a table
       if not opts.ensure_installed then opts.ensure_installed = {} end
       -- Add eslint_d to ensure_installed
-      utils.list_insert_unique(opts.ensure_installed, { "eslint_d" })
+      utils.list_insert_unique(opts.ensure_installed, { "eslint_d", "prettier" })
     end,
   },
   {
@@ -37,7 +37,7 @@ return {
       -- Ensure that opts.ensure_installed exists and is a table
       if not opts.ensure_installed then opts.ensure_installed = {} end
       -- Add chrome dap adapter
-      utils.list_insert_unique(opts.ensure_installed, "chrome")
+      -- utils.list_insert_unique(opts.ensure_installed, "chrome")
     end,
   },
 }
