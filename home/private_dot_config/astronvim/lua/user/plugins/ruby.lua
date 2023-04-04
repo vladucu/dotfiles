@@ -9,8 +9,8 @@ return {
       elseif opts.ensure_installed == "all" then
         return
       end
-      -- Add the "glimmer" language to opts.ensure_installed.
-      utils.list_insert_unique(opts.ensure_installed, "glimmer")
+      -- Add the "ruby" language to opts.ensure_installed.
+      utils.list_insert_unique(opts.ensure_installed, "ruby")
     end,
   },
   {
@@ -18,8 +18,9 @@ return {
     opts = function(_, opts)
       -- Ensure that opts.ensure_installed exists and is a table
       if not opts.ensure_installed then opts.ensure_installed = {} end
-      -- Add ember & glint lsp to ensure_installed
-      utils.list_insert_unique(opts.ensure_installed, { "ember", "glint" })
+      -- Add standardrb lsp to ensure_installed
+      utils.list_insert_unique(opts.ensure_installed, "standardrb")
+      -- utils.list_insert_unique(opts.ensure_installed, { "sorbet", "ruby_ls", "standardrb" })
     end,
   },
   {
@@ -27,17 +28,8 @@ return {
     opts = function(_, opts)
       -- Ensure that opts.ensure_installed exists and is a table
       if not opts.ensure_installed then opts.ensure_installed = {} end
-      -- Add eslint_d to ensure_installed
-      utils.list_insert_unique(opts.ensure_installed, { "eslint_d", "prettier" })
+      -- Add standardrb to ensure_installed
+      utils.list_insert_unique(opts.ensure_installed, "standardrb")
     end,
   },
-  -- {
-  --   "jay-babu/mason-nvim-dap.nvim",
-  --   opts = function(_, opts)
-  --     -- Ensure that opts.ensure_installed exists and is a table
-  --     if not opts.ensure_installed then opts.ensure_installed = {} end
-  --     -- Add chrome dap adapter
-  --     -- utils.list_insert_unique(opts.ensure_installed, "chrome")
-  --   end,
-  -- },
 }
