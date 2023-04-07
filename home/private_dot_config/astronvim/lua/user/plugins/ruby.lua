@@ -19,7 +19,7 @@ return {
       -- Ensure that opts.ensure_installed exists and is a table
       if not opts.ensure_installed then opts.ensure_installed = {} end
       -- Add standardrb lsp to ensure_installed
-      utils.list_insert_unique(opts.ensure_installed, "standardrb")
+      utils.list_insert_unique(opts.ensure_installed, { "solargraph", "standardrb" })
       -- utils.list_insert_unique(opts.ensure_installed, { "sorbet", "ruby_ls", "standardrb" })
     end,
   },
