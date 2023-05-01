@@ -1,6 +1,14 @@
 #!/usr/bin/env sh
 # https://github.com/koekeishiya/yabai/wiki/Commands
 
+move_to_space() {
+  id=$(yabai -m query --windows | jq ".[] | select(.app | contains(\"$1\")) | .id")
+
+  if [ -n "$id" ]; then
+    yabai -m window "$id" --space "$2"
+  fi
+}
+
 #============================================
 # Configuration
 #============================================
@@ -35,30 +43,40 @@ yabai -m config window_gap 06
 # Spaces
 #============================================
 yabai -m space 1 --label code
-yabai -m space 2 --label communications
+yabai -m space 2 --label terminal
 yabai -m space 3 --label web
-yabai -m space 4 --label media
-yabai -m space 5 --label social
-yabai -m space 6 --label other
+yabai -m space 4 --label social
+yabai -m space 5 --label media
+yabai -m space 6 --label misc
 
 # window rules
 yabai -m rule --add app="^1Password$" manage=off
 yabai -m rule --add label="Arc PiP" app="^Arc$" title="Picture in Picture" manage=off
-yabai -m rule --add app="Brave Browser" space=web
 yabai -m rule --add label="Calculator" app="^Calculator$" manage=off
-yabai -m rule --add app="Chrome" space=other
-yabai -m rule --add app="Code$" space=code
-yabai -m rule --add app="Discord" space=social
 yabai -m rule --add label="Hammerspoon" app="^Hammerspoon$" manage=off
 yabai -m rule --add label="Loom" app="Loom" manage=off
 yabai -m rule --add label="Preview" app="Preview" manage=off
-yabai -m rule --add app="^Slack$" space=communications
-yabai -m rule --add app="^Spotify$" space=media
 yabai -m rule --add label="System Preferences" app="^System Preferences$" manage=off
-yabai -m rule --add app="Telegram" space=social
-yabai -m rule --add app="WhatsApp" space=social
 
 # specific space settings
+#
+# Move all windows to Space 4 (Misc) by default
+yabai -m space misc --layout stack
+yabai -m rule --add app=".*" label="All Apps" space=misc
+yabai -m rule --remove "All Apps"
+
+# yabai -m rule --add app="kitty" title=".+" space=terminal
+move_to_space "Code" code
+move_to_space "kitty" terminal
+move_to_space "Arc" web
+move_to_space "Brave Browser" web
+move_to_space "Chrome" web
+move_to_space "Spotify" media
+move_to_space "Discord" social
+move_to_space "Slack" social
+move_to_space "Telegram" social
+move_to_space "WhatsApp" social
+
 yabai -m config --space communications layout stack
 yabai -m config --space web layout stack
 yabai -m config --space social layout stack
