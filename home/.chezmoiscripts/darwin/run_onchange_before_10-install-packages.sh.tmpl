@@ -214,8 +214,6 @@ Removed casks for now:
 {{ end -}}
 
 {{ $services := list
-    "skhd"
-    "yabai"
 -}}
 
 {{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
@@ -236,3 +234,6 @@ EOF
 {{ range ($services | sortAlpha | uniq) -}}
 {{ $brew }} services start "{{ . }}"
 {{ end -}}
+
+# Install skhd launch agent
+skhd --start-service
