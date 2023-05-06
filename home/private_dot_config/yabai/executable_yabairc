@@ -68,17 +68,18 @@ yabai -m rule --remove "All Apps"
 # yabai -m rule --add app="kitty" title=".+" space=terminal
 move_to_space "Code" code
 move_to_space "kitty" terminal
+
+yabai -m config --space web layout stack
 move_to_space "Arc" web
 move_to_space "Brave Browser" web
 move_to_space "Chrome" web
-move_to_space "Spotify" media
+
+yabai -m config --space social layout stack
 move_to_space "Discord" social
 move_to_space "Slack" social
-move_to_space "Telegram" social
 move_to_space "WhatsApp" social
+move_to_space "Telegram" social
 
-yabai -m config --space communications layout stack
-yabai -m config --space web layout stack
-yabai -m config --space social layout stack
+move_to_space "Spotify" media
 
 echo "yabai configuration loaded.."
