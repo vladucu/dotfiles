@@ -3,6 +3,8 @@
 path+=$HOME/.local/bin
 path+=/usr/local/bin
 
+path=(/opt/homebrew/opt/ncurses/bin $path) 
+
 {{- if .smile }}
 path+=/opt/homebrew/opt/postgresql@11/bin
 {{- end -}}
