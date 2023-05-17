@@ -3,8 +3,8 @@
 # See https://rossmacarthur.github.io/sheldon/
 
 [templates]
-defer = "{% for file in files %}zsh-defer source {{ `\"{{ file }}\"` }}\n{% endfor %}"
-defer-more = "{% for file in files %}zsh-defer -t 0.5 source {{ `\"{{ file }}\"` }}\n{% endfor %}"
+defer = {{ `"{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"` }}
+defer-more = {{ `"{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer -t 0.5 source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"` }}
 
 ###################
 # Completions
@@ -55,12 +55,12 @@ github = "MichaelAquilina/zsh-you-should-use"
 apply = ["defer"]
 
 # Git aliases
-[plugins.zimfw-git-functions]
-# Not sure if there's a better way to do this, but works for now
-inline = "fpath+={{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions && autoload -U {{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions/*"
 [plugins.zimfw-git]
 github = "zimfw/git"
 apply = ["defer"]
+[plugins.zimfw-git.hooks]
+pre = "zstyle ':zim:git' aliases-prefix 'g'"
+post = "fpath+={{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions && autoload -U {{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions/*"
 
 [plugins.zimfw-exa]
 github = "zimfw/exa"
