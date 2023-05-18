@@ -119,29 +119,6 @@ bind-key F set-window-option window-size
 bind r source-file ~/.config/tmux/tmux.conf \; display 'tmux.conf reloaded'
 
 ##############################################################################
-# Decoration (256-color)
-##############################################################################
-
-# TODO revise this
-set-option -g status-justify left
-set-option -g status-left '#[bg=colour72] #[bg=colour237] #[bg=colour236] #[bg=colour235]#[fg=colour185] #h #[bg=colour236] '
-set-option -g status-left-length 16
-set-option -g status-bg colour237
-set-option -g status-right '#{?pane_synchronized, #[fg=colour196]*SYNC*#[default],}#[bg=colour236] #[bg=colour235]#[fg=colour185] #(date "+%a %b %d %H:%M") #[bg=colour236] #[bg=colour237] #[bg=colour72] '
-set-option -g status-interval 60
-
-set-option -g pane-border-status bottom
-set-option -g pane-border-format "#{pane_index} #{pane_current_command}"
-set-option -g pane-active-border-style fg=colour245
-set-option -g pane-border-style fg=colour243
-
-set-window-option -g window-status-format '#[bg=colour238]#[fg=colour107] #I #[bg=colour239]#[fg=colour110] #[bg=colour240]#W#[bg=colour239]#[fg=colour195]#F#[bg=colour238] '
-set-window-option -g window-status-current-format '#[bg=colour236]#[fg=colour215] #I #[bg=colour235]#[fg=colour167] #[bg=colour234]#W#[bg=colour235]#[fg=colour195]#F#[bg=colour236] '
-
-# set-window-option -g window-style 'bg=colour238'
-# set-window-option -g window-active-style 'bg=colour237'
-
-##############################################################################
 # fzf integration
 ##############################################################################
 # TODO
@@ -161,15 +138,16 @@ set-option -g @plugin 'tmux-plugins/tpm'
 set-option -g @plugin 'tmux-plugins/tmux-sensible'
 set-option -g @plugin 'tmux-plugins/tmux-sessionist'
 set-option -g @plugin 'tmux-plugins/tmux-pain-control'
+set-option -g @plugin 'sainnhe/tmux-fzf'
 
 # Themes
-# set -g @plugin 'dracula/tmux'
+set -g @plugin 'dracula/tmux'
 
-# set-option -g @dracula-plugins "battery network-bandwidth time"
-# set-option -g @dracula-show-powerline true
-# set-option -g @dracula-show-flags true
-# set-option -g @dracula-show-fahrenheit false
-# set-option -g @dracula-day-month true
+set-option -g @dracula-plugins "time"
+set-option -g @dracula-show-powerline true
+set-option -g @dracula-show-flags true
+set-option -g @dracula-day-month true
+set-option -g @dracula-military-time true
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 {{ if (eq .chezmoi.arch "arm64") -}}
