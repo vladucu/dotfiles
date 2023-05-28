@@ -12,9 +12,28 @@ stackline = require "stackline"
 
 {{- $yabai := or (lookPath "/opt/homebrew/bin/yabai") (lookPath "/usr/local/bin/yabai") }}
 local myStackline = {
-    paths = {
-      yabai = "{{ $yabai }}"
-    },
+  paths = {
+    yabai = "{{ $yabai }}"
+  },
+  -- Appearance
+  appearance = {
+    alpha                    = 1,                   -- Opacity of active indicators
+    color                    = { white = 0.90 },    -- Indicator background color, e.g., {red = 0.5, blue = 0 }
+    dimmer                   = 2.5,                 -- Higher numbers increase contrast b/n focused & unfocused state
+    fadeDuration             = 0.2,                 -- Duration of fade animations (seconds) 
+    iconDimmer               = 1.1,                 -- Higher numbers dim inactive icons *less* than the non-icon indicators
+    iconPadding              = 4,                   -- Space between icon & indicator edge. Higher numbers → smaller, more inset icons
+    pillThinness             = 6,                   -- Aspect ratio of pill-style icons (width = size / pillThinness)
+    radius                   = 3,                   -- Indicator roundness. Higher numbers → *less* roundness… I'm sorry
+    shouldFade               = true,                -- Enable/disable fade animations
+    showIcons                = true,                -- Window indicator style ('lozenge'-shaped when false)
+    size                     = 32,                  -- Size of window indicators (height when icons off)
+    vertSpacing              = 1.2,                 -- Amount of vertical space between indicators
+    offset                   = {                    -- Offset controls position of stack indicators relative to the window
+      y                 = 50,                       -- Distance from top of the window to render indicators
+      x                 = 4                         -- Distance away from the edge of the window to render indicators
+    }
+  }
 }
 
 stackline:init(myStackline)
@@ -68,3 +87,6 @@ function reloadConfig(files)
 end
 
 hs.pathwatcher.new(os.getenv('HOME') .. '/.hammerspoon/', reloadConfig):start()
+
+
+{{/* vim: set filetype=lua: */}}
