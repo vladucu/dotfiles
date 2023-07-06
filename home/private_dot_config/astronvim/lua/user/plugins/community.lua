@@ -9,7 +9,7 @@ return {
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.editing-support.chatgpt-nvim" },
   { import = "astrocommunity.editing-support.neogen" },
-  { import = "astrocommunity.editing-support.treej" },
+  { import = "astrocommunity.editing-support.treesj" },
   { import = "astrocommunity.editing-support.zen-mode-nvim" },
   { import = "astrocommunity.media.vim-wakatime" },
   { import = "astrocommunity.motion.leap-nvim" },
