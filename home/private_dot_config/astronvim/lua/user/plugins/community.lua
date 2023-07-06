@@ -7,6 +7,7 @@ return {
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.colorscheme.onedarkpro-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
+  { import = "astrocommunity.editing-support.chatgpt-nvim" },
   { import = "astrocommunity.editing-support.neogen" },
   { import = "astrocommunity.editing-support.treej" },
   { import = "astrocommunity.editing-support.zen-mode-nvim" },
