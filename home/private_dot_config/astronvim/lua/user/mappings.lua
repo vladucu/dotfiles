@@ -32,8 +32,6 @@ return {
     ["<leader>P"] = { [["_dP]] },
   },
   v = {
-    ["J"] = { ":m '>+1<CR>gv=gv" },
-    ["K"] = { ":m '<-2<CR>gv=gv" },
     ["<leader>d"] = { [["_d"]] },
     ["<leader>y"] = { [["+y"]] },
   },
