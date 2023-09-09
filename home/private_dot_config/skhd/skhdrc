@@ -4,37 +4,83 @@
 # A list of all built-in modifier and literal keywords can be found here
 # https://github.com/koekeishiya/skhd/issues/1
 
-# Open terminal, blazingly fast compared to iTerm/Hyper
-hyper - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
-
-#============================================
-# Yabai
-#============================================
 # Sources
+# https://github.com/koekeishiya/dotfiles/blob/master/skhd/skhdrc
+# https://github.com/narze/dotfiles/blob/master/chezmoi/executable_dot_skhdrc
 # https://github.com/koekeishiya/yabai/wiki/Commands
 # https://programmer.ink/think/tile-desktop-under-mac-yabai.html
 # https://github.com/kpritam/nixpkgs/blob/master/configs/.skhdrc
 
-# Navigation
-alt - h : yabai -m window --focus west || yabai -m window --focus east
-alt - j : yabai -m window --focus south || yabai -m window --focus north
-alt - k : yabai -m window --focus north || yabai -m window --focus south
-alt - l : yabai -m window --focus east || yabai -m window --focus west
+# ============================================
+# Legend
+#   Leader: Alt
+#   Navigation : H / J / K / L (vim)
+#   Prev / Next : p / n OR z / c
+# ============================================
 
-# Toggle behavior
-alt - f         : yabai -m window --toggle zoom-fullscreen
-shift + alt - f : yabai -m window --toggle native-fullscreen
-# Close focused window
-alt - w         : yabai -m window --close
-alt - c         : yabai -m window --toggle float
-alt - x         : yabai -m window --toggle split
-shift + ctrl + alt - c : ((yabai -m query --spaces --space | jq -re '.type == "bsp"') && yabai -m space --layout float) || yabai -m space --layout bsp
+# Open terminal, blazingly fast compared to iTerm/Hyper
+hyper - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
 
-# Moving windows
-shift + alt - h : yabai -m window --warp west
-shift + alt - j : yabai -m window --warp south
-shift + alt - k : yabai -m window --warp north
-shift + alt - l : yabai -m window --warp east
+# Change desktop layout
+ctrl + alt - a : yabai -m space --layout bsp; \
+                 terminal-notifier -title Yabai -message "Bsp mode activated"
+ctrl + alt - d: yabai -m space --layout float; \
+                 terminal-notifier -title Yabai -message "Float mode activated"
+ctrl + alt - s : yabai -m space --layout stack; \
+                 terminal-notifier -title Yabai -message "Stack mode activated"
+
+# balance size of windows
+# shift + alt - 0 : yabai -m space --balance
+alt - 0 : yabai -m space --balance
+
+# make floating window fill screen
+hyper - k     : yabai -m window --grid 1:1:0:0:1:1
+
+# make floating window fill left-half of screen
+hyper - h     : yabai -m window --grid 1:2:0:0:1:1
+
+# make floating window fill right-half of screen
+hyper - l  : yabai -m window --grid 1:2:1:0:1:1
+
+# Focus window
+alt - x : yabai -m window --focus recent
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+# Focus window in stacked mode
+alt - z : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+alt - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
+alt - c : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+alt - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+
+# Swap window
+shift + alt - x : yabai -m window --swap recent
+shift + alt - h : yabai -m window --swap west
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - l : yabai -m window --swap east
+
+# Move window
+shift + cmd - h : yabai -m window --warp west
+shift + cmd - j : yabai -m window --warp south
+shift + cmd - k : yabai -m window --warp north
+shift + cmd - l : yabai -m window --warp east
+
+##############################################
+# Sizing: Shift + [Alt/Cmd/Ctrl] + [DIR]
+##############################################
+# increase window size
+shift + alt - a : yabai -m window --resize left:-20:0
+shift + alt - s : yabai -m window --resize bottom:0:20
+shift + alt - w : yabai -m window --resize top:0:-20
+shift + alt - d : yabai -m window --resize right:20:0
+
+# decrease window size
+shift + cmd - a : yabai -m window --resize left:20:0
+shift + cmd - s : yabai -m window --resize bottom:0:-20
+shift + cmd - w : yabai -m window --resize top:0:20
+shift + cmd - d : yabai -m window --resize right:-20:0
 
 # Resize windows
 ctrl + alt - h : \
@@ -53,9 +99,73 @@ ctrl + alt - l : \
     yabai -m window --resize right:100:0 ; \
     yabai -m window --resize left:100:0
 
+# move window
+shift + ctrl - a : yabai -m window --move rel:-20:0
+shift + ctrl - s : yabai -m window --move rel:0:20
+shift + ctrl - w : yabai -m window --move rel:0:-20
+shift + ctrl - d : yabai -m window --move rel:20:0
+
+##############################################
+# Toggling
+##############################################
+# rotate tree
+alt - r : yabai -m space --rotate 90
+
+# mirror tree y-axis
+alt - y : yabai -m space --mirror y-axis
+
+# mirror tree x-axis
+alt - x : yabai -m space --mirror x-axis
+
+# toggle desktop offset
+alt - a : yabai -m space --toggle padding --toggle gap
+
+# toggle window parent zoom
+alt - d : yabai -m window --toggle zoom-parent
+
+# toggle window fullscreen zoom
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+# toggle window native fullscreen
+shift + alt - f : yabai -m window --toggle native-fullscreen
+
+# toggle sticky (show on all spaces)
+alt - s : yabai -m window --toggle sticky
+
+# toggle window split type
+alt - e : yabai -m window --toggle split
+
+# toggle topmost (keep above other windows)
+alt - o : yabai -m window --toggle topmost
+
+# toggle window fade
+alt - q : yabai -m window --toggle fade
+
+# toggle picture-in-picture
+alt - p : yabai -m window --toggle border --toggle pip
+
 # Float and center window
-shift + alt - c : yabai -m window --toggle float;\
-                yabai -m window --grid 24:24:1:1:22:22
+shift + alt - c : yabai -m window --toggle float --grid 24:24:1:1:22:22
+
+##############################################
+# Stacking
+##############################################
+# Stack windows
+shift + ctrl + alt - h : yabai -m window --stack west
+shift + ctrl + alt - l : yabai -m window --stack east
+shift + ctrl + alt - j : yabai -m window --stack south
+shift + ctrl + alt - k : yabai -m window --stack north
+
+# Restart Yabai
+shift + ctrl + alt - r : chezmoi apply ~/.config/skhd/skhdrc ~/.config/yabai/yabairc && \
+                          yabai --restart-service && \
+                          terminal-notifier -title Yabai -message "Yabai restarted"
+
+
+# Close focused window
+alt - w         : yabai -m window --close
+alt - c         : yabai -m window --toggle float
+
 
 ctrl - 1 : yabai -m space --focus 1
 shift + ctrl - 1 : yabai -m window --space 1 && yabai -m space --focus 1
@@ -78,27 +188,6 @@ shift + ctrl - 9 : yabai -m window --space 9 && yabai -m space --focus 9
 ctrl - 0 : yabai -m space --focus 10
 shift + ctrl - 0 : yabai -m window --space 10 && yabai -m space --focus 10
 
-# Equalize size of windows
-lctrl + alt - 0 : yabai -m space --balance
-
-# Mirror tree y-axis
-shift + alt - y : yabai -m space --mirror y-axis
-## Mirror tree x-axis
-shift + alt - x : yabai -m space --mirror x-axis
-
-
-# Stacks
-alt - e : yabai -m space --layout bsp
-# alt - s : yabai -m space --layout stack
-alt - s : ((yabai -m query --spaces --space | jq -re '.type == "bsp"') && yabai -m space --layout stack) || yabai -m space --layout bsp
-shift + ctrl + alt - h : yabai -m window --stack west
-shift + ctrl + alt - l : yabai -m window --stack east
-shift + ctrl + alt - j : yabai -m window --stack south
-shift + ctrl + alt - k : yabai -m window --stack north
-alt - n : yabai -m window --focus stack.next || yabai -m window --focus stack.first
-alt - p : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 shift + alt - b :  hs -c 'stackline.config:toggle("appearance.showIcons")'
 
-# Restart Yabai
-shift + ctrl + alt - r : yabai --restart-service
