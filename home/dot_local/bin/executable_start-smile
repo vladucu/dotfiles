@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+pushd $GHQ_ROOT/github.com/smile-io/dev-env-services || exit 1
+
+# Grab latest changes
+git pull
+git submodule init
+git submodule update
+
+# Check if the 'smile-dev' Docker network exists
+# docker network inspect smile-dev > /dev/null 2>&1
+# network_exists=$?
+#
+# # Create the 'smile-dev' Docker network if it doesn't exist
+# if [ "$network_exists" -ne 0 ]; then
+#     docker network create smile-dev
+# fi
+
+# Start & wait for docker
+wait-for-docker
+
+# Start Docker Compose services
+smile-cli dc -f docker-compose.yml -f arm64-override.yml up -d
+
+# Return to the original directory
+popd || exit 1
+
+echo "Smile services started successfully."

@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+(cd $GHQ_ROOT/github.com/smile-io/dev-env-services && smile-cli dc stop > /dev/null 2>&1) &
+(cd $GHQ_ROOT/github.com/smile-io/smile-core && smile-cli dc stop > /dev/null 2>&1) &
+(cd $GHQ_ROOT/github.com/smile-io/smile-data-ingestion-endpoints && smile-cli dc stop > /dev/null 2>&1) &
+(cd $GHQ_ROOT/github.com/smile-io/smile-analytics && smile-cli dc stop > /dev/null 2>&1)

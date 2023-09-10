@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+pushd $GHQ_ROOT/github.com/smile-io/dev-env-services
+smile-cli dc down
+docker volume rm dev-env-services_kafkadata dev-env-services_zookeeperdata dev-env-services_zookeeperdatalog dev-env-services_zookeeperlogs
+smile-cli dc -f docker-compose.yml -f arm64-override.yml up -d
+popd
