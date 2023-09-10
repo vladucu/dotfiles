@@ -18,8 +18,14 @@
 {{   output $zoxide "init" "zsh" | trim }}
 {{- end }}
 
-{{- $thefuck := or (lookPath "/opt/homebrew/bin/thefuck") (lookPath "/usr/local/bin/thefuck") }}
-{{- if $thefuck }}
+{{ $direnv := or (lookPath "/opt/homebrew/bin/direnv") (lookPath "/usr/local/bin/direnv") -}}
+{{ if $direnv -}}
+# Source direnv
+{{   output $direnv "hook" "zsh" | trim }}
+{{- end }}
+
+{{ $thefuck := or (lookPath "/opt/homebrew/bin/thefuck") (lookPath "/usr/local/bin/thefuck") -}}
+{{ if $thefuck -}}
 # Fuck
 # https://github.com/nvbn/thefuck
 {{   output $thefuck "--alias" | trim }}
