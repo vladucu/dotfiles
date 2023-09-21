@@ -62,6 +62,13 @@ apply = ["defer"]
 pre = "zstyle ':zim:git' aliases-prefix 'g'"
 post = "fpath+={{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions && autoload -U {{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions/*"
 
+# We're re-loading this again after initially doing it in `plugins.env` to address `gh` conflict with `zimfw/git`
+# TODO get rid of zimfw/git in favor of own shortcuts
+[plugins.op]
+local = "{{ .chezmoi.homeDir }}/.local/share/shell/op"
+use = ["env.zsh"]
+apply = ["defer"]
+
 [plugins.zimfw-exa]
 github = "zimfw/exa"
 apply = ["defer"]
