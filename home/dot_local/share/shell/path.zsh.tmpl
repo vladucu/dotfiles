@@ -5,6 +5,8 @@ path+=/usr/local/bin
 
 path=(/opt/homebrew/opt/ncurses/bin $path) 
 
+path+=$HOME/.bun/bin
+
 {{- if .smile }}
 path+=/opt/homebrew/opt/postgresql@11/bin
 {{- end -}}

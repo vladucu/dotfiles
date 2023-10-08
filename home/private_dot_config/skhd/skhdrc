@@ -188,6 +188,4 @@ shift + ctrl - 9 : yabai -m window --space 9 && yabai -m space --focus 9
 ctrl - 0 : yabai -m space --focus 10
 shift + ctrl - 0 : yabai -m window --space 10 && yabai -m space --focus 10
 
-
 shift + alt - b :  hs -c 'stackline.config:toggle("appearance.showIcons")'
-
