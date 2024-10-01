@@ -20,7 +20,7 @@ echo "Installing common macOS packages"
     "cmake"
     "coreutils"
     "curl"
-    "exa"
+    "eza"
     "fd"
     "fzf"
     "gh"
@@ -28,8 +28,10 @@ echo "Installing common macOS packages"
     "git-delta"
     "git"
     "gpg"
+    "jj"
     "jq"
     "lazygit"
+    "lsd"
     "less"
     "mackup"
     "navi"
@@ -220,15 +222,15 @@ Removed casks for now:
 {{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
 {{ $brew }} bundle --no-lock --file=/dev/stdin <<EOF
 {{ range ($taps | sortAlpha | uniq) -}}
-tap "{{ . }}"
+tap {{ . | quote }}
 {{ end -}}
 
 {{ range ($brews | sortAlpha | uniq) -}}
-brew "{{ . }}"
+brew {{ . | quote }}
 {{ end -}}
 
 {{ range ($casks | sortAlpha | uniq) -}}
-cask "{{ . }}"
+cask {{ . | quote }}
 {{ end -}}
 EOF
 
