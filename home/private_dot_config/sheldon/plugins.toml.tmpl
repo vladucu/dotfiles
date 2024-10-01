@@ -2,9 +2,11 @@
 #
 # See https://rossmacarthur.github.io/sheldon/
 
+shell = "zsh"
+
 [templates]
-defer = {{ `"{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"` }}
-defer-more = {{ `"{{ hooks | get: \"pre\" | nl }}{% for file in files %}zsh-defer -t 0.5 source \"{{ file }}\"\n{% endfor %}{{ hooks | get: \"post\" | nl }}"` }}
+defer = {{ `"{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"` }}
+defer-more = {{ `"{{ hooks?.pre | nl }}{% for file in files %}zsh-defer -t 0.5 source \"{{ file }}\"\n{% endfor %}{{ hooks?.post | nl }}"` }}
 
 ###################
 # Completions
@@ -42,7 +44,7 @@ github = "romkatv/zsh-defer"
 [plugins.config]
 local = "{{ .chezmoi.homeDir }}/.local/share/shell"
 use = ["config.zsh"]
-apply = ["defer", "source"]
+apply = ["defer"]
 
 [plugins.local]
 local = "{{ .chezmoi.homeDir }}/.local/share/shell"
@@ -52,6 +54,15 @@ apply = ["defer"]
 # Alternative djui/alias-tips
 [plugins.zsh-you-should-use]
 github = "MichaelAquilina/zsh-you-should-use"
+apply = ["defer"]
+
+
+[plugins.zimfw-utility]
+github = "zimfw/utility"
+apply = ["defer"]
+
+[plugins.zimfw-exa]
+github = "zimfw/exa"
 apply = ["defer"]
 
 # Git aliases
@@ -67,10 +78,6 @@ post = "fpath+={{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimf
 [plugins.op]
 local = "{{ .chezmoi.homeDir }}/.local/share/shell/op"
 use = ["env.zsh"]
-apply = ["defer"]
-
-[plugins.zimfw-exa]
-github = "zimfw/exa"
 apply = ["defer"]
 
 # Testing out alternative https://github.com/ajeetdsouza/zoxide
