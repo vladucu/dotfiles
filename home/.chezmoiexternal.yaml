@@ -6,10 +6,11 @@
   refreshPeriod: 168h
 
 .config/nvim:
-  type: git-repo
-  url: https://github.com/LazyNvim/starter.git
-  exact: true
+  type: archive
+  url: https://github.com/LazyVim/starter/archive/main.tar.gz
   stripComponents: 1
+  exclude:
+    - "*/plugins/**"
   refreshPeriod: 168h
 
 .hammerspoon/stackline:
