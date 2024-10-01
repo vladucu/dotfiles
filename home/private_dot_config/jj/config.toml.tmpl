@@ -1,0 +1,18 @@
+[user]
+name = "Vlad Vanca"
+email = "vanca.vlad@gmail.com"
+
+[template-aliases]
+# https://github.com/martinvonz/jj/blob/main/docs/config.md#display-of-commit-and-change-ids
+# Just the shortest possible unique prefix
+'format_short_id(id)' = 'id.shortest()'
+# Prioritize the current branch to get shorter prefixes for certain revisions
+revsets.short-prefixes = "(main..@)::"
+
+{{- $gpgPath := or (lookPath "/opt/homebrew/bin/gpg") (lookPath "/usr/local/bin/gpg") }}
+{{- if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") $gpgPath }}
+[signing]
+sign-all = true
+backend = "gpg"
+key = "{{ .gpg_recipient }}"
+{{- end }}
