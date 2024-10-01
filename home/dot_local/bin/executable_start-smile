@@ -20,7 +20,7 @@ git submodule update
 wait-for-docker
 
 # Start Docker Compose services
-smile-cli dc -f docker-compose.yml -f arm64-override.yml up -d
+smile-cli dc up -d
 
 # Return to the original directory
 popd || exit 1
