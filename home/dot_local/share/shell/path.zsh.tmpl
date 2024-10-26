@@ -9,6 +9,8 @@ path+=$HOME/.bun/bin
 
 {{- if .smile }}
 path+=/opt/homebrew/opt/postgresql@11/bin
-{{- end -}}
+{{- end }}
+
+path+=$GHOSTTY_BIN_DIR
 
 {{/* vim: set filetype=zsh: */}}
