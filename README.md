@@ -10,7 +10,7 @@ These dotfiles are managed with [Chezmoi](https://chezmoi.io).
 
 ## Usage
 
-First, download and install the [1Password](https://1password.com/product/mac) password manager.
+First, download and install manually the [1Password](https://1password.com/product/mac) password manager.
 
 > 1Password version 8 is required since it features an SSH agent, which stores the GitHub SSH key.
 
