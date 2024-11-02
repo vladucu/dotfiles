@@ -10,23 +10,18 @@ These dotfiles are managed with [Chezmoi](https://chezmoi.io).
 
 ## Usage
 
+First, download and install the [1Password](https://1password.com/product/mac) password manager.
+
+> 1Password version 8 is required since it features an SSH agent, which stores the GitHub SSH key.
+
+Next, enable 1Password's SSH agent (Developer > SSH Agent > Use SSH agent).
+
+After configuring 1Password, download and execute the [installation script](./install.sh).
+
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/install.sh) -k"
 ```
 
-Right now, during first installation a couple of things that use personal secrets will fail.
-Personal secrets are stored in [1Password](https://1password.com) and you'll
-need to log into 1Password with:
-
-```shell
-eval $(op signin)
-```
-
-Re-run chezmoi again after logging into 1Password
-
-```shell
-chezmoi apply
-```
 
 ## Manual tasks (One-time per machine)
 
@@ -37,9 +32,6 @@ chezmoi apply
 
 ### TODOs
 
-- [ ] Fix kitty not working on macOS Ventura
-- [ ] Support Linux
-- [ ] Support GitHub Codespaces
 - [ ] Instructions to import GPG keys
 
 ### Installed Applications & Tools
