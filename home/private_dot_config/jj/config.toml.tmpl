@@ -19,12 +19,13 @@ key = "{{ .gpg_recipient }}"
 {{- end }}
 
 [aliases]
-b = ["branch"]
+b = ["bookmark"]
 n = ["new"]
 
 [ui]
 # diff-editor = ":builtin"
-# diff-editor = "scm-diff-editor"
+# Explicitly set the diff editor to the default one to fix bug with splitting not including deleted files
+diff-editor = "scm-diff-editor"
 default-command = "log"
 
 [merge-tools.scm-diff-editor]
