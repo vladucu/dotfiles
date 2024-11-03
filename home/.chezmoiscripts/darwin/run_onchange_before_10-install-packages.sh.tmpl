@@ -1,11 +1,10 @@
 #!/bin/bash
 # Install common macOS packages
-
-source /tmp/chezmoi-utils.sh
 set -eufo pipefail
 
-printf "${green}\n[10 - macOS] ${reset}"
-echo "Installing common macOS packages"
+{{ template "utils" }}
+
+info "[10 - macOS - Homebew packages]"
 
 {{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
 
@@ -22,3 +21,5 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
+
+success "Homebew packages install successful!"

@@ -1,0 +1,48 @@
+# ANSI color and styling variables
+export red="\e[0;91m"
+export blue="\e[0;94m"
+export green="\e[0;92m"
+export yellow="\e[0;93m"
+export white="\e[0;97m"
+export bold="\e[1m"
+export reset="\e[0m"
+export expand_bg="\e[K"
+
+# Background colors with expanded background (optional use for larger blocks)
+export blue_bg="\e[0;104m${expand_bg}"
+export red_bg="\e[0;101m${expand_bg}"
+export green_bg="\e[0;102m${expand_bg}"
+
+# Symbols for enhanced visuals (Unicode for cross-platform support)
+info_icon="ℹ️ "
+user_icon="❓"
+success_icon="✅"
+fail_icon="❌"
+warn_icon="⚠️ "
+
+# Improved message functions with color and icons
+info() {
+  printf "${blue}${info_icon}${reset} ${blue}INFO${reset}  - $1\n"
+}
+
+user() {
+  printf "${yellow}${user_icon}${reset} ${yellow}USER${reset}  - $1\n"
+}
+
+success() {
+  printf "${green}${success_icon}${reset} ${green}SUCCESS${reset} - $1\n"
+}
+
+fail() {
+  printf "${red}${fail_icon}${reset} ${red}FAIL${reset}    - $1\n"
+}
+
+warn() {
+  printf "${yellow}${warn_icon}${reset} ${yellow}WARNING${reset} - $1\n"
+}
+
+fail_exit() {
+  fail "$1"
+  echo "Exiting..."
+  exit 1
+}

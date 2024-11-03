@@ -1,10 +1,12 @@
 #!/bin/bash
 # Install Rosetta 2
-
-source /tmp/chezmoi-utils.sh
 set -eufo pipefail
 
-printf "${green}\n[02 - macOS] ${reset}"
-echo "Installing Rosetta 2"
+{{ template "utils" }}
+
+info "[02 - macOS - Rosetta 2]"
 
 sudo softwareupdate --install-rosetta
+
+success "Rosetta 2 install successful!"
+
