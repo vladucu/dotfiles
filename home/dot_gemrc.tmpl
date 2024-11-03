@@ -1,4 +1,4 @@
-{{ $GITHUB_TOKEN = onepasswordRead "op://Personal/GITHUB_TOKEN PAT/token" .onepassword_account }}
+{{ $GITHUB_TOKEN := onepasswordRead "op://Personal/GITHUB_TOKEN PAT/token" .onepassword_account }}
 ---
 :backtrace: false
 :bulk_threshold: 1000
