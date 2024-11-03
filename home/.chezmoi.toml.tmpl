@@ -60,16 +60,19 @@
 {{-   writeToStdout "💡 Tip: you can re-enter your name and email with `chezmoi init --data=false`.\n" -}}
 {{- end -}}
 
+encryption = "gpg"
 
-data:
-  name: {{ $name | quote }}
-  email: {{ $email | quote }}
-  computer_name: {{ $computer_name | quote }}
-  hostname: {{ $hostname | quote }}
-  smile: {{ $smile }}
-  onepassword_account: "44TQRXVOJ5CR3BULYTHWSHDLAI"
-  gpg_recipient: {{ $gpg_recipient | quote }}
+[data]
+name = {{ $name | quote }}
+email = {{ $email | quote }}
+computer_name = {{ $computer_name | quote }}
+hostname = {{ $hostname | quote }}
+smile = {{ $smile }}
+onepassword_account = "44TQRXVOJ5CR3BULYTHWSHDLAI"
+gpg_recipient = {{ $gpg_recipient | quote }}
 
-encryption: "gpg"
-gpg:
-  recipient: {{ $gpg_recipient | quote }}
+[gpg]
+recipient = {{ $gpg_recipient | quote }}
+
+[hooks.read-source-state.pre]
+command = ".local/share/chezmoi/home/.install-password-manager.sh"
