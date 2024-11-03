@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 (cd $GHQ_ROOT/github.com/smile-io/dev-env-services && smile-cli dc stop > /dev/null 2>&1) &
 (cd $GHQ_ROOT/github.com/smile-io/smile-core && smile-cli dc stop > /dev/null 2>&1) &

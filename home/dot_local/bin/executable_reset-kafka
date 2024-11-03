@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 pushd $GHQ_ROOT/github.com/smile-io/dev-env-services
 smile-cli dc down
