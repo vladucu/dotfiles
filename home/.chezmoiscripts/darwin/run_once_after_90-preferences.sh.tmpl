@@ -3,7 +3,7 @@ set -eufo pipefail
 
 {{ template "utils" }}
 
-info "[90 - macOS preferences]"
+title "[90 - macOS preferences]"
 
 # Inspiration
 # https://macos-defaults.com/#%F0%9F%99%8B-what-s-a-defaults-command
@@ -169,4 +169,4 @@ for app in "Activity Monitor" \
 done
 {{  end -}}
 
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+success "Done. Note that some of these changes require a logout/restart to take effect."

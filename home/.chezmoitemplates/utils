@@ -21,6 +21,10 @@ fail_icon="❌"
 warn_icon="⚠️ "
 
 # Improved message functions with color and icons
+title() {
+  printf "\n${blue_bg}${bold}$1${reset}\n\n"
+}
+
 info() {
   printf "${blue}${info_icon}${reset} ${blue}INFO${reset}  - $1\n"
 }

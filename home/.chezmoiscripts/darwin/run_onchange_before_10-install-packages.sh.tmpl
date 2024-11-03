@@ -4,7 +4,7 @@ set -eufo pipefail
 
 {{ template "utils" }}
 
-info "[10 - macOS - Homebew packages]"
+title "[10 - macOS - Homebew packages]"
 
 {{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
 

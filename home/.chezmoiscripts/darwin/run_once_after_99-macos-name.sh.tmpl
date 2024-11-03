@@ -1,4 +1,9 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
+set -eufo pipefail
+
+{{ template "utils" }}
+
+title "[99 - macOS name]"
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -24,3 +29,5 @@ sudo scutil --set ComputerName $COMPUTER_NAME
 sudo scutil --set LocalHostName $HOSTNAME
 sudo scutil --set HostName $HOSTNAME
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $HOSTNAME
+
+success "Computer name set to $COMPUTER_NAME and hostname set to $HOSTNAME"
