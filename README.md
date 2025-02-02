@@ -19,9 +19,8 @@ Next, enable 1Password's SSH agent (Developer > SSH Agent > Use SSH agent).
 After configuring 1Password, download and execute the [installation script](./install.sh).
 
 ```shell
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/install.sh) -k"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/install.sh)"
 ```
-
 
 ## Manual tasks (One-time per machine)
 
@@ -67,3 +66,4 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/inst
 
 - [narze/dotfiles](https://github.com/narze/dotfiles)
 - [twpayne/dotfiles](https://github.com/twpayne/dotfiles)
+

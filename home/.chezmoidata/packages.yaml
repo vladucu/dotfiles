@@ -1,10 +1,9 @@
 packages:
   darwin:
     taps:
-      - "homebrew/cask-versions"
-      - "homebrew/cask-fonts"
       - "koekeishiya/formulae"
     brews:
+      - "ast-grep"
       - "awk"
       - "awscli"
       - "bash"
@@ -42,7 +41,7 @@ packages:
       - "sheldon"
       - "shellcheck"
       - "skhd"
-      - "thefuck"
+      # - "thefuck"
       - "tig"
       - "tmux"
       - "tmuxinator"
@@ -53,8 +52,9 @@ packages:
       - "zoxide"
       - "zsh"
     casks:
-      - "1password"
-      - "1password-cli"
+      # - "1password"
+      # - "1password-cli"
+      - "aerospace"
       - "adobe-acrobat-reader"
       - "appcleaner"
       - "arc"
@@ -62,7 +62,7 @@ packages:
       - "brave-browser"
       - "coscreen"
       - "discord"
-      - "docker"
+      # - "docker"
       - "flux"
       - "font-fira-code-nerd-font"
       - "font-hack-nerd-font"

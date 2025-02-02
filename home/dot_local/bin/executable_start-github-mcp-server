@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Export GitHub token from 1Password
+export GITHUB_PERSONAL_ACCESS_TOKEN="op://Employee/GITHUB_TOKEN PAT/token"
+
+# Run the MCP server with the token
+op run -- docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server

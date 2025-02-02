@@ -1,0 +1,27 @@
+{{ $GITHUB_PERSONAL_ACCESS_TOKEN := onepasswordRead "op://Personal/GITHUB_TOKEN PAT/token" .onepassword_account -}}
+{
+  "globalShortcut": "Shift+Alt+Space",
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{{ $GITHUB_PERSONAL_ACCESS_TOKEN }}"
+      }
+    },
+    "linear": {
+      "command": "/Users/vladucu/.volta/bin/npx",
+      "args": ["-y", "mcp-remote", "https://mcp.linear.app/sse"]
+    }
+  },
+  "preferences": {
+    "quickEntryDictationShortcut": "capslock"
+  }
+}

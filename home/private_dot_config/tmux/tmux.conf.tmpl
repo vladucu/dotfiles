@@ -149,11 +149,11 @@ set-option -g @dracula-show-flags true
 set-option -g @dracula-day-month true
 set-option -g @dracula-military-time true
 
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-{{ if (eq .chezmoi.arch "arm64") -}}
-# This line is needed for M1 https://github.com/tmux-plugins/tpm/issues/203#issuecomment-858036483
-set-environment -g PATH "/opt/homebrew/bin:/usr/local/bin:/bin:/usr/bin"
-{{- end }}
 run '~/.tmux/plugins/tpm/tpm'
+
+# 3.5a update
+# https://github.com/tmux/tmux/issues/4162
+set -gu default-command
+set -g default-shell "$SHELL"
 
 {{/* vim: set filetype=tmux: */}}

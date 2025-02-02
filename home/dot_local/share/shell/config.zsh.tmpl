@@ -57,6 +57,28 @@ alias t=tig
 alias ts="tig status"
 
 alias j=jj
+alias js="jj split"
+alias jst="jj status"
+alias jd="jj diff"
+alias jc="jj commit"
+alias jcm="jj commit -m"
+
+# Workflow shortcuts - high frequency patterns
+alias jnm="jj new main@origin"
+alias jgp="jj git push"
+alias jgpa="jj git push --allow-new"
+alias jgf="jj git fetch"
+alias jlm="jj log -r '::mine()'"
+alias jbl="jj bookmark list"
+alias jsq="jj squash"
+
+# Bookmark movement shortcuts - HUGE time savers
+alias jbmb="jj bookmark move --from @-- --to @-"
+alias jbmm="jj bookmark move main --to main@origin"
+
+alias oc="open-codex"
+
+alias cl=claude
 
 {{- if .smile }}
 alias sc=smile-cli
