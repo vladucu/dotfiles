@@ -8,7 +8,7 @@ title "[10 - macOS - Homebew packages]"
 
 {{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
 
-{{ $brew }} bundle --no-lock --file=/dev/stdin <<EOF
+{{ $brew }} bundle --file=/dev/stdin <<EOF
 {{ range (.packages.darwin.taps | sortAlpha | uniq) -}}
 tap {{ . | quote }}
 {{ end -}}
