@@ -13,7 +13,7 @@ email = "vanca.vlad@gmail.com"
 {{- $gpgPath := or (lookPath "/opt/homebrew/bin/gpg") (lookPath "/usr/local/bin/gpg") }}
 {{- if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") $gpgPath }}
 [signing]
-sign-all = true
+behavior = "own"
 backend = "gpg"
 key = "{{ .gpg_recipient }}"
 {{- end }}
