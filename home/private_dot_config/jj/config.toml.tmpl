@@ -20,7 +20,13 @@ key = "{{ .gpg_recipient }}"
 
 [aliases]
 b = ["bookmark"]
+d = ["diff"]
 n = ["new"]
+
+[revsets]
+# Overwrite the default to exclude noisy work service commits
+# https://github.com/jj-vcs/jj/blob/main/cli/src/config/revsets.toml#L10C1-L10C74
+log = "(present(@) | ancestors(immutable_heads().., 2) | present(trunk())) & ~ author('smile-ci-service@users.noreply.github.com')"
 
 [ui]
 # diff-editor = ":builtin"
