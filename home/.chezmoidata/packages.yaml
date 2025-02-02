@@ -31,6 +31,7 @@ packages:
       - "less"
       - "lsd"
       - "mackup"
+      - "mise"
       - "navi"
       - "ncurses"
       - "neovim"

@@ -90,11 +90,6 @@ github = "ohmyzsh/ohmyzsh"
 use = ["**/fancy-ctrl-z/*.plugin.zsh"]
 apply = ["defer"]
 
-[plugins.asdf]
-local = "~/.asdf"
-use = ["{{- "{{ name }}.sh" -}}"]
-apply = ["defer"]
-
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 use = ["{{- "{{ name }}.zsh" -}}"]

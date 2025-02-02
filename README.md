@@ -45,7 +45,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/inst
   - [kitty](https://sw.kovidgoyal.net/kitty/) as terminal
   - [zsh](https://zsh.org) with [sheldon.cli](https://sheldon.cli.rs/) + [pure](https://github.com/sindresorhus/pure) prompt
     - using chezmoi turned out to be amazing, because zsh config can run all the expensive evaluations when applying the dotfiles, hence making the shell starting time blazing fast
-  - [asdf](https://asdf-vm.com) with Ruby / Rust / Elixir
   - [volta](https://volta.sh) as Node.js tool manager
   - [tmux](https://github.com/tmux/tmux/)
   - [macOS defaults](https://mths.be/macos)
@@ -56,14 +55,15 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/vladucu/dotfiles/main/inst
 ### Apple Silicon
 
 - Yabai : Cannot use space switch commands (eg. `yabai -m space --focus 1`) even if SIP is disabled
-  <details>
-    <summary>Workaround</summary>
+    <details>
+      <summary>Workaround</summary>
 
   Setup native shortcut keys manually and use non-consuming shortcut settings (`->`) in `skhd`
   ![image](https://user-images.githubusercontent.com/248741/111079897-a77e6380-852e-11eb-92d5-42f743dc3060.png)
+    </details>
   </details>
-</details>
 
 ### Inspirations
+
 - [narze/dotfiles](https://github.com/narze/dotfiles)
 - [twpayne/dotfiles](https://github.com/twpayne/dotfiles)

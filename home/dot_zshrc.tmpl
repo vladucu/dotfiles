@@ -31,6 +31,14 @@
 {{   output $thefuck "--alias" | trim }}
 {{- end }}
 
+
+{{ $mise := or (lookPath "/opt/homebrew/bin/mise") (lookPath "/usr/local/bin/mise") -}}
+{{ if $mise -}}
+# Mise
+# https://mise.jdx.dev/
+{{   output $mise "activate" "zsh" | trim }}
+{{- end }}
+
 ulimit -S -n 65536
 ulimit -H -n 200000
 
