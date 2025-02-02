@@ -12,7 +12,7 @@ after-login-command = []
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -122,7 +122,7 @@ alt-2 = 'workspace 2.Code'
 alt-c = 'workspace 2.Code'
 alt-3 = 'workspace 3.Browse'
 alt-4 = 'workspace 4.Comms'
-alt-5 = 'workspace 5.System'
+alt-5 = 'workspace 5.Misc'
 alt-6 = 'workspace 6.Media'
 alt-7 = 'workspace 7.Other'
 alt-8 = 'workspace 8'
@@ -135,7 +135,7 @@ alt-shift-c = 'move-node-to-workspace 2.Code'
 alt-shift-3 = 'move-node-to-workspace 3.Browse'
 alt-shift-b = 'move-node-to-workspace 3.Browse'
 alt-shift-4 = 'move-node-to-workspace 4.Comms'
-alt-shift-5 = 'move-node-to-workspace 5.System'
+alt-shift-5 = 'move-node-to-workspace 5.Misc'
 alt-shift-6 = 'move-node-to-workspace 6.Media'
 alt-shift-7 = 'move-node-to-workspace 7.Other'
 alt-shift-8 = 'move-node-to-workspace 8'
@@ -184,6 +184,10 @@ if.app-id = 'com.todesktop.230313mzl4w4u92'
 run = 'move-node-to-workspace 2.Code'
 
 [[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace 2.Code'
+
+[[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace 3.Browse'
 
@@ -208,6 +212,22 @@ if.app-id = 'net.whatsapp.WhatsApp'
 run = 'move-node-to-workspace 4.Comms'
 
 [[on-window-detected]]
+if.app-id = 'com.linear'
+run = 'move-node-to-workspace 5.Misc'
+
+[[on-window-detected]]
+if.app-id = 'ai.perplexity.mac'
+run = 'move-node-to-workspace 5.Misc'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace 5.Misc'
+
+[[on-window-detected]]
+if.app-id = 'com.todoist.mac.Todoist'
+run = 'move-node-to-workspace 5.Misc'
+
+[[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 6.Media'
 
@@ -218,3 +238,7 @@ run = 'move-node-to-workspace 8'
 [[on-window-detected]]
 if.app-id = 'com.tradingview.tradingviewapp.desktop'
 run = 'move-node-to-workspace 8'
+
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = 'layout floating'
