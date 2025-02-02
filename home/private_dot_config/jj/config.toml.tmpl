@@ -19,20 +19,56 @@ key = "{{ .gpg_recipient }}"
 {{- end }}
 
 [aliases]
+# Bookmark operations 
 b = ["bookmark"]
-d = ["diff"]
-n = ["new"]
+bl = ["bookmark", "list"]
+bs = ["bookmark", "set"]
+bt = ["bookmark", "track"]
+bu = ["bookmark", "untrack"]
+
+# Core commands 
+l = ["log"]
+s = ["split"]
+sq = ["squash"]
+ab = ["abandon"]
+u = ["undo"]
+e = ["edit"]
+sh = ["show"]
+c = ["commit"]
+
+# Git operations
+gf = ["git", "fetch"]
+gp = ["git", "push"]
+gpa = ["git", "push", "--allow-new"]
+
+# Workflow aliases
+nm = ["new", "main@origin"]
+bmm = ["bookmark", "move", "main", "--to", "main@origin"]
+bmb = ["bookmark", "move", "--from", "@--", "--to", "@-"]
+lm = ["log", "-r", "::mine()"]
 
 [revsets]
 # Overwrite the default to exclude noisy work service commits
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/revsets.toml#L10C1-L10C74
-log = "(present(@) | ancestors(immutable_heads().., 2) | present(trunk())) & ~ author('smile-ci-service@users.noreply.github.com')"
+log = "(present(@) | ancestors(immutable_heads().., 2) | present(trunk())) & ~ author('substring:smile-ci-service@users.noreply.github.com') & ~ author('substring:[bot]@users.noreply.github.com')"
+my = "(present(@) | ::mine()) & ~ author('substring:smile-ci-service@users.noreply.github.com') & ~ author('substring:[bot]@users.noreply.github.com')"
+short-prefixes = "(main..@)::"
+
+[revset-aliases]
+# Common revision ranges
+'mine_changes()' = '::mine()'
+'to_parent()' = '..@'
+'from_parent()' = '@..'
 
 [ui]
 # diff-editor = ":builtin"
 # Explicitly set the diff editor to the default one to fix bug with splitting not including deleted files
 diff-editor = "scm-diff-editor"
 default-command = "log"
+
+# Suppress revset pattern syntax warnings for email addresses in author()
+# This enables the new glob-by-default behavior to avoid future breaking changes
+revsets-use-glob-by-default = true
 
 [merge-tools.scm-diff-editor]
 program = "scm-diff-editor"
