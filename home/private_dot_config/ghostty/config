@@ -2,7 +2,7 @@
 font-size = 12.5
 font-family = Monaspace Neon
 #font-family = JetBrains Mono
-#background-opacity = 0.95
+background-opacity = 0.95
 background-blur-radius = 20
 macos-non-native-fullscreen = visible-menu
 macos-option-as-alt = left
