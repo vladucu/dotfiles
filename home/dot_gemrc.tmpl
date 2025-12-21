@@ -1,10 +1,9 @@
-{{ $GITHUB_TOKEN := onepasswordRead "op://Personal/GITHUB_TOKEN PAT/token" .onepassword_account }}
 ---
 :backtrace: false
 :bulk_threshold: 1000
 :sources:
 - https://rubygems.org/
-- https://vladucu:{{ $GITHUB_TOKEN }}@rubygems.pkg.github.com/smile-io/
-- https://vladucu:{{ $GITHUB_TOKEN }}@rubygems.pkg.github.com/
+- https://vladucu:{{ .github_token }}@rubygems.pkg.github.com/smile-io/
+- https://vladucu:{{ .github_token }}@rubygems.pkg.github.com/
 :update_sources: true
 :verbose: true

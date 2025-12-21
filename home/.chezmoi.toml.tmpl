@@ -70,6 +70,8 @@ hostname = {{ $hostname | quote }}
 smile = {{ $smile }}
 onepassword_account = "44TQRXVOJ5CR3BULYTHWSHDLAI"
 gpg_recipient = {{ $gpg_recipient | quote }}
+# Secrets - fetched once from 1Password, used across templates
+github_token = {{ onepasswordRead "op://Personal/GITHUB_TOKEN PAT/token" "44TQRXVOJ5CR3BULYTHWSHDLAI" | quote }}
 
 [gpg]
 recipient = {{ $gpg_recipient | quote }}
