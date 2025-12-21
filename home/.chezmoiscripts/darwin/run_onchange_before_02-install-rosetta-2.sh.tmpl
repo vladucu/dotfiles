@@ -1,12 +1,21 @@
 #!/bin/bash
-# Install Rosetta 2
+# Install Rosetta 2 (only needed on Apple Silicon)
 set -eufo pipefail
 
 {{ template "utils" }}
 
 title "[02 - macOS - Rosetta 2]"
 
-sudo softwareupdate --install-rosetta
-
-success "Rosetta 2 install successful!"
+{{- if eq .chezmoi.arch "arm64" }}
+# Only install on Apple Silicon Macs
+if ! pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto &>/dev/null; then
+  info "Installing Rosetta 2..."
+  sudo softwareupdate --install-rosetta --agree-to-license
+  success "Rosetta 2 installed!"
+else
+  success "Rosetta 2 already installed"
+fi
+{{- else }}
+info "Skipping Rosetta 2 (not needed on Intel Macs)"
+{{- end }}
 

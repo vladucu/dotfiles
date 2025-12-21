@@ -1,0 +1,26 @@
+{{- /*
+  find_program pattern - Resolve program path for both Intel and Apple Silicon Macs
+
+  NOTE: chezmoi's include/template functions don't support capturing output into
+  variables, so this file serves as DOCUMENTATION for the standard pattern.
+
+  STANDARD PATTERN (copy this for each program):
+  {{- $brew := or (lookPath "/opt/homebrew/bin/brew") (lookPath "/usr/local/bin/brew") }}
+  {{- $gpg := or (lookPath "/opt/homebrew/bin/gpg") (lookPath "/usr/local/bin/gpg") }}
+
+  Then use with conditional:
+  {{- if $brew }}
+    {{ $brew }} install something
+  {{- end }}
+
+  COMMONLY USED PROGRAMS:
+  - brew, gpg, sheldon, zoxide, direnv, mise, thefuck, op, jj, yabai, skhd
+
+  WHY THIS PATTERN:
+  - /opt/homebrew/bin = Apple Silicon (M1/M2/M3) Homebrew location
+  - /usr/local/bin = Intel Mac Homebrew location
+  - lookPath returns empty string if not found
+  - `or` returns first non-empty value
+
+  ALTERNATIVE: Add paths to [data] in .chezmoi.toml.tmpl for frequently used programs
+*/ -}}

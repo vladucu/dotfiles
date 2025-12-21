@@ -20,6 +20,12 @@ brew {{ . | quote }}
 {{ range (.packages.darwin.casks | sortAlpha | uniq) -}}
 cask {{ . | quote }}
 {{ end -}}
+
+{{- if .packages.darwin.mas }}
+{{ range .packages.darwin.mas -}}
+mas {{ .name | quote }}, id: {{ .id }}
+{{ end -}}
+{{- end }}
 EOF
 
 success "Homebew packages install successful!"

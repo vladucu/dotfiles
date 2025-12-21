@@ -132,12 +132,23 @@ defaults write com.apple.dock show-recents -bool false
 # Dockutil is not on brew yet to work in macOS Ventura
 {{  if lookPath "dockutil" -}}
 dockutil --remove all
-dockutil --add "/Applications/Alacritty.app"
-dockutil --add "/Applications/Brave Browser.app"
-dockutil --add "/Applications/Google Chrome.app"
+
+# Helper function to add app to Dock only if it exists
+add_to_dock() {
+  if [[ -d "$1" ]]; then
+    dockutil --add "$1"
+  else
+    warn "Skipping $1 (not installed)"
+  fi
+}
+
+# Add apps to Dock (only if installed)
+add_to_dock "/Applications/Alacritty.app"
+add_to_dock "/Applications/Brave Browser.app"
+add_to_dock "/Applications/Google Chrome.app"
 dockutil --add "" --type spacer --section apps
-dockutil --add "/Applications/Discord.app"
-dockutil --add "/Applications/Telegram.app"
+add_to_dock "/Applications/Discord.app"
+add_to_dock "/Applications/Telegram.app"
 dockutil --add "" --type spacer --section apps
 
 ###############################################################################

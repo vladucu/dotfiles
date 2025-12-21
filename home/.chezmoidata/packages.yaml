@@ -1,3 +1,6 @@
+# Curated package list for automated installation via chezmoi
+# Note: Brewfile (root) is a separate backup/reference from `brew bundle dump`
+#       This file is the source of truth for automated installation
 packages:
   darwin:
     taps:
@@ -30,6 +33,7 @@ packages:
       - "less"
       - "lsd"
       - "mackup"
+      - "mas"  # Mac App Store CLI - required for mas apps below
       - "mise"
       - "navi"
       - "ncurses"
@@ -90,3 +94,15 @@ packages:
       - "tunnelblick"
       - "visual-studio-code"
       - "whatsapp"
+    mas:
+      - { name: "Amphetamine", id: 937984704 }
+      - { name: "Expenses", id: 1492055171 }
+      - { name: "Furtherance", id: 1659277200 }
+      - { name: "GarageBand", id: 682658836 }
+      - { name: "Keynote", id: 409183694 }
+      - { name: "NordVPN", id: 905953485 }
+      - { name: "Numbers", id: 409203825 }
+      - { name: "O3", id: 1421086700 }
+      - { name: "Pages", id: 409201541 }
+      - { name: "Perplexity", id: 6714467650 }
+      - { name: "Tailscale", id: 1475387142 }
