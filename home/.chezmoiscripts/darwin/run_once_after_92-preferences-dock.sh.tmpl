@@ -1,0 +1,84 @@
+#!/bin/bash
+# Dock and system preferences
+set -eufo pipefail
+
+{{ template "utils" }}
+
+title "[92 - macOS preferences - Dock & System]"
+
+# Ask for the administrator password upfront
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+###############################################################################
+# General UI/UX                                                               #
+###############################################################################
+
+# Disable the sound effects on boot
+sudo nvram SystemAudioVolume=" "
+
+# Show the /Volumes folder
+sudo chflags nohidden /Volumes
+
+###############################################################################
+# Dock, Dashboard, and hot corners                                            #
+###############################################################################
+
+# Set the icon size of Dock items to 36 pixels
+defaults write com.apple.dock tilesize -int 36
+
+# Automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
+
+# Remove the auto-hiding Dock delay
+defaults write com.apple.dock autohide-delay -float 0
+
+# Remove the animation when hiding/showing the Dock
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+# Don't show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+
+# Don't rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -int 0
+
+# Make Dock icons of hidden applications translucent
+defaults write com.apple.dock showhidden -bool true
+
+###############################################################################
+# Dock apps (via dockutil)                                                    #
+###############################################################################
+
+{{- if lookPath "dockutil" }}
+dockutil --remove all
+
+# Helper function to add app to Dock only if it exists
+add_to_dock() {
+  if [[ -d "$1" ]]; then
+    dockutil --add "$1"
+  else
+    warn "Skipping $1 (not installed)"
+  fi
+}
+
+# Add apps to Dock (only if installed)
+add_to_dock "/Applications/Alacritty.app"
+add_to_dock "/Applications/Brave Browser.app"
+add_to_dock "/Applications/Google Chrome.app"
+dockutil --add "" --type spacer --section apps
+add_to_dock "/Applications/Discord.app"
+add_to_dock "/Applications/Telegram.app"
+dockutil --add "" --type spacer --section apps
+{{- end }}
+
+###############################################################################
+# Restart affected applications                                               #
+###############################################################################
+
+for app in "Dock" "SystemUIServer"; do
+  killall "${app}" &>/dev/null || true
+done
+
+success "Dock & system preferences configured. Some changes require logout/restart."

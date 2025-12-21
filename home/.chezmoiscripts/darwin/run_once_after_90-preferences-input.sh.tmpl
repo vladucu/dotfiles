@@ -1,0 +1,17 @@
+#!/bin/bash
+# Keyboard and input preferences
+set -eufo pipefail
+
+{{ template "utils" }}
+
+title "[90 - macOS preferences - Input]"
+
+###############################################################################
+# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+###############################################################################
+
+# Set a blazingly fast keyboard repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+success "Input preferences configured"
