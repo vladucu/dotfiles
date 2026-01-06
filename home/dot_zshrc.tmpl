@@ -12,6 +12,59 @@
 {{   output $sheldon "source" | trim }}
 {{- end }}
 
+
+
+# ##############################################################################
+# # FZF Configuration (Dracula theme)
+# ##############################################################################
+# export FZF_DEFAULT_OPTS="
+#   --height 40%
+#   --tmux bottom,40%
+#   --layout reverse
+#   --border rounded
+#   --info inline
+#   --prompt '❯ '
+#   --pointer '▶'
+#   --marker '✓'
+#   --color=fg:#f8f8f2,bg:#282a36,hl:#bd93f9
+#   --color=fg+:#f8f8f2,bg+:#44475a,hl+:#bd93f9
+#   --color=info:#ffb86c,prompt:#50fa7b,pointer:#ff79c6
+#   --color=marker:#ff79c6,spinner:#ffb86c,header:#6272a4
+#   --bind 'ctrl-/:toggle-preview'
+#   --bind 'ctrl-y:execute-silent(echo {} | pbcopy)'
+#   --preview-window 'right:50%:wrap'
+# "
+#
+# # FZF popup size presets for tmux
+# export FZF_TMUX_OPTS_LARGE="-p 90%,90%"
+# export FZF_TMUX_OPTS_MEDIUM="-p 80%,60%"
+# export FZF_TMUX_OPTS_SMALL="-p 60%,40%"
+#
+# # Shell history with fzf in tmux popup
+# fzf-history-widget-in-tmux-popup() {
+#   if [[ -n "$TMUX" ]]; then
+#     # Use tmux popup when in tmux
+#     local selected
+#     selected=$(fc -rl 1 | fzf --tac --no-sort --tiebreak=index \
+#       --prompt="❯ History: " \
+#       --header="Enter:insert | ^E:execute | ^Y:copy | Esc:cancel" \
+#       --bind="ctrl-e:execute-silent(tmux send-keys -t $TMUX_PANE {} Enter)+abort" \
+#       --bind="ctrl-y:execute-silent(echo {} | cut -d: -f2- | pbcopy)+abort" \
+#       | cut -d: -f2-)
+#     if [[ -n "$selected" ]]; then
+#       LBUFFER="$selected"
+#     fi
+#     zle reset-prompt
+#   else
+#     # Fall back to regular fzf history widget
+#     zle fzf-history-widget
+#   fi
+# }
+#
+# # Register the widget and bind to Ctrl+R
+# zle -N fzf-history-widget-in-tmux-popup
+# bindkey '^r' fzf-history-widget-in-tmux-popup
+
 {{ $zoxide := or (lookPath "/opt/homebrew/bin/zoxide") (lookPath "/usr/local/bin/zoxide") -}}
 {{ if $zoxide -}}
 # Source zoxide 
@@ -37,11 +90,16 @@
 # Mise
 # https://mise.jdx.dev/
 {{   output $mise "activate" "zsh" | trim }}
+
+# There's an issue with `mise` which overwrites the PATH and this is removed from local/share/shell/path.zsh.tmpl.
+# For now, adding manually after mise to fix this.
+path+=$HOME/.cache/.bun/bin
 {{- end }}
 
 ulimit -S -n 65536
 ulimit -H -n 200000
 
 {{ end -}}
+
 
 {{/* vim: set filetype=zsh: */}}

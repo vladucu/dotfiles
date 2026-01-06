@@ -6,6 +6,9 @@ path+=/usr/local/bin
 path=(/opt/homebrew/opt/ncurses/bin $path) 
 
 path+=$HOME/.bun/bin
+# There's an issue with `mise` which overwrites the PATH and this is removed. 
+# For now, adding manually after mise to fix this.
+path+=$HOME/.cache/.bun/bin
 
 path+=$GHOSTTY_BIN_DIR
 
