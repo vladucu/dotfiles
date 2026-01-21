@@ -117,27 +117,24 @@ alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1.Terminal'
-alt-2 = 'workspace 2.Code'
-alt-c = 'workspace 2.Code'
-alt-3 = 'workspace 3.Browse'
-alt-4 = 'workspace 4.Comms'
-alt-5 = 'workspace 5.Misc'
-alt-6 = 'workspace 6.Media'
-alt-7 = 'workspace 7.Other'
+alt-1 = 'workspace 1'   # Terminal
+alt-2 = 'workspace 2'   # Code
+alt-3 = 'workspace 3'   # Browse
+alt-4 = 'workspace 4'   # Comms
+alt-5 = 'workspace 5'   # Misc
+alt-6 = 'workspace 6'   # Media
+alt-7 = 'workspace 7'   # Other
 alt-8 = 'workspace 8'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1.Terminal'
-alt-shift-t = 'move-node-to-workspace 1.Terminal'
-alt-shift-2 = 'move-node-to-workspace 2.Code'
-alt-shift-c = 'move-node-to-workspace 2.Code'
-alt-shift-3 = 'move-node-to-workspace 3.Browse'
-alt-shift-b = 'move-node-to-workspace 3.Browse'
-alt-shift-4 = 'move-node-to-workspace 4.Comms'
-alt-shift-5 = 'move-node-to-workspace 5.Misc'
-alt-shift-6 = 'move-node-to-workspace 6.Media'
-alt-shift-7 = 'move-node-to-workspace 7.Other'
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-t = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
 alt-shift-8 = 'move-node-to-workspace 8'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
@@ -177,11 +174,11 @@ shift-down = ['volume set 0', 'mode main']
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 # if.during-aerospace-startup = true
-run = 'move-node-to-workspace 1.Terminal'
+run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace 2.Code'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
@@ -189,27 +186,27 @@ run = 'move-node-to-workspace 2.Code'
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
-run = 'move-node-to-workspace 3.Browse'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
-run = 'move-node-to-workspace 4.Comms'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = 'move-node-to-workspace 4.Comms'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
-run = 'move-node-to-workspace 4.Comms'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace 4.Comms'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
-run = 'move-node-to-workspace 4.Comms'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.linear'
@@ -229,7 +226,7 @@ run = 'move-node-to-workspace 5.Misc'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
-run = 'move-node-to-workspace 6.Media'
+run = 'move-node-to-workspace 6'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
