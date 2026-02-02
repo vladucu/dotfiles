@@ -1,0 +1,7 @@
+# linear cli
+# https://github.com/schpet/linear-cli
+
+workspace = "smile"
+team_id = "ACT"
+issue_sort = "manual"
+vcs = "jj"
