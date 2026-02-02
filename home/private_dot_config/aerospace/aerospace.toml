@@ -210,7 +210,7 @@ run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.linear'
-run = 'move-node-to-workspace 5.Misc'
+run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'ai.perplexity.mac'
