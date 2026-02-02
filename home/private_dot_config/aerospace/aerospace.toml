@@ -182,7 +182,7 @@ run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
-run = 'move-node-to-workspace 2.Code'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.Browser'
@@ -214,15 +214,15 @@ run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'ai.perplexity.mac'
-run = 'move-node-to-workspace 5.Misc'
+run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'com.anthropic.claudefordesktop'
-run = 'move-node-to-workspace 5.Misc'
+run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
-run = 'move-node-to-workspace 5.Misc'
+run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
