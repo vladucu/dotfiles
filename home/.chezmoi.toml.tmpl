@@ -6,6 +6,10 @@
 {{- $smile := false -}}
 {{- "" -}}
 
+{{/* Theme — propagated to Ghostty, delta, bat, fzf */}}
+{{- $theme := "dracula" -}}
+{{- "" -}}
+
 {{/* Configs */}}
 {{- $name := "Vlad Vanca" -}}
 {{- $email := "vanca.vlad@gmail.com" -}}
@@ -54,6 +58,12 @@
 {{-     $smile = promptBool "Smile" -}}
 {{-   end -}}
 
+{{-   if hasKey . "theme" -}}
+{{-     $theme = .theme -}}
+{{-   else -}}
+{{-     $theme = promptChoice "Theme" (list "dracula" "one-half-dark" "snazzy" "catppuccin-mocha") -}}
+{{-   end -}}
+
 {{- end -}}
 
 {{- if $interactive -}}
@@ -68,6 +78,7 @@ email = {{ $email | quote }}
 computer_name = {{ $computer_name | quote }}
 hostname = {{ $hostname | quote }}
 smile = {{ $smile }}
+theme = {{ $theme | quote }}
 onepassword_account = "44TQRXVOJ5CR3BULYTHWSHDLAI"
 gpg_recipient = {{ $gpg_recipient | quote }}
 # Secrets - fetched once from 1Password, used across templates

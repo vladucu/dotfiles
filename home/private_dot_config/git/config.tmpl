@@ -12,9 +12,12 @@
     pager = delta
     whitespace = trailing-space,space-before-tab
 
+{{- $deltaThemes := dict "dracula" "Dracula" "one-half-dark" "OneHalfDark" "snazzy" "Sublime Snazzy" "catppuccin-mocha" "Catppuccin Mocha" }}
+
 [delta]
     navigate = true
     side-by-side = true
+    syntax-theme = {{ get $deltaThemes .theme }}
 
 [diff]
     colorMoved = default
