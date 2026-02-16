@@ -8,6 +8,9 @@ hs.ipc.cliInstall("/opt/homebrew")
 hs.ipc.cliInstall()
 {{- end }}
 
+-- stackline disabled: causes errors when yabai stacks aren't actively used
+-- To re-enable, uncomment the block below
+--[[
 stackline = require "stackline"
 
 {{- $yabai := or (lookPath "/opt/homebrew/bin/yabai") (lookPath "/usr/local/bin/yabai") }}
@@ -37,6 +40,7 @@ local myStackline = {
 }
 
 stackline:init(myStackline)
+--]]
 
 hs.window.animationDuration = 0 -- disable animations
 
@@ -59,6 +63,7 @@ local bindings = {
     g = launchOrFocus('ru.keepcoder.Telegram'),
     l = launchOrFocus('com.linear'),
     m = launchOrFocus('com.spotify.client'),
+    o = launchOrFocus('md.obsidian'),
     s = launchOrFocus('com.tinyspeck.slackmacgap'),
     t = launchOrFocus('com.mitchellh.ghostty'),
     v = launchOrFocus('com.microsoft.VSCode'),
@@ -88,7 +93,7 @@ function reloadConfig(files)
   hs.notify.new({title="Hammerspoon", informativeText="Config reloaded"}):send()
 end
 
-hs.pathwatcher.new(os.getenv('HOME') .. '/.hammerspoon/', reloadConfig):start()
+hs.pathwatcher.new(hs.configdir, reloadConfig):start()
 
 
 {{/* vim: set filetype=lua: */}}

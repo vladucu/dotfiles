@@ -332,4 +332,4 @@ shift + ctrl + alt - r : chezmoi apply ~/.config/skhd/skhdrc ~/.config/yabai/yab
                           yabai --restart-service && \
                           terminal-notifier -title Yabai -message "Yabai restarted"
 
-shift + alt - b :  hs -c 'stackline.config:toggle("appearance.showIcons")'
+# shift + alt - b :  hs -c 'stackline.config:toggle("appearance.showIcons")'
