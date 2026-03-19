@@ -16,6 +16,7 @@
 {{- $computer_name := "vladucu's macbook" -}}
 {{- $hostname := "vladucu" -}}
 {{- $gpg_recipient := "9F2DA28BEC99BC96" -}}
+{{- $theme := "catppuccin-mocha" -}}
 {{- "" -}}
 
 {{- /* If running interactively */ -}}
@@ -50,6 +51,12 @@
 {{-     $gpg_recipient = .gpg_recipient -}}
 {{-   else if $interactive -}}
 {{-     $gpg_recipient = promptString "GPG Recipient" $gpg_recipient -}}
+{{-   end -}}
+
+{{-   if hasKey . "theme" -}}
+{{-     $theme = .theme -}}
+{{-   else -}}
+{{-     $theme = promptChoice "Theme" (list "catppuccin-mocha" "dracula" "one-half-dark" "snazzy") $theme -}}
 {{-   end -}}
 
 {{-   if hasKey . "smile" -}}
