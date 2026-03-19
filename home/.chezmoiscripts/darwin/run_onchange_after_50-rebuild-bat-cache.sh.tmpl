@@ -1,0 +1,13 @@
+#!/bin/bash
+# Rebuild bat cache so delta picks up custom themes (e.g., Catppuccin Mocha)
+# bat themes hash: {{ include "private_dot_config/bat/themes/Catppuccin Mocha.tmTheme" | sha256sum }}
+
+set -euo pipefail
+
+if command -v bat &>/dev/null; then
+    echo "Rebuilding bat cache (custom themes changed)..."
+    bat cache --build
+    echo "Done."
+else
+    echo "bat not found, skipping cache rebuild"
+fi
