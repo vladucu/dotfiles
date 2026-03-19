@@ -39,7 +39,7 @@ packages:
       - "ncurses"
       - "neovim"
       - "pinentry-mac"
-      - "postgresql@14"
+      - "postgresql"
       - "reattach-to-user-namespace"
       - "ripgrep"
       - "sheldon"
