@@ -45,3 +45,8 @@
 
 [url "git@github.com:vladucu/"]
     insteadOf = https://github.com/vladucu/
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
