@@ -18,8 +18,8 @@ echo "Using agent-config at: $REPO_PATH"
 # Create directories
 mkdir -p ~/.claude/skills ~/.claude/hooks ~/.claude/commands ~/.pi/agent
 
-# Skills symlinks
-for skill in smile-io-dev jj manage-linear pr-creator resolve-dependabot-alerts skill-crafting tmux; do
+# Skills symlinks — tool-agnostic skills synced to Claude
+for skill in colgrep datadog describe-pr ember-best-practices eval-agent-sessions jj manage-linear pr-creator readwise record-demo resolve-dependabot-alerts self-reflect skill-crafting slack smile-io-dev spec-gen tmux; do
   ln -sfn "$REPO_PATH/skills/$skill" "$HOME/.claude/skills/$skill"
 done
 
@@ -32,7 +32,18 @@ ln -sfn "$REPO_PATH/claude/commands/save-progress.md" "$HOME/.claude/commands/sa
 ln -sfn "$REPO_PATH/claude/commands/cl" "$HOME/.claude/commands/cl"
 ln -sfn "$REPO_PATH/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 
+# MCP server — exposes vault_write + todo tools to Claude Code
+claude mcp remove agent-tools 2>/dev/null || true
+claude mcp add --scope user agent-tools -- bun run "$REPO_PATH/mcp-server/index.ts" 2>/dev/null || true
+
 # Pi config
 ln -sfn "$REPO_PATH/pi/settings.json" "$HOME/.pi/agent/settings.json"
+
+# Codex config — AGENTS.md + skills
+mkdir -p ~/.codex/skills
+ln -sfn "$REPO_PATH/agents/AGENTS.md" "$HOME/.codex/AGENTS.md"
+for skill in colgrep datadog describe-pr ember-best-practices manage-linear pr-creator readwise record-demo self-reflect skill-crafting slack smile-io-dev spec-gen tmux; do
+  ln -sfn "$REPO_PATH/skills/$skill" "$HOME/.codex/skills/$skill"
+done
 
 success "Agent config symlinks created!"
