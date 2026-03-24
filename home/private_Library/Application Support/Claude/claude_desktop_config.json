@@ -1,0 +1,17 @@
+{
+  "globalShortcut": "Shift+Alt+Space",
+  "mcpServers": {},
+  "preferences": {
+    "menuBarEnabled": false,
+    "quickEntryDictationShortcut": "capslock",
+    "ccBranchPrefix": "vlad",
+    "launchPreviewPersistSession": true,
+    "localAgentModeTrustedFolders": [
+      "/Users/vladucu/code/github.com/smile-io/smile-admin"
+    ],
+    "coworkScheduledTasksEnabled": true,
+    "ccdScheduledTasksEnabled": true,
+    "sidebarMode": "chat",
+    "coworkWebSearchEnabled": true
+  }
+}
