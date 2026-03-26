@@ -1,0 +1,268 @@
+#!/usr/bin/env bash
+# meetily-to-obsidian.sh — Sync Meetily meeting transcripts to Obsidian vault
+#
+# Reads from Meetily's SQLite database and writes meeting transcripts
+# as markdown files to the Obsidian vault with proper frontmatter.
+# Optionally summarizes via Claude CLI (uses your subscription, no API key needed).
+#
+# Usage:
+#   ./scripts/meetily-to-obsidian.sh                        # sync new meetings
+#   ./scripts/meetily-to-obsidian.sh --all                   # re-sync all meetings
+#   ./scripts/meetily-to-obsidian.sh --summarize             # sync + summarize via Claude
+#   ./scripts/meetily-to-obsidian.sh --summarize --all       # re-sync + re-summarize all
+#   ./scripts/meetily-to-obsidian.sh --dry-run               # preview without writing
+#   ./scripts/meetily-to-obsidian.sh --commit                # auto git-commit after sync
+#
+# Environment variables:
+#   MEETILY_DB      Path to Meetily SQLite database
+#   OBSIDIAN_VAULT  Path to Obsidian vault root
+#   CLAUDE_MODEL    Model to use for summarization (default: sonnet)
+
+set -euo pipefail
+
+# ─── Configuration ──────────────────────────────────────────────────────────
+MEETILY_DB="${MEETILY_DB:-$HOME/Library/Application Support/com.meetily.ai/meeting_minutes.db}"
+OBSIDIAN_VAULT="${OBSIDIAN_VAULT:-$HOME/code/github.com/vladucu/brain}"
+MEETINGS_DIR="${OBSIDIAN_VAULT}/meetings"
+SYNC_MARKER="${MEETINGS_DIR}/.last-sync"
+CLAUDE_MODEL="${CLAUDE_MODEL:-sonnet}"
+
+DRY_RUN=false
+SYNC_ALL=false
+AUTO_COMMIT=false
+SUMMARIZE=false
+
+# ─── Parse args ─────────────────────────────────────────────────────────────
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run)     DRY_RUN=true ;;
+    --all)         SYNC_ALL=true ;;
+    --commit)      AUTO_COMMIT=true ;;
+    --summarize)   SUMMARIZE=true ;;
+    --help|-h)
+      cat <<'USAGE'
+Usage: meetily-to-obsidian.sh [--all] [--summarize] [--dry-run] [--commit]
+  --all        Re-sync all meetings (ignore last sync time)
+  --summarize  Summarize transcripts via Claude CLI (uses your subscription)
+  --dry-run    Preview what would be written without writing
+  --commit     Auto git-commit new notes to the vault
+
+Environment:
+  MEETILY_DB      Meetily SQLite database path
+  OBSIDIAN_VAULT  Obsidian vault root path
+  CLAUDE_MODEL    Claude model for summarization (default: sonnet)
+USAGE
+      exit 0
+      ;;
+  esac
+done
+
+# ─── Preflight ──────────────────────────────────────────────────────────────
+if [[ ! -f "$MEETILY_DB" ]]; then
+  ALT_DB="$HOME/Library/Application Support/com.meetily.ai/meetily.db"
+  if [[ -f "$ALT_DB" ]]; then
+    MEETILY_DB="$ALT_DB"
+  else
+    echo "❌ Meetily database not found at:"
+    echo "   $MEETILY_DB"
+    echo "   $ALT_DB"
+    echo ""
+    echo "Have you run Meetily at least once? Launch it from /Applications/meetily.app"
+    exit 1
+  fi
+fi
+
+if [[ "$SUMMARIZE" == true ]] && ! command -v claude &>/dev/null; then
+  echo "❌ claude CLI not found — install it or remove --summarize"
+  exit 1
+fi
+
+mkdir -p "$MEETINGS_DIR"
+
+# ─── Summarization prompt ──────────────────────────────────────────────────
+SUMMARY_PROMPT='You are a meeting notes assistant. Given a raw meeting transcript, produce a structured summary in markdown. Output ONLY the markdown below, nothing else.
+
+## Summary
+A concise 2-4 sentence overview of what was discussed and decided.
+
+## Key Decisions
+- Bullet list of decisions made (if any)
+
+## Action Items
+- [ ] Action item with owner if identifiable
+- [ ] Another action item
+
+## Key Discussion Points
+- Important topics discussed with brief context
+
+## Follow-ups
+- Things to revisit or track
+
+If speakers are identified in the transcript, attribute action items and decisions to them where possible. Be concise but capture all actionable information.'
+
+# ─── Determine sync window ─────────────────────────────────────────────────
+if [[ "$SYNC_ALL" == true ]] || [[ ! -f "$SYNC_MARKER" ]]; then
+  SINCE="1970-01-01T00:00:00"
+else
+  SINCE=$(cat "$SYNC_MARKER")
+fi
+
+echo "🔍 Scanning Meetily DB: $(basename "$MEETILY_DB")"
+echo "   Since: $SINCE"
+[[ "$SUMMARIZE" == true ]] && echo "   📝 Summarization: ON (via claude -p --model $CLAUDE_MODEL)"
+echo ""
+
+# ─── Export meetings ────────────────────────────────────────────────────────
+python3 -c "
+import sqlite3, json, sys
+
+db_path = sys.argv[1]
+since = sys.argv[2]
+
+conn = sqlite3.connect(db_path)
+conn.row_factory = sqlite3.Row
+
+rows = conn.execute('''
+    SELECT
+        m.id,
+        m.title,
+        m.created_at,
+        m.updated_at,
+        COALESCE(t.transcript, '') as transcript,
+        COALESCE(t.summary, '') as summary,
+        COALESCE(t.action_items, '') as action_items,
+        COALESCE(t.key_points, '') as key_points
+    FROM meetings m
+    LEFT JOIN transcripts t ON t.meeting_id = m.id
+    WHERE m.updated_at > ?
+    ORDER BY m.created_at ASC
+''', (since,)).fetchall()
+
+# Also check summary_processes for richer results
+for row in rows:
+    meeting = dict(row)
+
+    if not meeting['summary']:
+        sp = conn.execute('''
+            SELECT result FROM summary_processes
+            WHERE meeting_id = ? AND status = 'completed'
+            ORDER BY updated_at DESC LIMIT 1
+        ''', (meeting['id'],)).fetchone()
+        if sp and sp[0]:
+            meeting['summary'] = sp[0]
+
+    print(json.dumps(meeting))
+
+conn.close()
+" "$MEETILY_DB" "$SINCE" | while IFS= read -r json_line; do
+
+  # Parse JSON fields
+  id=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['id'])")
+  title=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['title'])")
+  created_at=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['created_at'])")
+  updated_at=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['updated_at'])")
+  transcript=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['transcript'])")
+  meetily_summary=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary'])")
+  action_items=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['action_items'])")
+  key_points=$(echo "$json_line" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['key_points'])")
+
+  # Extract date for filename
+  meeting_date="${created_at:0:10}"
+
+  # Sanitize title for filename
+  safe_title=$(echo "$title" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//' | head -c 60)
+  [[ -z "$safe_title" ]] && safe_title="meeting-${id:0:8}"
+
+  filename="${meeting_date}-${safe_title}.md"
+  filepath="${MEETINGS_DIR}/${filename}"
+
+  if [[ "$DRY_RUN" == true ]]; then
+    echo "  📝 [dry-run] Would write: meetings/${filename}"
+    continue
+  fi
+
+  # ─── Summarize via Claude if requested ──────────────────────────────────
+  claude_summary=""
+  if [[ "$SUMMARIZE" == true ]] && [[ -n "$transcript" ]]; then
+    echo "  🤖 Summarizing: ${title}..."
+    claude_summary=$(echo "$transcript" | claude -p \
+      --model "$CLAUDE_MODEL" \
+      --no-session-persistence \
+      --bare \
+      --system-prompt "$SUMMARY_PROMPT" \
+      2>/dev/null) || true
+  fi
+
+  # Determine status
+  if [[ -n "$claude_summary" ]]; then
+    status="summarized"
+  elif [[ -n "$meetily_summary" ]]; then
+    status="summarized"
+  else
+    status="raw"
+  fi
+
+  # ─── Build markdown file ────────────────────────────────────────────────
+  {
+    cat <<FRONTMATTER
+---
+type: meeting
+created: ${created_at}
+updated: ${updated_at}
+meetily_id: "${id}"
+source: meetily
+status: ${status}
+---
+# ${title}
+
+**Date**: ${meeting_date}
+FRONTMATTER
+
+    # Claude summary takes priority (higher quality)
+    if [[ -n "$claude_summary" ]]; then
+      printf '\n%s\n' "$claude_summary"
+
+      # Keep Meetily's summary as a secondary reference if it exists
+      if [[ -n "$meetily_summary" ]]; then
+        printf '\n---\n\n<details>\n<summary>Meetily auto-summary (for reference)</summary>\n\n%s\n' "$meetily_summary"
+        [[ -n "$action_items" ]] && printf '\n### Action Items\n\n%s\n' "$action_items"
+        [[ -n "$key_points" ]] && printf '\n### Key Points\n\n%s\n' "$key_points"
+        printf '\n</details>\n'
+      fi
+
+    elif [[ -n "$meetily_summary" ]]; then
+      # Fall back to Meetily's built-in summary
+      printf '\n## Summary\n\n%s\n' "$meetily_summary"
+      [[ -n "$action_items" ]] && printf '\n## Action Items\n\n%s\n' "$action_items"
+      [[ -n "$key_points" ]] && printf '\n## Key Points\n\n%s\n' "$key_points"
+    fi
+
+    # Transcript last (collapsed)
+    if [[ -n "$transcript" ]]; then
+      printf '\n## Transcript\n\n<details>\n<summary>Full transcript (click to expand)</summary>\n\n%s\n\n</details>\n' "$transcript"
+    fi
+
+  } > "$filepath"
+
+  echo "  ✅ ${filename} (${status})"
+done
+
+# ─── Update sync marker ────────────────────────────────────────────────────
+if [[ "$DRY_RUN" != true ]]; then
+  date -u +"%Y-%m-%dT%H:%M:%S" > "$SYNC_MARKER"
+fi
+
+echo ""
+echo "✨ Sync complete → ${MEETINGS_DIR}/"
+
+# ─── Auto-commit ────────────────────────────────────────────────────────────
+if [[ "$AUTO_COMMIT" == true ]] && [[ "$DRY_RUN" != true ]]; then
+  cd "$OBSIDIAN_VAULT"
+  if git diff --quiet meetings/ 2>/dev/null && git diff --cached --quiet meetings/ 2>/dev/null; then
+    echo "   No changes to commit."
+  else
+    git add meetings/
+    git commit -m "vault: sync meeting transcripts from Meetily ($(date +%Y-%m-%d))" --quiet
+    echo "   📦 Committed to vault."
+  fi
+fi

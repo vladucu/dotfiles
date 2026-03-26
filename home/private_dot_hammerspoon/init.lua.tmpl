@@ -80,6 +80,16 @@ for modifier, keyActions in pairs(bindings) do
 end
 
 --
+-- Meetily auto-launch on Google Meet
+-- See: docs/meetily-obsidian-setup.md
+--
+local meetily = require("meetily-auto")
+meetily.start()
+
+-- Toggle with Hyper+R (same modifier as app launchers)
+hs.hotkey.bind({'alt', 'cmd', 'ctrl', 'shift'}, 'r', meetily.toggle)
+
+--
 -- Auto-reload config on change.
 --
 
