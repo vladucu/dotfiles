@@ -98,7 +98,7 @@ A concise 2-4 sentence overview of what was discussed and decided.
 ## Follow-ups
 - Things to revisit or track
 
-If speakers are identified in the transcript, attribute action items and decisions to them where possible. Be concise but capture all actionable information.'
+The transcript has two audio channels: "mic" (the meeting owner, Vlad) and "system" (everyone else on the call). Use conversational context, names mentioned, and speaking patterns to infer who is talking when possible. Attribute action items and decisions to specific people where identifiable. Be concise but capture all actionable information.'
 
 # ─── Determine sync window ─────────────────────────────────────────────────
 if [[ "$SYNC_ALL" == true ]] || [[ ! -f "$SYNC_MARKER" ]]; then
