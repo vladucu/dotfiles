@@ -21,7 +21,7 @@
 set -euo pipefail
 
 # ─── Configuration ──────────────────────────────────────────────────────────
-MEETILY_DB="${MEETILY_DB:-$HOME/Library/Application Support/com.meetily.ai/meeting_minutes.db}"
+MEETILY_DB="${MEETILY_DB:-$HOME/Library/Application Support/com.meetily.ai/meeting_minutes.sqlite}"
 OBSIDIAN_VAULT="${OBSIDIAN_VAULT:-$HOME/code/github.com/vladucu/brain}"
 MEETINGS_DIR="${OBSIDIAN_VAULT}/meetings"
 SYNC_MARKER="${MEETINGS_DIR}/.last-sync"
@@ -59,7 +59,7 @@ done
 
 # ─── Preflight ──────────────────────────────────────────────────────────────
 if [[ ! -f "$MEETILY_DB" ]]; then
-  ALT_DB="$HOME/Library/Application Support/com.meetily.ai/meetily.db"
+  ALT_DB="$HOME/Library/Application Support/com.meetily.ai/meetily.sqlite"
   if [[ -f "$ALT_DB" ]]; then
     MEETILY_DB="$ALT_DB"
   else
