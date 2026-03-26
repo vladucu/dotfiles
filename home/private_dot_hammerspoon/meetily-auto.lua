@@ -10,6 +10,8 @@ local M = {}
 M.pollInterval = 10          -- seconds between checks
 M.bundleId = "com.meetily.ai"
 M.meetPattern = "meet.google.com/"
+M.syncCommand = os.getenv("HOME") .. "/.local/bin/meeting-sync --summarize --commit"
+M.syncDelay = 30             -- seconds to wait after meeting ends before syncing
 M.enabled = true
 
 -- ─── State ─────────────────────────────────────────────────────────────────
@@ -106,11 +108,32 @@ local function checkMeeting()
 
     hs.notify.new({
       title = "🎙️ Meetily",
-      informativeText = "Google Meet ended.\nDon't forget to stop recording and sync to Obsidian!",
-      withdrawAfter = 15,
+      informativeText = "Google Meet ended.\nAuto-syncing to Obsidian in " .. M.syncDelay .. "s...",
+      withdrawAfter = 10,
     }):send()
 
-    hs.printf("[meetily-auto] Google Meet ended → reminded to stop recording")
+    hs.printf("[meetily-auto] Google Meet ended → syncing in %ds", M.syncDelay)
+
+    -- Delay to let Meetily finish writing transcript + auto-summary
+    hs.timer.doAfter(M.syncDelay, function()
+      hs.printf("[meetily-auto] Running meeting-sync...")
+      local output, status, _, rc = hs.execute(M.syncCommand, true)
+      if rc == 0 then
+        hs.notify.new({
+          title = "✅ Meeting Synced",
+          informativeText = "Transcript + summary saved to Obsidian.",
+          withdrawAfter = 8,
+        }):send()
+        hs.printf("[meetily-auto] Sync complete")
+      else
+        hs.notify.new({
+          title = "⚠️ Meeting Sync Failed",
+          informativeText = "Check: meeting-sync --dry-run",
+          withdrawAfter = 15,
+        }):send()
+        hs.printf("[meetily-auto] Sync failed: %s", output or "unknown error")
+      end
+    end)
   end
 end
 
