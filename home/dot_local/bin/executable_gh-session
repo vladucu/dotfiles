@@ -1,49 +1,13 @@
 #!/bin/bash
-# Run gh commands in a persistent tmux session to keep 1Password auth alive
-
-SESSION_NAME="github-ops"
-OUTPUT_FILE="/tmp/gh-output-$RANDOM-$$"
-EXITCODE_FILE="/tmp/gh-exitcode-$RANDOM-$$"
-
-# Create session if it doesn't exist, force it to use bash
-if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-    tmux new-session -d -s "$SESSION_NAME" bash
-fi
-
-# Build the command with proper quoting
-# Use bash printf %q to properly escape each argument
-ESCAPED_ARGS=""
-for arg in "$@"; do
-    ESCAPED_ARGS+=" $(printf %q "$arg")"
-done
-
-CMD="gh${ESCAPED_ARGS} > $OUTPUT_FILE 2>&1; echo \$? > $EXITCODE_FILE"
-
-# Send command to tmux session
-tmux send-keys -t "$SESSION_NAME" "$CMD" C-m
-
-# Wait for completion
-timeout=50
-while [[ $timeout -gt 0 ]]; do
-    if [[ -f "$EXITCODE_FILE" ]]; then
-        break
-    fi
-    sleep 0.2
-    ((timeout--))
-done
-
-# Print output
-if [[ -f "$OUTPUT_FILE" ]]; then
-    cat "$OUTPUT_FILE"
-fi
-
-# Get exit code
-exit_code=1
-if [[ -f "$EXITCODE_FILE" ]]; then
-    exit_code=$(cat "$EXITCODE_FILE")
-fi
-
-# Cleanup
-rm -f "$OUTPUT_FILE" "$EXITCODE_FILE"
-
-exit $exit_code
+# Passthrough to gh CLI.
+#
+# Previously this ran gh commands in a persistent tmux session ("github-ops")
+# to keep 1Password biometric auth alive. That's no longer needed because:
+#   - GITHUB_TOKEN is set from macOS Keychain at shell startup (env.zsh)
+#   - Keychain is seeded by `sync-secrets` (1Password → Keychain, ~25ms)
+#   - The `op plugin run -- gh` alias has been disabled
+#
+# This wrapper remains for backward compatibility — many agent configs,
+# skills, and prompts reference `gh-session`. They can be gradually
+# updated to use `gh` directly.
+exec gh "$@"
