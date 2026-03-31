@@ -71,7 +71,7 @@ github = "zimfw/git"
 apply = ["defer"]
 [plugins.zimfw-git.hooks]
 pre = "zstyle ':zim:git' aliases-prefix 'g'"
-post = "fpath+={{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions && autoload -U {{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions/*; unalias gh 2>/dev/null  # zimfw/git sets gh='git help', shadows GitHub CLI"
+post = "fpath+={{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions && autoload -U {{ .chezmoi.homeDir }}/.local/share/sheldon/repos/github.com/zimfw/git/functions/*; zsh-defer -c 'unalias gh 2>/dev/null'  # zimfw/git sets gh='git help', shadows GitHub CLI"
 
 # 1Password plugin aliases removed — GITHUB_TOKEN comes from Keychain now (env.zsh).
 # The deferred `op plugin run -- gh` alias was overriding zimfw/git's `gh` alias,
