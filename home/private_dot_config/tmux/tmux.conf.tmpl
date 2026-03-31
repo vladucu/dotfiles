@@ -82,20 +82,13 @@ bind-key btab select-pane -t :.-
 # Synchronize panes
 bind-key * set-window-option synchronize-pane\; display 'synchronize-panes #{?synchronize-panes,on,off}'
 
-# Copy-mode
-bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-bind-key y send-keys C-l C-a \; run-shell 'sleep 0.25' \;\
-  copy-mode \; send-keys -X begin-selection \;\
-  send-keys -X -N 100 'cursor-down' \;\
-  send-keys -X 'end-of-line' \;\
-  send-keys -X 'previous-word' \;\
-  send-keys -X 'next-word-end' \;\
-  send-keys -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy" \;\
-  send-keys C-e \;\
-  display-message "Line copied"
+# Smart clear: sends C-l if a program is running, otherwise clears scrollback
+# Replaces the old unconditional `prefix C-l` with a no-prefix Alt-k binding
+is_program="ps -o comm= -t '#{pane_tty}' | grep -vE '^-?(fish|bash|zsh|sh|ps|grep|awk|sed|cut|sort|uniq|head|cat|echo|printf)$' | grep -q ."
+bind-key -n M-k if-shell "$is_program" "send-keys C-l" "send-keys -R; clear-history"
 
-# Clear scrollback buffer
-bind-key C-l send-keys C-l \; clear-history
+# Open scrollback in neovim for searching/yanking
+bind-key e run-shell 'tmux capture-pane -pS -102400 > /tmp/tmux-scrollback.txt && tmux new-window "nvim /tmp/tmux-scrollback.txt"'
 
 # Some extra key bindings to select higher numbered windows
 bind-key F1 selectw -t:10
@@ -139,6 +132,12 @@ set-option -g @plugin 'tmux-plugins/tmux-sensible'
 set-option -g @plugin 'tmux-plugins/tmux-sessionist'
 set-option -g @plugin 'tmux-plugins/tmux-pain-control'
 set-option -g @plugin 'sainnhe/tmux-fzf'
+set-option -g @plugin 'tmux-plugins/tmux-resurrect'
+set-option -g @plugin 'tmux-plugins/tmux-continuum'
+set-option -g @plugin 'tmux-plugins/tmux-yank'
+
+# Restore sessions automatically on tmux server start
+set-option -g @continuum-restore 'on'
 
 # Themes
 set -g @plugin 'dracula/tmux'
