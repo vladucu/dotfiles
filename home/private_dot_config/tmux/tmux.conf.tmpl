@@ -46,6 +46,13 @@ set-option -g status-keys emacs
 # Mouse
 set-option -g mouse on
 
+# Extended keys: encodes modified keys (Ctrl+Enter, Shift+Enter, etc.) so
+# programs in the pane can distinguish them from their unmodified counterparts.
+# csi-u format (e.g. \033[13;5u) is required by Pi coding agent; the default
+# xterm format uses different escape sequences that not all programs handle.
+set-option -g extended-keys on
+set-option -g extended-keys-format csi-u
+
 ##############################################################################
 # Window options
 ##############################################################################
