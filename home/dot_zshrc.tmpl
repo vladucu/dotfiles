@@ -92,7 +92,12 @@ bindkey '^r' fzf-history-widget-in-tmux-popup
 {{ if $mise -}}
 # Mise
 # https://mise.jdx.dev/
-{{   output $mise "activate" "zsh" | trim }}
+# NOTE: Using runtime eval instead of chezmoi `output` to avoid baking the current
+# PATH (which may contain leaked volta/tools/image/* paths) into the compiled .zshrc.
+# Unset inherited __MISE_ORIG_PATH so mise recaptures the clean PATH (volta/path.zsh
+# strips volta/tools/image/* above, but a stale __MISE_ORIG_PATH would still have them).
+unset __MISE_ORIG_PATH __MISE_DIFF __MISE_SESSION
+eval "$({{ $mise }} activate zsh)"
 
 # There's an issue with `mise` which overwrites the PATH and this is removed from local/share/shell/path.zsh.tmpl.
 # For now, adding manually after mise to fix this.
