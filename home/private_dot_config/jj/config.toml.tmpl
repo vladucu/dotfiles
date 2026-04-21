@@ -47,6 +47,14 @@ bmm = ["bookmark", "move", "main", "--to", "main@origin"]
 bmb = ["bookmark", "move", "--from", "@--", "--to", "@-"]
 lm = ["log", "-r", "::mine()"]
 
+# Move the closest bookmark to the current commit. This is useful when
+# working on a named branch, creating a bunch of commits, and then needing
+# to update the bookmark before pushing.
+tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
+
+# Rebase the current branch onto the trunk.
+retrunk = ["rebase", "-d", "trunk()"]
+
 [revsets]
 # Overwrite the default to exclude noisy work service commits
 # https://github.com/jj-vcs/jj/blob/main/cli/src/config/revsets.toml#L10C1-L10C74
@@ -59,6 +67,10 @@ short-prefixes = "(main..@)::"
 'mine_changes()' = '::mine()'
 'to_parent()' = '..@'
 'from_parent()' = '@..'
+
+"closest_bookmark(to)" = "heads(::to & bookmarks())"
+"fork_history(to, from)" = "fork_point(to | from)..@"
+
 
 [ui]
 # diff-editor = ":builtin"
