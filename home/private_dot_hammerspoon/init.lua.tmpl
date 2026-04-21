@@ -44,11 +44,16 @@ stackline:init(myStackline)
 
 hs.window.animationDuration = 0 -- disable animations
 
-function launchOrFocus(app)
+-- Use `open -b` instead of hs.application.launchOrFocusByBundleID to avoid
+-- AX API timeouts when background processes are unresponsive (see: hammerspoon#3450)
+function launchOrFocus(bundleID)
   return function()
-    hs.application.launchOrFocusByBundleID(app)
+    hs.execute('open -b ' .. bundleID)
   end
 end
+
+-- Store hotkeys globally to prevent Lua garbage collection from disabling them
+Hotkeys = {}
 
 local bindings = {
   -- Find bundle ID using
@@ -59,7 +64,7 @@ local bindings = {
     -- c = launchOrFocus('com.google.Chrome'),
     c = launchOrFocus('com.todesktop.230313mzl4w4u92'),
     d = launchOrFocus('com.hnc.Discord'),
-    f = launchOrFocus('fom.apple.finder'),
+    f = launchOrFocus('com.apple.finder'),
     g = launchOrFocus('ru.keepcoder.Telegram'),
     l = launchOrFocus('com.linear'),
     m = launchOrFocus('com.spotify.client'),
@@ -75,19 +80,19 @@ local bindings = {
 
 for modifier, keyActions in pairs(bindings) do
   for key, action in pairs(keyActions) do
-    hs.hotkey.bind(modifier, tostring(key), action)
+    table.insert(Hotkeys, hs.hotkey.bind(modifier, tostring(key), action))
   end
 end
 
+----
+---- Meetily auto-launch on Google Meet
+---- See: docs/meetily-obsidian-setup.md
+----
+--local meetily = require("meetily-auto")
+--meetily.start()
 --
--- Meetily auto-launch on Google Meet
--- See: docs/meetily-obsidian-setup.md
---
-local meetily = require("meetily-auto")
-meetily.start()
-
--- Toggle with Hyper+R (same modifier as app launchers)
-hs.hotkey.bind({'alt', 'cmd', 'ctrl', 'shift'}, 'r', meetily.toggle)
+---- Toggle with Hyper+R (same modifier as app launchers)
+--table.insert(Hotkeys, hs.hotkey.bind({'alt', 'cmd', 'ctrl', 'shift'}, 'r', meetily.toggle))
 
 --
 -- Auto-reload config on change.
@@ -103,7 +108,7 @@ function reloadConfig(files)
   hs.notify.new({title="Hammerspoon", informativeText="Config reloaded"}):send()
 end
 
-hs.pathwatcher.new(hs.configdir, reloadConfig):start()
+ConfigWatcher = hs.pathwatcher.new(hs.configdir, reloadConfig):start()
 
 
 {{/* vim: set filetype=lua: */}}
