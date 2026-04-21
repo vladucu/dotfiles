@@ -116,14 +116,14 @@ alt-shift-l = 'move right'
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1'   # Terminal
-alt-2 = 'workspace 2'   # Code
-alt-3 = 'workspace 3'   # Browse
-alt-4 = 'workspace 4'   # Comms
-alt-5 = 'workspace 5'   # Misc
-alt-6 = 'workspace 6'   # Media
-alt-7 = 'workspace 7'   # Other
+#aerospace layout tiles horizontal vertical See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+alt-1 = 'workspace 1' # Terminal
+alt-2 = 'workspace 2' # Code
+alt-3 = 'workspace 3' # Browse
+alt-4 = 'workspace 4' # Comms
+alt-5 = 'workspace 5' # Misc
+alt-6 = 'workspace 6' # Media
+alt-7 = 'workspace 7' # Other
 alt-8 = 'workspace 8'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
@@ -189,6 +189,10 @@ if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
 run = 'move-node-to-workspace 4'
 
@@ -227,10 +231,6 @@ run = 'move-node-to-workspace 5'
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 6'
-
-[[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace 8'
 
 [[on-window-detected]]
 if.app-id = 'com.tradingview.tradingviewapp.desktop'
