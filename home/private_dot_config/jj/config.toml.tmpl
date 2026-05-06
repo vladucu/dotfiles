@@ -1,32 +1,32 @@
 [user]
+# Identity used for commit metadata.
 name = "Vlad Vanca"
 email = "vanca.vlad@gmail.com"
 
 [template-aliases]
-# https://github.com/martinvonz/jj/blob/main/docs/config.md#display-of-commit-and-change-ids
-# Just the shortest possible unique prefix
+# Render commit/change IDs as the shortest unique prefix.
 'format_short_id(id)' = 'id.shortest()'
+# Render timestamps as relative time, e.g. "2 hours ago".
 "format_timestamp(timestamp)" = "timestamp.ago()"
-# Prioritize the current branch to get shorter prefixes for certain revisions
-# revsets.short-prefixes = "(main..@)::"
 
 {{- $gpgPath := or (lookPath "/opt/homebrew/bin/gpg") (lookPath "/usr/local/bin/gpg") }}
 {{- if and (eq .chezmoi.os "darwin") (eq .chezmoi.arch "arm64") $gpgPath }}
 [signing]
+# Sign commits you create when GPG is available on Apple Silicon macOS.
 behavior = "own"
 backend = "gpg"
 key = "{{ .gpg_recipient }}"
 {{- end }}
 
 [aliases]
-# Bookmark operations 
+# Bookmark shortcuts.
 b = ["bookmark"]
 bl = ["bookmark", "list"]
 bs = ["bookmark", "set"]
 bt = ["bookmark", "track"]
 bu = ["bookmark", "untrack"]
 
-# Core commands 
+# Core jj shortcuts.
 l = ["log"]
 s = ["split"]
 sq = ["squash"]
@@ -36,52 +36,58 @@ e = ["edit"]
 sh = ["show"]
 c = ["commit"]
 
-# Git operations
+# Git interop shortcuts.
 gf = ["git", "fetch"]
 gp = ["git", "push"]
 gpa = ["git", "push", "--allow-new"]
 
-# Workflow aliases
+# Start a new change from remote main.
 nm = ["new", "main@origin"]
+# Reset local main bookmark to remote main.
 bmm = ["bookmark", "move", "main", "--to", "main@origin"]
+# Move a bookmark from grandparent to parent; useful after committing from @.
 bmb = ["bookmark", "move", "--from", "@--", "--to", "@-"]
+# Show all revisions authored by me.
 lm = ["log", "-r", "::mine()"]
 
-# Move the closest bookmark to the current commit. This is useful when
-# working on a named branch, creating a bunch of commits, and then needing
-# to update the bookmark before pushing.
+# Move the nearest ancestor bookmark to the latest committed change.
 tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
 
-# Rebase the current branch onto the trunk.
-retrunk = ["rebase", "-d", "trunk()"]
+# Rebase the current branch/stack onto trunk().
+retrunk = ["rebase", "-b", "@", "-d", "trunk()"]
+
+# Fetch remote changes, then rebase the current branch/stack onto trunk().
+sync = ["util", "exec", "--", "sh", "-c", "jj git fetch && jj retrunk"]
 
 [revsets]
-# Overwrite the default to exclude noisy work service commits
-# https://github.com/jj-vcs/jj/blob/main/cli/src/config/revsets.toml#L10C1-L10C74
+# Default log: current change, nearby immutable heads, trunk; hide bot noise.
 log = "(present(@) | ancestors(immutable_heads().., 2) | present(trunk())) & ~ author('substring:smile-ci-service@users.noreply.github.com') & ~ author('substring:[bot]@users.noreply.github.com')"
+# Personal log: current change plus all my reachable work; hide bot noise.
 my = "(present(@) | ::mine()) & ~ author('substring:smile-ci-service@users.noreply.github.com') & ~ author('substring:[bot]@users.noreply.github.com')"
+# Prefer short IDs for revisions between main and @.
 short-prefixes = "(main..@)::"
 
 [revset-aliases]
-# Common revision ranges
+# All ancestors authored by me.
 'mine_changes()' = '::mine()'
+# Range from parents to @.
 'to_parent()' = '..@'
+# Range from @ forward.
 'from_parent()' = '@..'
-
+# Nearest bookmarked ancestor of a revision.
 "closest_bookmark(to)" = "heads(::to & bookmarks())"
+# Commits from the fork point of two revsets up to @.
 "fork_history(to, from)" = "fork_point(to | from)..@"
 
-
 [ui]
-# diff-editor = ":builtin"
-# Explicitly set the diff editor to the default one to fix bug with splitting not including deleted files
+# Use scm-diff-editor for interactive split/squash/diff editing.
 diff-editor = "scm-diff-editor"
+# Running bare `jj` opens the log.
 default-command = "log"
-
-# Suppress revset pattern syntax warnings for email addresses in author()
-# This enables the new glob-by-default behavior to avoid future breaking changes
+# Treat revset string patterns as globs by default; avoids future warnings.
 revsets-use-glob-by-default = true
 
 [merge-tools.scm-diff-editor]
+# External diff editor command and arguments.
 program = "scm-diff-editor"
 edit-args = ["--dir-diff", "$left", "$right"]
