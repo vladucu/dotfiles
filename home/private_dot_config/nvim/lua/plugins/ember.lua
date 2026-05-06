@@ -7,57 +7,66 @@ return {
   end,
 
   {
-    "nvim-treesitter/nvim-treesitter",
+    "NullVoxPopuli/ember.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = false,
+    config = function()
+      require("ember.nvim").config()
+
+      -- Workaround for ember.nvim bug: its on_new_config checks `info.isGlintPlugin`
+      -- (a field that doesn't exist) so the @glint/tsserver-plugin location is never
+      -- rewritten from the placeholder. Re-register ts_ls so that before_init resolves
+      -- the real path from the project's node_modules.
+      vim.lsp.config("ts_ls", {
+        before_init = function(params, config)
+          local root = params.rootPath
+            or (params.rootUri and vim.uri_to_fname(params.rootUri))
+          if not root then
+            return
+          end
+          local plugin_path = root .. "/node_modules/@glint/tsserver-plugin"
+          if vim.uv.fs_stat(plugin_path) then
+            config.init_options = config.init_options or {}
+            config.init_options.plugins = {
+              {
+                name = "@glint/tsserver-plugin",
+                location = plugin_path,
+                languages = {
+                  "typescript",
+                  "javascript",
+                  "typescript.glimmer",
+                  "javascript.glimmer",
+                  "typescript.tsx",
+                  "javascript.jsx",
+                  "html.handlebars",
+                  "handlebars",
+                },
+                enableForWorkspaceTypeScriptVersions = true,
+                configNamespace = "typescript",
+              },
+            }
+          end
+        end,
+      })
+    end,
+  },
+
+  {
+    "mason-org/mason.nvim",
     opts = {
-      ensure_installed = {
-        "glimmer",
-        "glimmer_javascript",
-        "glimmer_typescript",
-      },
+      ensure_installed = { "glint" },
     },
   },
 
   {
     "stevearc/conform.nvim",
     opts = {
-      ft_parsers = {
-        ["javascript.glimmer"] = "glimmer",
-        ["typescript.glimmer"] = "glimmer",
-      },
-
       formatters_by_ft = {
         ["javascript.glimmer"] = { "prettier" },
         ["typescript.glimmer"] = { "prettier" },
       },
-    },
-  },
-
-  -- {
-  --   "stevearc/conform.nvim",
-  --   optional = true,
-  --   ---@param opts ConformOpts
-  --   opts = function(_, opts)
-  --     opts.formatters_by_ft = opts.formatters_by_ft or {}
-  --     for _, ft in ipairs(supported) do
-  --       opts.formatters_by_ft[ft] = opts.formatters_by_ft[ft] or {}
-  --       table.insert(opts.formatters_by_ft[ft], "prettier")
-  --     end
-  --
-  --     opts.formatters = opts.formatters or {}
-  --     opts.formatters.prettier = {
-  --       condition = function(_, ctx)
-  --         return M.has_parser(ctx) and (vim.g.lazyvim_prettier_needs_config ~= true or M.has_config(ctx))
-  --       end,
-  --     }
-  --   end,
-  -- },
-
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        ember = {},
-        glint = {},
+      formatters = {
+        prettier = { require_cwd = true },
       },
     },
   },
