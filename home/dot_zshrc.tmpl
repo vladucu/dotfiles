@@ -87,7 +87,6 @@ bindkey '^r' fzf-history-widget-in-tmux-popup
 {{   output $thefuck "--alias" | trim }}
 {{- end }}
 
-
 {{ $mise := or (lookPath "/opt/homebrew/bin/mise") (lookPath "/usr/local/bin/mise") -}}
 {{ if $mise -}}
 # Mise
