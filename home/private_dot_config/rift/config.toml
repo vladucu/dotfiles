@@ -1,0 +1,192 @@
+# Rift config — translated from aerospace.toml as a starting point.
+# Hot-reload is enabled, so edits apply without a restart.
+
+[settings]
+animate = true
+animation_duration = 0.18
+animation_fps = 120.0
+default_disable = false
+
+focus_follows_mouse = false
+mouse_follows_focus = true
+mouse_hides_on_focus = false
+
+auto_focus_blacklist = ["com.apple.Spotlight", "com.raycast.macos"]
+
+run_on_start = []
+hot_reload = true
+
+[settings.layout]
+mode = "traditional"
+
+[settings.layout.master_stack]
+master_ratio = 0.6
+master_count = 1
+master_side = "left"
+# Keep new windows in the stack so the first-opened (master) survives relaunches
+new_window_placement = "stack"
+
+[settings.layout.stack]
+stack_offset = 20
+
+[settings.layout.gaps.outer]
+top = 0
+left = 0
+bottom = 0
+right = 0
+
+[settings.layout.gaps.inner]
+horizontal = 0
+vertical = 0
+
+[settings.ui.menu_bar]
+enabled = true
+show_empty = false
+mode = "active"
+active_label = "index"
+display_style = "label"
+
+[settings.ui.mission_control]
+enabled = true
+fade_enabled = true
+fade_duration_ms = 180.0
+
+[settings.gestures]
+enabled = false
+
+[settings.window_snapping]
+drag_swap_fraction = 0.3
+
+[virtual_workspaces]
+enabled = true
+default_workspace_count = 8
+auto_assign_windows = true
+preserve_focus_per_workspace = true
+workspace_auto_back_and_forth = true
+reapply_app_rules_on_title_change = false
+workspace_rules = [
+  { workspace = 0, layout = 'stack' },
+  { workspace = 1, layout = 'stack' },
+  { workspace = 2, layout = 'scrolling' },
+  { workspace = 3, layout = 'master_stack' },
+  { workspace = 4, layout = 'stack' },
+]
+
+workspace_names = [
+  "Term",
+  "Code",
+  "Browse",
+  "Comms",
+  "Misc",
+  "Media",
+  "Other",
+  "Trade",
+]
+
+# App auto-assignment (workspace indices are 0-based)
+app_rules = [
+  { app_id = "com.mitchellh.ghostty", workspace = 0 },
+  { app_id = "com.todesktop.230313mzl4w4u92", workspace = 1 },          # Cursor
+  { app_id = "dev.zed.Zed", workspace = 1 },
+  { app_id = "company.thebrowser.Browser", workspace = 2 },
+  { app_id = "company.thebrowser.dia", workspace = 2 },
+  { app_id = "com.google.Chrome", workspace = 2 },
+  { app_id = "ru.keepcoder.Telegram", workspace = 3 },
+  { app_id = "com.hnc.Discord", workspace = 3 },
+  { app_id = "com.tinyspeck.slackmacgap", workspace = 3 },
+  { app_id = "net.whatsapp.WhatsApp", workspace = 3 },
+  { app_id = "com.linear", workspace = 4 },
+  { app_id = "ai.perplexity.mac", workspace = 4 },
+  { app_id = "com.anthropic.claudefordesktop", workspace = 4 },
+  { app_id = "com.todoist.mac.Todoist", workspace = 4 },
+  { app_id = "com.spotify.client", workspace = 5 },
+  { app_id = "md.obsidian", workspace = 5 },
+  { app_id = "com.tradingview.tradingviewapp.desktop", workspace = 7 },
+  { app_id = "com.1password.1password", floating = true },
+]
+
+[modifier_combinations]
+shift = "Alt + Shift"
+
+[keys]
+# Focus
+"Alt + H" = { move_focus = "left" }
+"Alt + J" = { move_focus = "down" }
+"Alt + K" = { move_focus = "up" }
+"Alt + L" = { move_focus = "right" }
+
+# Move window
+"shift + H" = { move_node = "left" }
+"shift + J" = { move_node = "down" }
+"shift + K" = { move_node = "up" }
+"shift + L" = { move_node = "right" }
+
+# Workspaces (Alt+1..8 → 0..7)
+"Alt + 1" = { switch_to_workspace = 0 }
+"Alt + 2" = { switch_to_workspace = 1 }
+"Alt + 3" = { switch_to_workspace = 2 }
+"Alt + 4" = { switch_to_workspace = 3 }
+"Alt + 5" = { switch_to_workspace = 4 }
+"Alt + 6" = { switch_to_workspace = 5 }
+"Alt + 7" = { switch_to_workspace = 6 }
+"Alt + 8" = { switch_to_workspace = 7 }
+
+"shift + 1" = { move_window_to_workspace = 0 }
+"shift + 2" = { move_window_to_workspace = 1 }
+"shift + 3" = { move_window_to_workspace = 2 }
+"shift + 4" = { move_window_to_workspace = 3 }
+"shift + 5" = { move_window_to_workspace = 4 }
+"shift + 6" = { move_window_to_workspace = 5 }
+"shift + 7" = { move_window_to_workspace = 6 }
+"shift + 8" = { move_window_to_workspace = 7 }
+
+# Quick send to Term workspace (matches aerospace alt-shift-t)
+"shift + T" = { move_window_to_workspace = 0 }
+
+# Back-and-forth
+"Alt + Tab" = "switch_to_last_workspace"
+"Alt + Quote" = "switch_to_last_workspace"
+
+# Layout toggles
+"Alt + Slash" = "toggle_orientation"
+"Alt + Comma" = "toggle_stack"
+
+# Resize
+"Alt + Equal" = "resize_window_grow"
+"Alt + Minus" = "resize_window_shrink"
+
+# Floating + fullscreen
+"Alt + Shift + Space" = "toggle_window_floating"
+"Alt + F" = "toggle_fullscreen"
+"Alt + Shift + F" = "toggle_fullscreen_within_gaps"
+
+# Stack join
+"Alt + Shift + Left" = { join_window = "left" }
+"Alt + Shift + Right" = { join_window = "right" }
+"Alt + Shift + Up" = { join_window = "up" }
+"Alt + Shift + Down" = { join_window = "down" }
+"Alt + Ctrl + E" = "unjoin_windows"
+
+# master_stack only (workspace 4 / Comms): promote focused window to master,
+# or swap master ↔ stack
+"Alt + Ctrl + P" = "promote_to_master"
+"Alt + Ctrl + Shift + P" = "swap_master_stack"
+
+# Mission control (rift's own)
+"Alt + Ctrl + M" = "show_mission_control_all"
+"Alt + Ctrl + Shift + M" = "show_mission_control_current"
+
+# Open ghostty
+"Alt + Enter" = { "exec" = ["/bin/bash", "-c", "open -a Ghostty"] }
+
+# Restart hotkey lives in Hammerspoon (Hyper+R) — a rift-bound key can't fire
+# when rift's input handling is wedged, which is exactly when restart is needed.
+
+# Activation toggle (rift only manages a space once toggled on)
+"Alt + Z" = "toggle_space_activated"
+
+# Move window between displays (matches aerospace alt-shift-tab spirit)
+"Alt + Shift + Tab" = { move_window_to_display = { selector = "right" } }
+
+"Alt + Ctrl + S" = "serialize"
+"Alt + Ctrl + Q" = "save_and_exit"
