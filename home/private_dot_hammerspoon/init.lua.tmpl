@@ -84,6 +84,14 @@ for modifier, keyActions in pairs(bindings) do
   end
 end
 
+-- Restart rift when its input handling gets stuck (Hyper+R).
+-- Bound here, not in rift's own config, so it works even when rift stops
+-- recognizing keys.
+table.insert(Hotkeys, hs.hotkey.bind({'alt', 'cmd', 'ctrl', 'shift'}, 'r', function()
+  hs.execute('/opt/homebrew/bin/rift service restart')
+  hs.notify.new({title="Rift", informativeText="Restarted"}):send()
+end))
+
 ----
 ---- Meetily auto-launch on Google Meet
 ---- See: docs/meetily-obsidian-setup.md
