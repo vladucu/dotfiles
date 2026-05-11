@@ -80,6 +80,12 @@ bindkey '^r' fzf-history-widget-in-tmux-popup
 {{   output $direnv "hook" "zsh" | trim }}
 {{- end }}
 
+{{ $devenv := lookPath (joinPath .chezmoi.homeDir ".nix-profile/bin/devenv") -}}
+{{ if $devenv -}}
+# Source devenv
+{{   output $devenv "hook" "zsh" | trim }}
+{{- end }}
+
 {{ $thefuck := or (lookPath "/opt/homebrew/bin/thefuck") (lookPath "/usr/local/bin/thefuck") -}}
 {{ if $thefuck -}}
 # Fuck
