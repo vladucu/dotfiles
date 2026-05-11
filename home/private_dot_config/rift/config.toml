@@ -8,7 +8,7 @@ animation_fps = 120.0
 default_disable = false
 
 focus_follows_mouse = false
-mouse_follows_focus = true
+mouse_follows_focus = false
 mouse_hides_on_focus = false
 
 auto_focus_blacklist = ["com.apple.Spotlight", "com.raycast.macos"]
@@ -67,8 +67,8 @@ reapply_app_rules_on_title_change = false
 workspace_rules = [
   { workspace = 0, layout = 'stack' },
   { workspace = 1, layout = 'stack' },
-  { workspace = 2, layout = 'scrolling' },
-  { workspace = 3, layout = 'master_stack' },
+  { workspace = 2, layout = 'stack' },
+  { workspace = 3, layout = 'stack' },
   { workspace = 4, layout = 'stack' },
 ]
 
