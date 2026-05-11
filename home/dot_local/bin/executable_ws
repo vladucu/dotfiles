@@ -1,0 +1,189 @@
+#!/usr/bin/env bash
+# ws - manage jj workspaces with manifest-driven untracked-file propagation
+#
+# Subcommands:
+#   ws new [<task-id>]   Create a sibling workspace of the current repo.
+#                        Auto-generates task-id as task-YYYYMMDD-HHMMSS if
+#                        omitted.
+#
+# Layout (assumes ghq-style ~/code/<host>/<owner>/<repo>):
+#   Source repo:   ~/code/<host>/<owner>/<repo>
+#   Workspace:     ~/code/<host>/<owner>/<repo>.workspaces/<task-id>
+#   Manifest:      ~/.config/ws/<owner>/<repo>.sh
+#
+# Manifest format (bash, sourced in a subshell):
+#   INCLUDE=(
+#     ".env:symlink"
+#     ".claude/settings.local.json:copy"
+#   )
+#
+#   post_create() {
+#     pnpm install --frozen-lockfile
+#   }
+
+set -euo pipefail
+
+die() { echo "ws: $*" >&2; exit 1; }
+log() { echo "ws: $*" >&2; }
+
+usage() {
+  cat <<'EOF'
+ws - manage jj workspaces
+
+Usage:
+  ws new [<task-id>]
+  ws -h | --help
+
+Creates a new jj workspace at <repo>.workspaces/<task-id> as a sibling of
+the source repo (auto-detected from CWD). After `jj workspace add`, the
+per-repo manifest at ~/.config/ws/<owner>/<repo>.sh is sourced to propagate
+untracked files and run a post-create hook.
+
+The absolute path of the new workspace is printed to stdout, so:
+
+  cd "$(ws new my-task)"
+
+Manifest example (~/.config/ws/smile-io/smile-admin.sh):
+
+  INCLUDE=(
+    ".env:symlink"
+    ".claude/settings.local.json:symlink"
+  )
+
+  post_create() {
+    pnpm install --frozen-lockfile
+  }
+EOF
+}
+
+find_repo_root() {
+  local dir="${1:-$PWD}"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -e "$dir/.jj" ]]; then
+      printf '%s\n' "$dir"
+      return 0
+    fi
+    dir="$(dirname "$dir")"
+  done
+  return 1
+}
+
+# Derive <owner>/<repo> from a ghq-style path.
+# Falls back to <parent-basename>/<repo-basename>, so the manifest lookup
+# either hits or misses cleanly without erroring.
+derive_owner_repo() {
+  local root="$1"
+  local repo owner
+  repo="$(basename "$root")"
+  owner="$(basename "$(dirname "$root")")"
+  printf '%s/%s\n' "$owner" "$repo"
+}
+
+apply_manifest() {
+  local source_root="$1" target="$2" manifest="$3"
+
+  (
+    INCLUDE=()
+    post_create() { :; }
+
+    # shellcheck disable=SC1090
+    source "$manifest"
+
+    local entry path mode src dst dst_parent
+    for entry in "${INCLUDE[@]:-}"; do
+      [[ -z "$entry" ]] && continue
+      path="${entry%:*}"
+      mode="${entry##*:}"
+      if [[ -z "$path" || -z "$mode" || "$path" == "$mode" ]]; then
+        log "skipping malformed manifest entry: '$entry'"
+        continue
+      fi
+      src="$source_root/$path"
+      dst="$target/$path"
+      if [[ ! -e "$src" && ! -L "$src" ]]; then
+        log "skipping missing source: $path"
+        continue
+      fi
+      dst_parent="$(dirname "$dst")"
+      mkdir -p "$dst_parent"
+      case "$mode" in
+        symlink)
+          ln -s "$src" "$dst"
+          log "symlinked $path"
+          ;;
+        copy)
+          cp -R "$src" "$dst"
+          log "copied $path"
+          ;;
+        *)
+          log "unknown mode '$mode' for $path (skipping)"
+          ;;
+      esac
+    done
+
+    if declare -F post_create >/dev/null; then
+      log "running post_create hook in $target"
+      ( cd "$target" && post_create )
+    fi
+  )
+}
+
+cmd_new() {
+  local task_id="${1:-}"
+
+  local repo_root
+  repo_root="$(find_repo_root)" || die "not inside a jj repo (no .jj found walking up from $PWD)"
+
+  # Refuse to run from inside an existing workspace.
+  local parent_basename
+  parent_basename="$(basename "$(dirname "$repo_root")")"
+  if [[ "$parent_basename" == *.workspaces ]]; then
+    die "run 'ws new' from the main checkout, not an existing workspace ($repo_root)"
+  fi
+
+  if [[ -z "$task_id" ]]; then
+    task_id="task-$(date +%Y%m%d-%H%M%S)"
+  fi
+
+  if [[ "$task_id" =~ [/[:space:]] ]] || [[ "$task_id" == *".."* ]] || [[ "$task_id" == .* ]]; then
+    die "invalid task-id: '$task_id' (no slashes, whitespace, leading dots, or '..')"
+  fi
+
+  local repo_name owner_repo workspaces_dir target
+  repo_name="$(basename "$repo_root")"
+  owner_repo="$(derive_owner_repo "$repo_root")"
+  workspaces_dir="$(dirname "$repo_root")/${repo_name}.workspaces"
+  target="$workspaces_dir/$task_id"
+
+  [[ -e "$target" ]] && die "target already exists: $target"
+
+  mkdir -p "$workspaces_dir"
+
+  log "creating jj workspace: $target"
+  jj --repository "$repo_root" workspace add "$target" >&2
+
+  local manifest="$HOME/.config/ws/${owner_repo}.sh"
+  if [[ -f "$manifest" ]]; then
+    log "applying manifest: $manifest"
+    apply_manifest "$repo_root" "$target" "$manifest"
+  else
+    log "no manifest at $manifest (skipping propagation)"
+  fi
+
+  printf '%s\n' "$target"
+}
+
+main() {
+  if [[ $# -eq 0 ]]; then
+    usage; exit 1
+  fi
+
+  local cmd="$1"; shift
+  case "$cmd" in
+    new)        cmd_new "$@" ;;
+    -h|--help)  usage ;;
+    *)          die "unknown subcommand: $cmd (try 'ws --help')" ;;
+  esac
+}
+
+main "$@"
