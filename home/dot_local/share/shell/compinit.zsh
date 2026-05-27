@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 
+# Add user-managed completion functions before initializing compinit.
+fpath=(~/.zsh/completions $fpath)
+
 # Load all stock functions (from $fpath files) called below.
 autoload -U compaudit compinit
 
