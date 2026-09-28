@@ -1,0 +1,32 @@
+# jt config - personal, never checked in.
+# Lives at ~/.config/jj-workspaces/config.toml (override with $JT_CONFIG).
+#
+# Because it is self-authored, post_create commands carry no RCE surface and
+# need no approval gate. A future checked-in/team-shared config + its gate are
+# a matched pair - both arrive together or not at all.
+
+[defaults]
+# Where new workspaces are created. Vars: {{ repo_parent }} {{ repo }} {{ name }}
+# (jj requires the destination to live OUTSIDE the main working tree.)
+path_template = "{{ repo_parent }}/_worktrees/{{ repo }}.{{ name }}"
+
+# Gitignored-but-needed paths (relative to the repo root) reflinked into each
+# new workspace via copy-on-write (APFS / btrfs / xfs) - shares blocks, so no
+# extra disk space. Cost scales with file count, not size (a 100k-file
+# node_modules is ~30s of clonefile syscalls; alternatively let post_create's
+# `pnpm install` rebuild it from the store).
+copy_ignored = ["node_modules", ".env"]
+
+# Lifecycle commands run in the new workspace after wiring + copy-ignored.
+# post_create = ["pnpm install"]
+
+# Per-repo overrides: a section keyed by the jj root (absolute path).
+# Listed keys REPLACE the matching [defaults] key for that repo.
+["/Users/vladucu/code/github.com/smile-io/smile-admin"]
+# .claude/settings.local.json came over from the retired `ws` manifest.
+copy_ignored = ["node_modules", ".env", ".claude/settings.local.json"]
+post_create  = ["pnpm install"]
+
+["/Users/vladucu/code/github.com/smile-io/ember-shopify-polaris"]
+copy_ignored = ["node_modules"]
+post_create  = ["pnpm install"]
