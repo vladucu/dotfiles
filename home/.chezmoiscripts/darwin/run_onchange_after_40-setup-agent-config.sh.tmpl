@@ -1,49 +1,17 @@
 #!/bin/bash
-# Clone agent-config repo and wire symlinks for Pi + Claude Code
+# Clone agent-config and hand off to its setup, which owns every link
 set -eufo pipefail
 
 {{ template "utils" }}
 
 title "[40 - Agent Config - Setup]"
 
-# Clone agent-config if needed
 REPO_PATH=$(ghq list -p -e vladucu/agent-config 2>/dev/null || true)
 if [ -z "$REPO_PATH" ]; then
   ghq get vladucu/agent-config
   REPO_PATH=$(ghq list -p -e vladucu/agent-config)
 fi
 
-echo "Using agent-config at: $REPO_PATH"
+"$REPO_PATH/setup" --host all
 
-# Create directories
-mkdir -p ~/.claude/skills ~/.claude/hooks ~/.claude/commands ~/.pi/agent
-
-# Skills symlinks — tool-agnostic skills synced to Claude
-for skill in colgrep datadog describe-pr ember-best-practices eval-agent-sessions jj manage-linear pr-creator readwise record-demo resolve-dependabot-alerts self-reflect skill-crafting slack smile-io-dev spec-gen tmux; do
-  ln -sfn "$REPO_PATH/skills/$skill" "$HOME/.claude/skills/$skill"
-done
-
-# Claude config symlinks
-ln -sfn "$REPO_PATH/claude/settings.json" "$HOME/.claude/settings.json"
-ln -sfn "$REPO_PATH/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-ln -sfn "$REPO_PATH/claude/hooks/notify.sh" "$HOME/.claude/hooks/notify.sh"
-ln -sfn "$REPO_PATH/claude/commands/resume.md" "$HOME/.claude/commands/resume.md"
-ln -sfn "$REPO_PATH/claude/commands/save-progress.md" "$HOME/.claude/commands/save-progress.md"
-ln -sfn "$REPO_PATH/claude/commands/cl" "$HOME/.claude/commands/cl"
-ln -sfn "$REPO_PATH/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
-
-# MCP server — exposes vault_write + todo tools to Claude Code
-claude mcp remove agent-tools 2>/dev/null || true
-claude mcp add --scope user agent-tools -- bun run "$REPO_PATH/mcp-server/index.ts" 2>/dev/null || true
-
-# Pi config
-ln -sfn "$REPO_PATH/pi/settings.json" "$HOME/.pi/agent/settings.json"
-
-# Codex config — AGENTS.md + skills
-mkdir -p ~/.codex/skills
-ln -sfn "$REPO_PATH/agents/AGENTS.md" "$HOME/.codex/AGENTS.md"
-for skill in colgrep datadog describe-pr ember-best-practices manage-linear pr-creator readwise record-demo self-reflect skill-crafting slack smile-io-dev spec-gen tmux; do
-  ln -sfn "$REPO_PATH/skills/$skill" "$HOME/.codex/skills/$skill"
-done
-
-success "Agent config symlinks created!"
+success "agent-config setup done"
