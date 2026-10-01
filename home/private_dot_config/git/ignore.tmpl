@@ -41,17 +41,21 @@ Temporary Items
 # Mise
 mise.local.toml
 
-# Cursor rules, etc
-.cursor
-AGENTS.md
+# Local agent state (machine-local; never shared). Shared agent guides
+# (AGENTS.md, CLAUDE.md, WORKFLOW.md, .cursor) are intentionally NOT ignored
+# so they can be committed as version-controlled, cross-tool repo files.
 .claude/
 .pi/
-CLAUDE.md
 CLAUDE.local.md
+REVIEW_GUIDELINES.md
+
+# playwright-cli: per-repo run artifacts (snapshots, console logs, screenshots)
+# and any local config override. Real config is global at ~/.playwright/.
+.playwright-cli/
+.playwright/
 
 **/.claude/settings.local.json
 
 .worktrees
-WORKFLOW.md
 
 # thoughts
