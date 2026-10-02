@@ -38,7 +38,7 @@ brew "helix"
 brew "helm"
 brew "hledger"
 brew "hyperfine"
-brew "jj"
+brew "jj", args: ["HEAD"]
 brew "jq"
 brew "kubergrunt"
 brew "kubernetes-cli"
