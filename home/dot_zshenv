@@ -1,9 +1,4 @@
-# Agents (Claude Code, Codex) run commands in non-interactive zsh, where
-# direnv's prompt hook never fires. Load the allowed .envrc at shell start and
-# after every cd, so a jt workspace gets its git shim, which sets $GIT_DIR for
-# git alone (gh and read-only git work) and blocks git writes. Pi runs bash
-# instead, through pi/agent-shell.bash. See agent-config
-# docs/audits/actions.md row 6.
+# Non-interactive zsh never fires direnv's prompt hook.
 if [[ ! -o interactive ]] && (( ${+CLAUDECODE} + ${+PI_SESSION_ID} + ${+CODEX_THREAD_ID} )) && (( ${+commands[direnv]} )); then
   _agent_direnv() { eval "$(direnv export zsh 2>/dev/null)"; }
   autoload -Uz add-zsh-hook
